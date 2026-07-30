@@ -18,6 +18,30 @@
     document.getElementById('already-note').classList.remove('hidden');
   }
 
+  // Pre-select dedicatedWorkoutTime from profile if available
+  const profile = Store.getProfile();
+  const defaultTime = profile && profile.dedicatedWorkoutTime ? profile.dedicatedWorkoutTime : '5-6 PM';
+  const timeChipGroup = document.querySelector('.chip-group[data-name="dedicatedWorkoutTime"]');
+  if (timeChipGroup) {
+    const matchingChip = timeChipGroup.querySelector(`.chip[data-value="${CSS.escape(defaultTime)}"]`);
+    if (matchingChip) {
+      matchingChip.click();
+    } else {
+      const defaultChip = timeChipGroup.querySelector(`.chip[data-value="5-6 PM"]`);
+      if (defaultChip) defaultChip.click();
+    }
+  }
+
+  const checkinCustomInput = document.getElementById('checkin-custom-time');
+  document.addEventListener('chipchange', (e) => {
+    if (e.target.dataset.name === 'dedicatedWorkoutTime') {
+      const val = UI.chipValue('dedicatedWorkoutTime');
+      if (checkinCustomInput) {
+        checkinCustomInput.classList.toggle('hidden', val !== 'custom');
+      }
+    }
+  });
+
   // The "none" default chip needs its group value set.
   const constraintGroup = document.querySelector('.chip-group[data-name="specialConstraint"]');
   constraintGroup.dataset.value = 'none';
@@ -32,6 +56,7 @@
       ['soreness', 'Rate your soreness (1–5).'],
       ['mood', 'Rate your mood (1–5).'],
       ['timeAvailable', 'How much time do you have today?'],
+      ['dedicatedWorkoutTime', 'Pick a dedicated workout time today.'],
     ];
     for (const [name, text] of required) {
       if (!UI.chipValue(name)) return text;
@@ -49,12 +74,18 @@
     }
     msg.classList.add('hidden');
 
+    let dedicatedTime = UI.chipValue('dedicatedWorkoutTime') || '5-6 PM';
+    if (dedicatedTime === 'custom') {
+      dedicatedTime = checkinCustomInput?.value.trim() || '5-6 PM';
+    }
+
     const checkin = {
       sleep: UI.chipValue('sleep'),
       energy: Number(UI.chipValue('energy')),
       soreness: Number(UI.chipValue('soreness')),
       mood: Number(UI.chipValue('mood')),
       timeAvailable: UI.chipValue('timeAvailable'),
+      dedicatedWorkoutTime: dedicatedTime,
       specialConstraint: UI.chipValue('specialConstraint') || 'none',
       extraNote: document.getElementById('note-input').value.trim(),
     };
@@ -66,10 +97,15 @@
       const profile = Store.getProfile();
       const prevEntry = Store.getLastEntryBefore(Store.todayKey());
       const entryCount = Store.getEntries().filter((e) => e.date !== Store.todayKey()).length + 1;
-      const recommendation = await Coach.generate(profile, checkin, prevEntry, entryCount);
+      const recentCompletions = Store.getRecentCompletions(7);
+      const recommendation = await Coach.generate(profile, checkin, prevEntry, entryCount, {
+        recentCompletions,
+        prevCompletion: Store.getCompletionLog(prevEntry ? prevEntry.date : null)
+      });
       Store.saveEntry(checkin, recommendation);
       window.location.href = 'today.html';
     } catch (e) {
+      console.error('[Striate CheckIn] Error generating plan:', e);
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'Get today\'s plan <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
       msg.textContent = 'Something went wrong generating your plan. Please try again.';

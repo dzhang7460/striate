@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Today — Striate</title>
+<title>Stats — Striate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
@@ -17,19 +17,21 @@
     <div class="row" style="gap:8px; align-items:center;">
       <button class="btn-ghost" id="debug-toggle-btn" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Debug Console">🐛 Debug</button>
       <a href="onboarding.html?edit=1" class="btn-ghost" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Profile"><i class="fa-solid fa-user"></i></a>
-      <span class="faint" id="date-label"></span>
     </div>
   </header>
 
-  <main id="today-main">
-    <!-- Filled by js/today.js -->
+  <main id="stats-main">
+    <h1 style="font-size:24px;">Stats &amp; Progress</h1>
+    <p class="muted small mb-2">Simple metrics from your recent check-ins and completion logs.</p>
+
+    <!-- Content filled by js/stats.js -->
+    <div id="stats-content"></div>
   </main>
 </div>
 
 <script src="js/store.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/debug.js"></script>
-<script src="js/coach.js"></script>
-<script src="js/today.js"></script>
+<script src="js/stats.js"></script>
 </body>
 </html>

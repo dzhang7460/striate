@@ -112,6 +112,20 @@
           <button class="chip" data-value="irregular">Irregular</button>
         </div>
       </div>
+
+      <div class="field">
+        <span class="label">Dedicated workout time window</span>
+        <div class="chip-group" data-name="dedicatedWorkoutTime" role="radiogroup" aria-label="Dedicated workout time window">
+          <button class="chip" data-value="7-8 AM">7–8 AM</button>
+          <button class="chip" data-value="12-1 PM">12–1 PM</button>
+          <button class="chip" data-value="30-after-school">30 min after school/work</button>
+          <button class="chip" data-value="5-6 PM">5–6 PM</button>
+          <button class="chip" data-value="6-7 PM">6–7 PM</button>
+          <button class="chip" data-value="custom">Custom time</button>
+        </div>
+        <input type="text" id="custom-workout-time" class="hidden mt-1" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border); background:var(--surface-light); color:var(--text);" placeholder="e.g. 8:00 PM – 8:45 PM">
+        <p class="faint mt-1">We'll schedule your daily workout block around this time.</p>
+      </div>
     </section>
 
     <!-- STEP 4: Equipment & limits -->

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Info &amp; Legend — Striate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell has-tabbar">
+
+  <header class="topbar">
+    <a class="wordmark" href="index.html">Stri<span>ate</span></a>
+    <div class="row" style="gap:8px; align-items:center;">
+      <button class="btn-ghost" id="debug-toggle-btn" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Debug Console">🐛 Debug</button>
+      <a href="onboarding.html?edit=1" class="btn-ghost" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Profile"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <main>
+    <h1 style="font-size:24px;">How Striate Works</h1>
+    <p class="muted small mb-3">Simple, evidence-based guidance for beginners without chatbot fluff.</p>
+
+    <!-- 1. Readiness -->
+    <section class="card mb-3">
+      <div class="row between mb-1">
+        <h2 style="font-size:17px;">What Readiness Means</h2>
+        <span class="badge badge-high">0 – 10 scale</span>
+      </div>
+      <p class="small muted">
+        Readiness is a simple composite score combining your <strong>sleep duration</strong>, <strong>energy</strong>, <strong>muscle soreness</strong>, and <strong>mood</strong>.
+      </p>
+      <ul style="margin: 10px 0 0 18px; font-size: 13.5px;" class="muted stack-sm">
+        <li><strong>8.0 – 10.0:</strong> Strong recovery. Great day for a full workout session.</li>
+        <li><strong>5.0 – 7.9:</strong> Moderate recovery. Good for consistent training at normal effort.</li>
+        <li><strong>Below 5.0:</strong> Depleted recovery. Striate will reduce volume or prescribe active recovery.</li>
+      </ul>
+    </section>
+
+    <!-- 2. Confidence -->
+    <section class="card mb-3">
+      <h2 style="font-size:17px; margin-bottom:10px;">What Confidence Means</h2>
+      <p class="small muted mb-2">
+        We never pretend to be 100% sure when data is limited. Confidence levels show how certain the recommendation is:
+      </p>
+      <div class="stack-sm">
+        <div style="background:var(--surface-2); padding:10px; border-radius:8px;">
+          <div class="mb-1"><span class="badge badge-high"><i class="fa-solid fa-signal"></i> High confidence</span></div>
+          <p class="small muted">Clear, consistent inputs pointing to a well-studied beginner routine or rest day.</p>
+        </div>
+        <div style="background:var(--surface-2); padding:10px; border-radius:8px;">
+          <div class="mb-1"><span class="badge badge-medium"><i class="fa-solid fa-signal"></i> Medium confidence</span></div>
+          <p class="small muted">Mixed signals (e.g., moderate soreness or limited check-in history) — a sensible middle path.</p>
+        </div>
+        <div style="background:var(--surface-2); padding:10px; border-radius:8px;">
+          <div class="mb-1"><span class="badge badge-low"><i class="fa-solid fa-signal"></i> Low confidence</span></div>
+          <p class="small muted">Pain, injury, or unusual constraints flagged. Defaults to safety first.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Adaptation -->
+    <section class="card mb-3">
+      <h2 style="font-size:17px; margin-bottom:10px;">How the AI Shortens or Moves Workouts</h2>
+      <p class="small muted mb-1">
+        Striate is a <strong>schedule-aware decision engine</strong>. It adjusts your daily schedule around three main rules:
+      </p>
+      <ul style="margin: 10px 0 0 18px; font-size: 13.5px;" class="muted stack-sm">
+        <li><strong>Shortening sessions:</strong> When you report ≤15 minutes or a busy day, it shortens your session to a 10-minute minimum to protect the habit without zeroing out.</li>
+        <li><strong>Moving to recovery:</strong> When short sleep (&lt;6h) combines with low energy, it moves lifting to tomorrow and prescribes an easy 15–20 min outdoor walk.</li>
+        <li><strong>Adapting to completion:</strong> If yesterday was completed, it maintains your momentum. If skipped, it asks why and simplifies starting today.</li>
+      </ul>
+    </section>
+
+    <!-- 4. Safety -->
+    <section class="card mb-3" style="border-color:rgba(245, 184, 75, 0.35);">
+      <div class="row between mb-1">
+        <h2 style="font-size:17px; color:var(--amber);">If Something Feels Wrong</h2>
+        <i class="fa-solid fa-shield-halved" style="color:var(--amber);"></i>
+      </div>
+      <p class="small muted">
+        <strong>Muscle soreness is normal; sharp or joint pain is not.</strong> Never train through sharp, worsening, or joint pain. If you experience pain, flag "Pain / Injury" on your check-in so Striate stops training that area. Always consult a medical professional for injuries — an app cannot diagnose you.
+      </p>
+    </section>
+
+    <!-- 5. Shortcuts & Debug -->
+    <section class="card">
+      <h2 style="font-size:17px; margin-bottom:10px;">Settings &amp; Developer Tools</h2>
+      <div class="row between" style="gap:10px;">
+        <a href="onboarding.html?edit=1" class="btn btn-secondary" style="font-size:14px; min-height:46px;">
+          <i class="fa-solid fa-user"></i> Edit Profile
+        </a>
+        <button class="btn btn-secondary" id="open-debug-btn" style="font-size:14px; min-height:46px;">
+          <i class="fa-solid fa-bug"></i> Debug Console
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/debug.js"></script>
+<script src="js/info.js"></script>
+</body>
+</html>

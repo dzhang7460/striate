@@ -1,0 +1,22 @@
+{
+  "name": "striate",
+  "version": "0.2.0",
+  "description": "An honest, adaptive AI coach for fitness beginners with schedule curation and completion tracking.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/test.js"
+  },
+  "keywords": [
+    "fitness",
+    "coach",
+    "adaptive",
+    "gemini",
+    "mobile-first"
+  ],
+  "author": "Striate Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

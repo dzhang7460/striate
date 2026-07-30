@@ -1,69 +1,76 @@
-# Striate — v0.1
+# Striate — v0.2
 
-An honest, adaptive daily coach for **fitness beginners**. One 60-second check-in → one realistic recommendation for today, with the reason, a confidence level, and an explanation of why the plan changed since yesterday.
+An honest, adaptive daily AI coach for **fitness beginners**. One 60-second check-in → a schedule-aware curated plan for today, workout completion feedback, a 7-day adaptive plan, and clear reasoning without chatbot fluff.
 
-**Personality contract:** direct, evidence-based, non-flattering. When confidence is low or data is missing, the coach says so instead of pretending.
+**Personality contract:** direct, evidence-based, non-flattering, realistic about uncertainty. When confidence is low or data is missing, the coach says so instead of pretending.
 
-## Currently completed features (v0.1 core loop)
+## New in v0.2
 
-1. **Landing page** — headline, trust principles (honest / adaptive / beginner-friendly / no fluff), single Start CTA. Detects returning users and routes them to check-in / today.
-2. **Onboarding** (4 steps, ~90s, progress bar): age range, height/weight, goal, experience, available days, session length, bedtime, equipment (multi-select), optional injury notes. Also serves as **profile editing** via `onboarding.html?edit=1` (Profile tab).
-3. **Daily check-in** — sleep, energy (1–5), soreness (1–5), mood (1–5), time available, unusual constraint (exam / busy / travel / injury / sick), optional note. One entry per day (re-submitting replaces today's plan).
-4. **Recommendation ("Today")** — state summary + check-in badges, one main action with concrete how-to, reason, one supporting habit, confidence badge (high/medium/low) with an honest confidence note, caution callout when relevant, and a **"why this changed"** diff vs. the previous check-in.
-5. **History** — collapsible per-day cards with date, check-in stats, main action, reason, supporting habit, caution, and the user's note. Capped at 90 days.
+1. **Workout Completion Tracking**:
+   - One-tap completion logging on Today's plan (`Completed ✅`, `Partially completed ⚠️`, `Skipped ❌`) with optional reason and notes.
+   - Feeds back into tomorrow's recommendation (maintains/progresses when completed; simplifies/protects momentum when skipped or partial).
+   - Editable across any past day in the Calendar & Logs view.
+2. **Dedicated Workout Time Input**:
+   - Set typical workout time window in profile onboarding (Step 3: e.g. `7–8 AM`, `5–6 PM`, `30 min after work/school`, `Custom time`).
+   - Adjustable per day during the daily check-in.
+   - Used by the schedule-aware engine to curate daily time blocks.
+3. **Refined Stats Page (`stats.html`)**:
+   - Check-in streak and consistency indicator.
+   - 7-day weekly activity tracker (visual pill track for Monday–Sunday).
+   - Rolling 7-day averages for Readiness, Sleep, Soreness, and Energy with trend arrows.
+   - Adaptive Coach Insight based on recent sleep and completion consistency.
+4. **Calendar & Logs Page (`history.html`)**:
+   - Interactive month calendar grid with visual status markers (`Completed`, `Partial`, `Skipped`, `Check-in / Rest`).
+   - Clicking a calendar day jumps to that day's editable schedule log.
+5. **Info / Legend Page (`info.html`)**:
+   - Clear, non-technical explanation of Readiness (0–10), Confidence levels (`High`, `Medium`, `Low`), AI adaptation rules, safety guidelines, and shortcuts to Edit Profile and Developer Tools.
+6. **Server-Side Google AI Studio / Gemini API Integration (`/api/coach`)**:
+   - Server-side AI service (`server/gemini.js`) using environment variables (`GEMINI_API_KEY`, `GEMINI_MODEL`) to protect API keys.
+   - Strict JSON schema validation (`server/validator.js`) before rendering.
+   - Automatic graceful fallback to the local deterministic rules engine if AI is unavailable or validation fails.
+7. **Curated Beginner Exercise Templates**:
+   - `Beginner Gym Full Body`, `Beginner Home Full Body`, `10-Minute Habit Protector`, `Active Recovery Walk`, `Upper Body Basics`, `Lower Body Basics`, `Light Cardio / Walk Day`.
+8. **Visible Debug Console & Test Suite (`?debug=1` or 🐛 Debug button)**:
+   - Live system logs for profile/check-in/completion events, Gemini payloads, and fallback activation.
+   - 10 one-click automated UI test scenarios and a Node.js test runner (`npm test`).
 
-## Entry URIs
+## Entry URIs & Navigation (5-Tab Bar)
 
-| Path | Purpose |
-|---|---|
-| `index.html` | Landing (adapts CTA for returning users) |
-| `onboarding.html` | Profile setup · `?edit=1` = edit existing profile |
-| `check-in.html` | Daily check-in form |
-| `today.html` | Today's recommendation (empty state if no check-in yet) |
-| `history.html` | Past check-ins + recommendations |
+| Tab | Path | Purpose |
+|---|---|---|
+| **Today** | `today.html` | Today's curated schedule, workout completion tracker, 7-day plan, and reasoning |
+| **Check-in** | `check-in.html` | 7-question low-friction check-in with dedicated workout time input |
+| **Calendar** | `history.html` | Monthly calendar grid & editable schedule logs |
+| **Stats** | `stats.html` | Streaks, weekly completion progress, 7-day averages & trends |
+| **Info** | `info.html` | Non-technical guide to readiness, confidence, AI rules, and developer tools |
+| **Profile** | `onboarding.html?edit=1` | Accessible via header shortcut or Info page |
 
-All app pages redirect to onboarding if no profile exists. App pages share a fixed bottom tab bar (Today / Check-in / History / Profile).
+## Running Locally
 
-## Stack & architecture
-
-Static site (this platform hosts static HTML/CSS/JS, so Next.js was adapted to a no-build equivalent with the same routes and data model):
-
-- Vanilla ES6 + custom CSS design system (dark, calm, athletic; Inter + Space Grotesk, Font Awesome via CDN)
-- Mobile-first: 480px shell, 46–54px touch targets, chip/scale selectors instead of dropdowns, safe-area-aware tab bar
-
+### 1. With Node.js Backend (Recommended — Enables Gemini AI API & Server-side validation)
+```bash
+npm start
+# Server runs at http://localhost:3000
 ```
-index.html / onboarding.html / check-in.html / today.html / history.html
-css/style.css        design system (tokens, chips, cards, badges, tabbar)
-js/store.js          persistence layer (localStorage; swap for API later)
-js/coach.js          recommendation engine + LLM plug point
-js/ui.js             shared helpers (chip groups, tabbar, guards, escaping)
-js/onboarding.js · js/checkin.js · js/today.js · js/history.js   page controllers
+To enable Google AI Studio / Gemini API:
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+export GEMINI_MODEL="gemini-1.5-flash" # optional, defaults to gemini-1.5-flash
+npm start
 ```
 
-## Data models (localStorage)
+### 2. Static Server / Offline Mode (Local Fallback Rules Engine)
+You can serve the folder with any static web server (e.g., `python3 -m http.server`). If `/api/coach` is unavailable, `Coach.generate()` automatically falls back to the local deterministic rules engine with zero UI breakage.
 
-- `striate_profile_v1` → `{ id, ageRange, heightCm, weightKg, goal, experienceLevel, availableDays, availableTime, sleepSchedule, equipment[], injuryNotes, createdAt }`
-- `striate_entries_v1` → array of `{ id, date, createdAt, checkin{ sleep, energy, soreness, mood, timeAvailable, specialConstraint, extraNote }, recommendation{ summary, mainAction, detail, supportAction, reason, confidence, confidenceNote, caution, whyChanged, structuredData } }`
+### 3. Running Automated Tests
+```bash
+npm test
+# Runs 10 testable scenarios covering completion logs, low sleep, low time, injury, AI failure, and malformed JSON.
+```
 
-## Recommendation engine (`js/coach.js`)
+## Data Models (localStorage)
 
-`Coach.generate(profile, checkin, prevEntry, entryCount) → Promise<recommendation>` — a stable contract the UI never needs to change for.
-
-Local rule engine (v0.1) priority order: **injury/pain flags → very poor recovery (short sleep + low energy) → high soreness → almost no time (10-min fallback) → adaptive training day** (workout picked from goal + equipment + minutes, trimmed when the 0–10 readiness composite is middling). Honesty behaviors: confidence downgraded on first check-ins ("limited data about you"), injury advice always marked low-confidence + not-medical-advice, `whyChanged` computed from the real diff vs. the previous day.
-
-**Plugging in an LLM later:** set `Coach.provider = 'llm'` and implement `callLLM()` — `buildPrompt()` already produces a system prompt demanding strict JSON in the exact recommendation shape, and the local engine remains the fallback.
-
-## Run locally
-
-No build step. Serve the folder with any static server (`python3 -m http.server` or VS Code Live Server) and open `index.html` — or use this project's preview. Note: `file://` works but a server is recommended so localStorage keys are origin-scoped. To reset all data: run `Store.clearAll()` in the console (or clear site data).
-
-## Not yet implemented (deliberately out of scope for v0.1)
-
-- Real LLM-backed recommendations (plug point ready), backend sync/accounts, weekly progress trends, post-workout "did you do it?" follow-up, units toggle (imperial), i18n. Excluded by design: streaks, social, notifications, wearables, calorie DB, payments.
-
-## Recommended next steps
-
-1. Wire `callLLM()` to a real endpoint; keep the rule engine as fallback + validator.
-2. Add a lightweight "done / skipped" follow-up on yesterday's plan to feed adherence back into recommendations.
-3. Simple 7-day readiness sparkline on History.
-4. Export/import data (JSON) before any backend work.
+- `striate_profile_v1` → `{ id, ageRange, heightCm, weightKg, goal, experienceLevel, availableDays, availableTime, sleepSchedule, dedicatedWorkoutTime, equipment[], injuryNotes, createdAt }`
+- `striate_entries_v1` → Array of daily `{ id, date, createdAt, checkin, recommendation }` objects.
+- `striate_completions_v1` → Dict by date of workout completion logs `{ id, date, plannedWorkout, status: 'completed' | 'partial' | 'skipped', reason, note, recordedAt }`.
+- `striate_debug_logs_v1` → Rolling buffer of system logs and AI payloads for visible debugging.

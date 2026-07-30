@@ -20,6 +20,16 @@
   UI.initChipGroups();
   UI.initMultiChipGroups();
 
+  const customTimeInput = document.getElementById('custom-workout-time');
+  document.addEventListener('chipchange', (e) => {
+    if (e.target.dataset.name === 'dedicatedWorkoutTime') {
+      const val = UI.chipValue('dedicatedWorkoutTime');
+      if (customTimeInput) {
+        customTimeInput.classList.toggle('hidden', val !== 'custom');
+      }
+    }
+  });
+
   // Prefill in edit mode
   if (isEdit) {
     const p = Store.getProfile();
@@ -29,6 +39,11 @@
     UI.setChipValue('availableDays', p.availableDays);
     UI.setChipValue('availableTime', p.availableTime);
     UI.setChipValue('sleepSchedule', p.sleepSchedule);
+    UI.setChipValue('dedicatedWorkoutTime', p.dedicatedWorkoutTime || '5-6 PM');
+    if (p.dedicatedWorkoutTime === 'custom' && customTimeInput) {
+      customTimeInput.classList.remove('hidden');
+      customTimeInput.value = p.customWorkoutTimeNote || '';
+    }
     (p.equipment || []).forEach((eq) => {
       const chip = document.querySelector(`.chip-group[data-name="equipment"] .chip[data-value="${CSS.escape(eq)}"]`);
       if (chip && !chip.classList.contains('selected')) chip.click();
@@ -37,6 +52,9 @@
     document.getElementById('weight-input').value = p.weightKg || '';
     document.getElementById('injury-input').value = p.injuryNotes || '';
     document.querySelector('h1').textContent = 'Edit profile';
+  } else {
+    // Default workout time selection
+    UI.setChipValue('dedicatedWorkoutTime', '5-6 PM');
   }
 
   function showStep(n) {
@@ -71,6 +89,7 @@
       if (!UI.chipValue('availableDays')) return 'Pick how many days you can train.';
       if (!UI.chipValue('availableTime')) return 'Pick a typical session length.';
       if (!UI.chipValue('sleepSchedule')) return 'Pick your usual bedtime.';
+      if (!UI.chipValue('dedicatedWorkoutTime')) return 'Pick a dedicated workout time window.';
     }
     if (n === 4) {
       const eq = JSON.parse(document.querySelector('.chip-group[data-name="equipment"]').dataset.value || '[]');
@@ -81,6 +100,12 @@
 
   function finish() {
     const equipment = JSON.parse(document.querySelector('.chip-group[data-name="equipment"]').dataset.value || '[]');
+    let workoutTime = UI.chipValue('dedicatedWorkoutTime') || '5-6 PM';
+    let customWorkoutTimeNote = '';
+    if (workoutTime === 'custom') {
+      customWorkoutTimeNote = customTimeInput?.value.trim() || 'Evening';
+      workoutTime = customWorkoutTimeNote;
+    }
     Store.saveProfile({
       ageRange: UI.chipValue('ageRange'),
       heightCm: Number(document.getElementById('height-input').value),
@@ -90,6 +115,8 @@
       availableDays: UI.chipValue('availableDays'),
       availableTime: UI.chipValue('availableTime'),
       sleepSchedule: UI.chipValue('sleepSchedule'),
+      dedicatedWorkoutTime: workoutTime,
+      customWorkoutTimeNote,
       equipment,
       injuryNotes: document.getElementById('injury-input').value.trim(),
     });
