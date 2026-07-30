@@ -20,7 +20,7 @@ const StriateDebug = (() => {
     div.innerHTML = `
       <div class="debug-modal-inner">
         <div class="row between mb-2">
-          <h2 style="font-size:18px;"><i class="fa-solid fa-bug" style="color:var(--amber);"></i> Striate Debug &amp; Test Suite</h2>
+          <h2 style="font-size:18px;"><i class="fa-solid fa-bug" style="color:var(--amber);"></i> Debug</h2>
           <button class="btn-ghost" id="debug-close-btn" style="padding:4px 8px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
@@ -43,16 +43,16 @@ const StriateDebug = (() => {
         <div class="debug-pane hidden" id="debug-pane-tests">
           <p class="small muted mb-2">Click any scenario to execute it against Coach.generate() and verify behavior.</p>
           <div class="debug-test-grid mb-2" style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-            <button class="btn btn-secondary debug-run-test" data-test="completed" style="padding:6px; font-size:12px;">1. Workout Completed ✅</button>
-            <button class="btn btn-secondary debug-run-test" data-test="skipped" style="padding:6px; font-size:12px;">2. Workout Skipped ❌</button>
-            <button class="btn btn-secondary debug-run-test" data-test="partial" style="padding:6px; font-size:12px;">3. Workout Partial ⚠️</button>
-            <button class="btn btn-secondary debug-run-test" data-test="low-sleep" style="padding:6px; font-size:12px;">4. Low Sleep (&lt;5h) 😴</button>
-            <button class="btn btn-secondary debug-run-test" data-test="low-time" style="padding:6px; font-size:12px;">5. Low Time (≤15m) ⏱️</button>
-            <button class="btn btn-secondary debug-run-test" data-test="injury" style="padding:6px; font-size:12px;">6. Injury Flag 🩹</button>
-            <button class="btn btn-secondary debug-run-test" data-test="first-time" style="padding:6px; font-size:12px;">7. First-time User 👤</button>
-            <button class="btn btn-secondary debug-run-test" data-test="missing-fields" style="padding:6px; font-size:12px;">8. Missing Fields ❓</button>
-            <button class="btn btn-secondary debug-run-test" data-test="ai-failure" style="padding:6px; font-size:12px;">9. AI Failure 🔌</button>
-            <button class="btn btn-secondary debug-run-test" data-test="malformed-json" style="padding:6px; font-size:12px;">10. Malformed AI JSON 💥</button>
+            <button class="btn btn-secondary debug-run-test" data-test="completed" style="padding:6px; font-size:12px;">1. Workout Completed</button>
+            <button class="btn btn-secondary debug-run-test" data-test="skipped" style="padding:6px; font-size:12px;">2. Workout Skipped</button>
+            <button class="btn btn-secondary debug-run-test" data-test="partial" style="padding:6px; font-size:12px;">3. Workout Partial</button>
+            <button class="btn btn-secondary debug-run-test" data-test="low-sleep" style="padding:6px; font-size:12px;">4. Low Sleep (&lt;5h)</button>
+            <button class="btn btn-secondary debug-run-test" data-test="low-time" style="padding:6px; font-size:12px;">5. Low Time (≤15m) </button>
+            <button class="btn btn-secondary debug-run-test" data-test="injury" style="padding:6px; font-size:12px;">6. Injury Flag</button>
+            <button class="btn btn-secondary debug-run-test" data-test="first-time" style="padding:6px; font-size:12px;">7. First-time User</button>
+            <button class="btn btn-secondary debug-run-test" data-test="missing-fields" style="padding:6px; font-size:12px;">8. Missing Fields</button>
+            <button class="btn btn-secondary debug-run-test" data-test="ai-failure" style="padding:6px; font-size:12px;">9. AI Failure</button>
+            <button class="btn btn-secondary debug-run-test" data-test="malformed-json" style="padding:6px; font-size:12px;">10. Malformed AI JSON</button>
           </div>
           <div class="debug-test-result" id="debug-test-result" style="background:var(--surface-dark); padding:10px; border-radius:6px; max-height:220px; overflow-y:auto; font-size:12px; font-family:monospace;">
             <em>Select a test scenario above to inspect output.</em>

@@ -162,7 +162,15 @@ async function callGemini(profile, checkin, prevEntry, entryCount, context = {})
     throw new Error(`Gemini output validation failed: ${validation.error}`);
   }
 
+  console.log("API key exists:", !!apiKey);
+  console.log("Model:", model);
+  console.log("Endpoint:", endpoint);
+  console.log("Prompt data:", JSON.stringify(promptData, null, 2));
+
   return parsed;
+
+  console.log("Raw Gemini response:", JSON.stringify(responseJson, null, 2));
+  console.log("Candidate text:", candidateText);
 }
 
 module.exports = {
