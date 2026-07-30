@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily check-in — Striate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell has-tabbar">
+
+  <header class="topbar">
+    <a class="wordmark" href="index.html">Stri<span>ate</span></a>
+    <span class="faint" id="date-label"></span>
+  </header>
+
+  <main id="checkin-main">
+    <h1 style="font-size:24px;">Daily check-in</h1>
+    <p class="muted small mb-2">7 quick answers. Today's plan is built from this.</p>
+
+    <div id="already-note" class="callout callout-info hidden mb-2">
+      You already checked in today. Submitting again will replace today's recommendation.
+    </div>
+
+    <div class="field">
+      <span class="label">Sleep last night</span>
+      <div class="chip-group" data-name="sleep" role="radiogroup" aria-label="Sleep last night">
+        <button class="chip" data-value="<5">&lt;5 h</button>
+        <button class="chip" data-value="5-6">5–6 h</button>
+        <button class="chip" data-value="6-7">6–7 h</button>
+        <button class="chip" data-value="7-8">7–8 h</button>
+        <button class="chip" data-value="8+">8+ h</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="label">Energy right now</span>
+      <div class="chip-group" data-name="energy" role="radiogroup" aria-label="Energy level 1 to 5">
+        <button class="chip" data-value="1">1</button>
+        <button class="chip" data-value="2">2</button>
+        <button class="chip" data-value="3">3</button>
+        <button class="chip" data-value="4">4</button>
+        <button class="chip" data-value="5">5</button>
+      </div>
+      <div class="scale-labels"><span>Drained</span><span>Fully charged</span></div>
+    </div>
+
+    <div class="field">
+      <span class="label">Soreness / stiffness</span>
+      <div class="chip-group" data-name="soreness" role="radiogroup" aria-label="Soreness level 1 to 5">
+        <button class="chip" data-value="1">1</button>
+        <button class="chip" data-value="2">2</button>
+        <button class="chip" data-value="3">3</button>
+        <button class="chip" data-value="4">4</button>
+        <button class="chip" data-value="5">5</button>
+      </div>
+      <div class="scale-labels"><span>None</span><span>Very sore</span></div>
+    </div>
+
+    <div class="field">
+      <span class="label">Mood</span>
+      <div class="chip-group" data-name="mood" role="radiogroup" aria-label="Mood 1 to 5">
+        <button class="chip" data-value="1">1</button>
+        <button class="chip" data-value="2">2</button>
+        <button class="chip" data-value="3">3</button>
+        <button class="chip" data-value="4">4</button>
+        <button class="chip" data-value="5">5</button>
+      </div>
+      <div class="scale-labels"><span>Rough</span><span>Great</span></div>
+    </div>
+
+    <div class="field">
+      <span class="label">Time available today</span>
+      <div class="chip-group" data-name="timeAvailable" role="radiogroup" aria-label="Time available today">
+        <button class="chip" data-value="0-15">≤15 min</button>
+        <button class="chip" data-value="15-30">15–30</button>
+        <button class="chip" data-value="30-45">30–45</button>
+        <button class="chip" data-value="45-60">45–60</button>
+        <button class="chip" data-value="60+">60+</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="label">Anything unusual today? <span class="optional">(optional)</span></span>
+      <div class="chip-group" data-name="specialConstraint" role="radiogroup" aria-label="Unusual constraint today">
+        <button class="chip selected" data-value="none">Nothing</button>
+        <button class="chip" data-value="exam">Exam / deadline</button>
+        <button class="chip" data-value="busy">Very busy day</button>
+        <button class="chip" data-value="travel">Traveling</button>
+        <button class="chip" data-value="injury">Pain / injury</button>
+        <button class="chip" data-value="sick">Feeling sick</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="note-input">Note <span class="optional">(optional)</span></label>
+      <textarea id="note-input" rows="2" placeholder="Anything else the coach should know…"></textarea>
+    </div>
+
+    <div id="validation-msg" class="callout callout-caution hidden mb-2" role="alert"></div>
+
+    <button class="btn btn-primary" id="submit-btn" type="button">
+      Get today's plan <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </button>
+  </main>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/coach.js"></script>
+<script src="js/checkin.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Set up — Striate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <a class="wordmark" href="index.html">Stri<span>ate</span></a>
+    <button class="btn-ghost btn" id="back-btn" style="width:auto; padding: 8px 12px;" type="button">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back
+    </button>
+  </header>
+
+  <main>
+    <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill" style="width:25%"></div></div>
+    <p class="step-count" id="step-count">Step 1 of 4</p>
+
+    <!-- STEP 1: Basics -->
+    <section class="onb-step" data-step="1">
+      <h1 class="mb-2" style="font-size:24px;">The basics</h1>
+
+      <div class="field">
+        <span class="label">Age range</span>
+        <div class="chip-group" data-name="ageRange" role="radiogroup" aria-label="Age range">
+          <button class="chip" data-value="13-17">13–17</button>
+          <button class="chip" data-value="18-24">18–24</button>
+          <button class="chip" data-value="25-34">25–34</button>
+          <button class="chip" data-value="35-44">35–44</button>
+          <button class="chip" data-value="45+">45+</button>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="field">
+          <label for="height-input">Height (cm)</label>
+          <input type="number" id="height-input" inputmode="numeric" min="100" max="250" placeholder="e.g. 172">
+        </div>
+        <div class="field">
+          <label for="weight-input">Weight (kg)</label>
+          <input type="number" id="weight-input" inputmode="decimal" min="30" max="300" placeholder="e.g. 68">
+        </div>
+      </div>
+      <p class="faint" style="margin-top:-10px;">Rough numbers are fine. Used only to size recommendations.</p>
+    </section>
+
+    <!-- STEP 2: Goal & experience -->
+    <section class="onb-step hidden" data-step="2">
+      <h1 class="mb-2" style="font-size:24px;">Goal &amp; experience</h1>
+
+      <div class="field">
+        <span class="label">Primary goal <span class="optional">(pick one)</span></span>
+        <div class="chip-group grid-2" data-name="goal" role="radiogroup" aria-label="Primary goal">
+          <button class="chip" data-value="strength">Get stronger</button>
+          <button class="chip" data-value="muscle">Build muscle</button>
+          <button class="chip" data-value="fat_loss">Lose fat</button>
+          <button class="chip" data-value="fitness">General fitness</button>
+          <button class="chip" data-value="energy">More daily energy</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Experience level</span>
+        <div class="chip-group" data-name="experienceLevel" role="radiogroup" aria-label="Experience level">
+          <button class="chip" data-value="new">Completely new</button>
+          <button class="chip" data-value="some">Tried a bit before</button>
+          <button class="chip" data-value="returning">Returning after a break</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Schedule -->
+    <section class="onb-step hidden" data-step="3">
+      <h1 class="mb-2" style="font-size:24px;">Your week</h1>
+
+      <div class="field">
+        <span class="label">Days per week you can realistically train</span>
+        <div class="chip-group" data-name="availableDays" role="radiogroup" aria-label="Available days per week">
+          <button class="chip" data-value="1">1</button>
+          <button class="chip" data-value="2">2</button>
+          <button class="chip" data-value="3">3</button>
+          <button class="chip" data-value="4">4</button>
+          <button class="chip" data-value="5">5+</button>
+        </div>
+        <p class="faint mt-1">Be honest — a plan for 3 real days beats a plan for 5 imaginary ones.</p>
+      </div>
+
+      <div class="field">
+        <span class="label">Typical time per session</span>
+        <div class="chip-group" data-name="availableTime" role="radiogroup" aria-label="Typical time per session">
+          <button class="chip" data-value="15-30">15–30 min</button>
+          <button class="chip" data-value="30-45">30–45 min</button>
+          <button class="chip" data-value="45-60">45–60 min</button>
+          <button class="chip" data-value="60+">60+ min</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Usual bedtime</span>
+        <div class="chip-group" data-name="sleepSchedule" role="radiogroup" aria-label="Usual bedtime">
+          <button class="chip" data-value="before-22">Before 22:00</button>
+          <button class="chip" data-value="22-23">22:00–23:00</button>
+          <button class="chip" data-value="23-24">23:00–24:00</button>
+          <button class="chip" data-value="after-24">After midnight</button>
+          <button class="chip" data-value="irregular">Irregular</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: Equipment & limits -->
+    <section class="onb-step hidden" data-step="4">
+      <h1 class="mb-2" style="font-size:24px;">Equipment &amp; limits</h1>
+
+      <div class="field">
+        <span class="label">Equipment access <span class="optional">(select all that apply)</span></span>
+        <div class="chip-group" data-name="equipment" data-multi aria-label="Equipment access">
+          <button class="chip" data-value="none">None / bodyweight</button>
+          <button class="chip" data-value="dumbbells">Dumbbells</button>
+          <button class="chip" data-value="bands">Resistance bands</button>
+          <button class="chip" data-value="gym">Full gym</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="injury-input">Injuries or limits <span class="optional">(optional)</span></label>
+        <textarea id="injury-input" rows="3" placeholder="e.g. sore right knee, lower back gets tight…"></textarea>
+        <p class="faint mt-1">This is used to keep recommendations safe. Leave blank if none.</p>
+      </div>
+    </section>
+
+    <div id="validation-msg" class="callout callout-caution hidden mb-2" role="alert"></div>
+
+    <button class="btn btn-primary mt-2" id="next-btn" type="button">Continue</button>
+  </main>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/onboarding.js"></script>
+</body>
+</html>

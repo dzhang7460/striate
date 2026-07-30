@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Striate — an honest coach for fitness beginners</title>
+<meta name="description" content="Striate gives fitness beginners one honest, adaptive recommendation per day. No hype, no fluff.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <span class="wordmark">Stri<span>ate</span></span>
+    <a class="faint" href="check-in.html" id="returning-link" style="text-decoration:none;">Returning? Check in →</a>
+  </header>
+
+  <main>
+    <section class="hero" id="hero-section">
+      <span class="badge badge-neutral"><i class="fa-solid fa-flask" aria-hidden="true"></i>v0.1 — beginner coach</span>
+      <h1>An honest coach.<br>One clear step <span class="accent">every day.</span></h1>
+      <p class="muted">Answer a 60-second check-in. Get one realistic recommendation for today — adapted to your sleep, energy, soreness, and schedule.</p>
+    </section>
+
+    <a class="btn btn-primary" href="onboarding.html" id="start-cta">
+      Start <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </a>
+    <p class="faint text-center mt-1">Free. No account. ~90 seconds to set up.</p>
+
+    <section class="card mt-3" id="principles-section" aria-label="What Striate stands for">
+      <p class="kicker">What you get</p>
+      <div class="principle">
+        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+        <div>
+          <strong>Honest, not hype</strong>
+          <p>If rest beats training today, it says so. If it's unsure, it tells you.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+        <div>
+          <strong>Adaptive</strong>
+          <p>Bad sleep, sore legs, exam day — the plan changes with your check-in, and explains why.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+        <div>
+          <strong>Built for beginners</strong>
+          <p>Simple, evidence-based basics. No jargon, no 6-day splits, no macros spreadsheet.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <i class="fa-solid fa-broom" aria-hidden="true"></i>
+        <div>
+          <strong>No fluff</strong>
+          <p>No streaks, no feed, no badges. One recommendation per day. That's it.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="faint text-center mt-3">Your data stays on this device.</p>
+  </main>
+</div>
+
+<script src="js/store.js"></script>
+<script>
+  // If a profile already exists, route returning users to the app directly.
+  (function () {
+    const profile = Store.getProfile();
+    const cta = document.getElementById('start-cta');
+    const back = document.getElementById('returning-link');
+    if (profile) {
+      cta.innerHTML = 'Continue <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+      cta.href = Store.getTodayEntry() ? 'today.html' : 'check-in.html';
+    } else {
+      back.classList.add('hidden');
+    }
+  })();
+</script>
+</body>
+</html>
