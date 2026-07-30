@@ -9,11 +9,11 @@
 const { validateRecommendation } = require('./validator');
 
 function getApiKey() {
-  return process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || null;
+  return process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || 'AQ.Ab8RN6I-yrYZw_5vlDNI9vfzGfbKvp5apr1KueY-apFC0lQIVg';
 }
 
 function getModel() {
-  return process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+  return process.env.GEMINI_MODEL || 'gemini-3.6-flash';
 }
 
 function buildSystemPrompt() {
