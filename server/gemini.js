@@ -2,14 +2,14 @@
    Striate — server/gemini.js
    Server-side AI service module for Google AI Studio / Gemini API.
    - API key server-side only via environment variable (GEMINI_API_KEY).
-   - Configurable model via GEMINI_MODEL (default: gemini-1.5-flash).
+   - Configurable model via GEMINI_MODEL (default: gemini-3.6-flash).
    - Strict JSON schema output contract & validation.
 ============================================================ */
 
 const { validateRecommendation } = require('./validator');
 
 function getApiKey() {
-  return process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || 'AQ.Ab8RN6I-yrYZw_5vlDNI9vfzGfbKvp5apr1KueY-apFC0lQIVg';
+  return process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || null;
 }
 
 function getModel() {
@@ -77,28 +77,42 @@ Output format: You MUST return ONLY valid JSON with no markdown formatting or ex
 }`;
 }
 
+function extractCandidateText(responseJson) {
+  const parts = responseJson?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts)) return null;
+
+  const text = parts
+    .map((part) => (typeof part?.text === 'string' ? part.text : ''))
+    .join('')
+    .trim();
+
+  return text || null;
+}
+
 async function callGemini(profile, checkin, prevEntry, entryCount, context = {}) {
   const apiKey = getApiKey();
   if (!apiKey) {
-    throw new Error('GEMINI_API_KEY is not configured on the server.');
+    throw new Error('Missing Gemini API key. Set GEMINI_API_KEY in your server environment.');
   }
 
   const model = getModel();
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+
+  const promptData = {
+    profile,
+    checkin,
+    prevEntry,
+    entryCount,
+    recentCompletions: context.recentCompletions || [],
+    prevCompletion: context.prevCompletion || null,
+  };
 
   const payload = {
     contents: [
       {
         parts: [
           {
-            text: `${buildSystemPrompt()}\n\nUser Context:\n${JSON.stringify({
-              profile,
-              checkin,
-              prevEntry,
-              entryCount,
-              recentCompletions: context.recentCompletions || [],
-              prevCompletion: context.prevCompletion || null,
-            }, null, 2)}`
+            text: `${buildSystemPrompt()}\n\nUser Context:\n${JSON.stringify(promptData, null, 2)}`
           }
         ]
       }
@@ -113,6 +127,7 @@ async function callGemini(profile, checkin, prevEntry, entryCount, context = {})
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
     },
     body: JSON.stringify(payload),
   });
@@ -123,14 +138,21 @@ async function callGemini(profile, checkin, prevEntry, entryCount, context = {})
   }
 
   const responseJson = await response.json();
-  const candidateText = responseJson?.candidates?.[0]?.content?.parts?.[0]?.text;
+  const candidateText = extractCandidateText(responseJson);
+
   if (!candidateText) {
-    throw new Error('Gemini API returned empty response candidates.');
+    throw new Error('Gemini API returned no usable text.');
   }
+
+  const cleanedText = candidateText
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/```$/i, '')
+    .trim();
 
   let parsed;
   try {
-    parsed = JSON.parse(candidateText);
+    parsed = JSON.parse(cleanedText);
   } catch (e) {
     throw new Error(`Failed to parse Gemini JSON output: ${e.message}`);
   }
