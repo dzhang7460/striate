@@ -19,6 +19,7 @@
 
   UI.initChipGroups();
   UI.initMultiChipGroups();
+  UI.initScaleGroups();
 
   const customTimeInput = document.getElementById('custom-workout-time');
   document.addEventListener('chipchange', (e) => {
@@ -36,7 +37,7 @@
     UI.setChipValue('ageRange', p.ageRange);
     UI.setChipValue('goal', p.goal);
     UI.setChipValue('experienceLevel', p.experienceLevel);
-    UI.setChipValue('availableDays', p.availableDays);
+    UI.setScaleValue('availableDays', p.availableDays);
     UI.setChipValue('availableTime', p.availableTime);
     UI.setChipValue('sleepSchedule', p.sleepSchedule);
     UI.setChipValue('dedicatedWorkoutTime', p.dedicatedWorkoutTime || '5-6 PM');
@@ -86,7 +87,7 @@
       if (!UI.chipValue('experienceLevel')) return 'Pick your experience level.';
     }
     if (n === 3) {
-      if (!UI.chipValue('availableDays')) return 'Pick how many days you can train.';
+      if (!UI.scaleValue('availableDays')) return 'Pick how many days you can train.';
       if (!UI.chipValue('availableTime')) return 'Pick a typical session length.';
       if (!UI.chipValue('sleepSchedule')) return 'Pick your usual bedtime.';
       if (!UI.chipValue('dedicatedWorkoutTime')) return 'Pick a dedicated workout time window.';
@@ -112,7 +113,7 @@
       weightKg: Number(document.getElementById('weight-input').value),
       goal: UI.chipValue('goal'),
       experienceLevel: UI.chipValue('experienceLevel'),
-      availableDays: UI.chipValue('availableDays'),
+      availableDays: UI.scaleValue('availableDays'),
       availableTime: UI.chipValue('availableTime'),
       sleepSchedule: UI.chipValue('sleepSchedule'),
       dedicatedWorkoutTime: workoutTime,

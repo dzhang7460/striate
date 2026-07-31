@@ -7,6 +7,7 @@
   if (!UI.requireProfile()) return;
 
   UI.initChipGroups();
+  UI.initScaleGroups();
   UI.renderTabbar('checkin');
 
   // Header date
@@ -18,19 +19,9 @@
     document.getElementById('already-note').classList.remove('hidden');
   }
 
-  // Pre-select dedicatedWorkoutTime from profile if available
   const profile = Store.getProfile();
   const defaultTime = profile && profile.dedicatedWorkoutTime ? profile.dedicatedWorkoutTime : '5-6 PM';
-  const timeChipGroup = document.querySelector('.chip-group[data-name="dedicatedWorkoutTime"]');
-  if (timeChipGroup) {
-    const matchingChip = timeChipGroup.querySelector(`.chip[data-value="${CSS.escape(defaultTime)}"]`);
-    if (matchingChip) {
-      matchingChip.click();
-    } else {
-      const defaultChip = timeChipGroup.querySelector(`.chip[data-value="5-6 PM"]`);
-      if (defaultChip) defaultChip.click();
-    }
-  }
+  UI.setChipValue('dedicatedWorkoutTime', defaultTime); // Replaces the messy CSS.escape logic
 
   const checkinCustomInput = document.getElementById('checkin-custom-time');
   document.addEventListener('chipchange', (e) => {
@@ -43,23 +34,24 @@
   });
 
   // The "none" default chip needs its group value set.
-  const constraintGroup = document.querySelector('.chip-group[data-name="specialConstraint"]');
-  constraintGroup.dataset.value = 'none';
+  UI.setChipValue('specialConstraint', 'none');
 
   const submitBtn = document.getElementById('submit-btn');
   const msg = document.getElementById('validation-msg');
 
   function validate() {
     const required = [
-      ['sleep', 'How did you sleep last night?'],
-      ['energy', 'Rate your energy (1–5).'],
-      ['soreness', 'Rate your soreness (1–5).'],
-      ['mood', 'Rate your mood (1–5).'],
-      ['timeAvailable', 'How much time do you have today?'],
-      ['dedicatedWorkoutTime', 'Pick a dedicated workout time today.'],
+      ['sleep', 'How did you sleep last night?', 'chip'],
+      ['energy', 'Rate your energy (1–5).', 'scale'],
+      ['soreness', 'Rate your soreness (1–5).', 'scale'],
+      ['mood', 'Rate your mood (1–5).', 'scale'],
+      ['timeAvailable', 'How much time do you have today?', 'chip'],
+      ['dedicatedWorkoutTime', 'Pick a dedicated workout time today.', 'chip'],
     ];
-    for (const [name, text] of required) {
-      if (!UI.chipValue(name)) return text;
+
+    for (const [name, text, type] of required) {
+      const val = type === 'scale' ? UI.scaleValue(name) : UI.chipValue(name);
+      if (!val) return text;
     }
     return null;
   }
@@ -81,9 +73,9 @@
 
     const checkin = {
       sleep: UI.chipValue('sleep'),
-      energy: Number(UI.chipValue('energy')),
-      soreness: Number(UI.chipValue('soreness')),
-      mood: Number(UI.chipValue('mood')),
+      energy: Number(UI.scaleValue('energy')),
+      soreness: Number(UI.scaleValue('soreness')),
+      mood: Number(UI.scaleValue('mood')),
       timeAvailable: UI.chipValue('timeAvailable'),
       dedicatedWorkoutTime: dedicatedTime,
       specialConstraint: UI.chipValue('specialConstraint') || 'none',

@@ -144,13 +144,13 @@
         <div class="hi-body stack-sm">
           ${rec ? `<p class="small muted">${esc(rec.summary || rec.explanation || '')}</p>` : ''}
           ${reason ? `<div><p class="kicker" style="margin-bottom:2px; color:var(--amber);">Reason</p><p class="small muted">${esc(reason)}</p></div>` : ''}
-          ${note ? `<div><p class="kicker" style="margin-bottom:2px;">User note</p><p class="small muted">"${esc(note)}"</p></div>` : ''}
+          ${note ? `<div><p class="kicker" style="margin-bottom:2px;">Note</p><p class="small muted">"${esc(note)}"</p></div>` : ''}
           
           <!-- Editable Log Bar -->
           <div class="card mt-2" style="background:var(--surface-2); padding:12px;">
             <div class="row between">
               <span class="small" style="font-weight:600;">Completion Status</span>
-              <button class="btn-ghost edit-log-btn" data-date="${date}" style="padding:4px 8px; font-size:12px;">Edit Log <i class="fa-solid fa-pen"></i></button>
+              <button class="chip edit-log-btn" data-date="${date}" style="padding:4px 8px; font-size:12px;">Edit Log <i class="fa-solid fa-pen"></i></button>
             </div>
             <div class="edit-log-form hidden mt-2" id="edit-form-${date}">
               <div class="completion-buttons">

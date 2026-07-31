@@ -97,10 +97,10 @@
       <div class="row mt-1" style="flex-wrap: wrap; gap: 6px;">${checkinChips}</div>
     </section>
 
-    <!-- Today's Curated Schedule -->
+    <!-- Today's Schedule -->
     <section class="card card-accent mt-3" id="today-schedule-card">
       <div class="row between mb-1">
-        <p class="kicker accent" style="margin-bottom:0;">Today's Curated Schedule</p>
+        <p class="kicker accent" style="margin-bottom:0;">Today's Schedule</p>
         ${UI.confidenceBadge(rec.confidence)}
       </div>
       <div class="schedule-timeline mt-2">
@@ -192,9 +192,9 @@
 
     if (existingLog) {
       const statusMap = {
-        completed: ['Completed ✅', 'var(--accent)', 'fa-circle-check'],
-        partial: ['Partially Completed ⚠️', 'var(--amber)', 'fa-circle-exclamation'],
-        skipped: ['Skipped ❌', 'var(--red)', 'fa-circle-xmark'],
+        completed: ['Completed', 'var(--accent)', 'fa-circle-check'],
+        partial: ['Partially Completed', 'var(--amber)', 'fa-circle-exclamation'],
+        skipped: ['Skipped', 'var(--red)', 'fa-circle-xmark'],
       };
       const [label, color, icon] = statusMap[existingLog.status] || ['Logged', 'var(--text)', 'fa-circle-info'];
       container.innerHTML = `
@@ -205,7 +205,7 @@
             ${existingLog.reason ? `<div class="small muted mt-1">Reason: ${esc(existingLog.reason)}</div>` : ''}
             ${existingLog.note ? `<div class="faint mt-1">"${esc(existingLog.note)}"</div>` : ''}
           </div>
-          <button class="btn-ghost" id="edit-completion-btn" style="padding:6px 10px; font-size:13px;">Edit Log</button>
+          <button class="chip" id="edit-completion-btn" style="padding:6px 10px; font-size:13px;">Edit Log</button>
         </div>
       `;
       document.getElementById('edit-completion-btn')?.addEventListener('click', () => {
@@ -221,7 +221,7 @@
     if (!container) return;
     const wTitle = rec.workout ? rec.workout.title : (rec.mainAction || 'Today\'s Workout');
     container.innerHTML = `
-      <p class="kicker" style="margin-bottom:4px;">Workout Completion Log</p>
+      <p class="kicker" style="margin-bottom:4px;">Completion Log</p>
       <strong style="font-size:15px;">Did you complete "${esc(wTitle)}"?</strong>
       <div class="completion-buttons mt-1">
         <button class="btn-status" data-status="completed">✅ Completed</button>

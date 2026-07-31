@@ -1,61 +1,149 @@
 /* ============================================================
    Striate — ui.js
-   Shared UI helpers: chip selectors, 5-tab navigation bar,
-   guards, formatting, icons, and escaping.
+   Shared UI helpers: chip selectors, scale groups, 5-tab 
+   navigation bar, guards, formatting, icons, and escaping.
 ============================================================ */
 
 const UI = (() => {
-  // Chip group behaves like a radio group.
+  // ==========================================
+  // CHIP GROUPS (Single & Multi)
+  // ==========================================
+
   function initChipGroups(root = document) {
-    root.querySelectorAll('.chip-group[data-name]').forEach((group) => {
-      group.querySelectorAll('.chip').forEach((chip) => {
-        chip.type = 'button';
-        chip.addEventListener('click', () => {
-          group.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
-          chip.classList.add('selected');
-          group.dataset.value = chip.dataset.value;
-          group.dispatchEvent(new CustomEvent('chipchange', { bubbles: true }));
-        });
-      });
+    root.querySelectorAll('.chip-group[data-name]:not([data-multi])').forEach((group) => {
+      group.removeEventListener('click', handleSingleChipClick); 
+      group.addEventListener('click', handleSingleChipClick);
     });
   }
 
-  // Multi-select chip group (for equipment).
+  function handleSingleChipClick(e) {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    e.preventDefault(); 
+
+    const group = e.currentTarget;
+    group.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    group.dataset.value = chip.dataset.value;
+    group.dispatchEvent(new CustomEvent('chipchange', { bubbles: true }));
+  }
+
   function initMultiChipGroups(root = document) {
     root.querySelectorAll('.chip-group[data-multi]').forEach((group) => {
-      group.querySelectorAll('.chip').forEach((chip) => {
-        chip.type = 'button';
-        chip.addEventListener('click', () => {
-          const val = chip.dataset.value;
-          if (val === 'none') {
-            group.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
-            chip.classList.add('selected');
-          } else {
-            const noneChip = group.querySelector('.chip[data-value="none"]');
-            if (noneChip) noneChip.classList.remove('selected');
-            chip.classList.toggle('selected');
-          }
-          const values = [...group.querySelectorAll('.chip.selected')].map((c) => c.dataset.value);
-          group.dataset.value = JSON.stringify(values);
-          group.dispatchEvent(new CustomEvent('chipchange', { bubbles: true }));
-        });
-      });
+      group.removeEventListener('click', handleMultiChipClick);
+      group.addEventListener('click', handleMultiChipClick);
     });
+  }
+
+  function handleMultiChipClick(e) {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    e.preventDefault(); 
+
+    const group = e.currentTarget;
+    const val = chip.dataset.value;
+
+    if (val === 'none') {
+      group.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
+      chip.classList.add('selected');
+    } else {
+      const noneChip = group.querySelector('.chip[data-value="none"]');
+      if (noneChip) noneChip.classList.remove('selected');
+      chip.classList.toggle('selected');
+    }
+
+    const values = [...group.querySelectorAll('.chip.selected')].map((c) => c.dataset.value);
+    group.dataset.value = JSON.stringify(values);
+    group.dispatchEvent(new CustomEvent('chipchange', { bubbles: true }));
   }
 
   function chipValue(name, root = document) {
     const g = root.querySelector(`.chip-group[data-name="${name}"]`);
-    return g ? g.dataset.value || null : null;
+    if (!g || !g.dataset.value) return null;
+    
+    if (g.hasAttribute('data-multi')) {
+      try { return JSON.parse(g.dataset.value); } catch(e) { return []; }
+    }
+    return g.dataset.value;
   }
 
   function setChipValue(name, value, root = document) {
     const g = root.querySelector(`.chip-group[data-name="${name}"]`);
     if (!g || value == null) return;
-    const chip = g.querySelector(`.chip[data-value="${CSS.escape(String(value))}"]`);
-    if (chip) chip.click();
+
+    const valuesToSet = Array.isArray(value) ? value : [value];
+
+    valuesToSet.forEach(val => {
+      const safeVal = String(val).replace(/"/g, '\\"');
+      const chip = g.querySelector(`.chip[data-value="${safeVal}"]`);
+      if (chip && !chip.classList.contains('selected')) {
+        chip.click();
+      }
+    });
   }
 
-  // 5-tab bottom navigation bar for Striate v0.2
+  // ==========================================
+  // SCALE GROUPS (Ratings, 1-10 scales, etc.)
+  // ==========================================
+
+  function initScaleGroups(root = document) {
+    root.querySelectorAll('.scale-group[data-name]').forEach((group) => {
+      group.removeEventListener('click', handleScaleClick);
+      group.addEventListener('click', handleScaleClick);
+    });
+  }
+
+  function handleScaleClick(e) {
+    const item = e.target.closest('.chip'); // Works perfectly with your HTML
+    if (!item) return;
+    e.preventDefault(); 
+
+    const group = e.currentTarget;
+    const allItems = Array.from(group.querySelectorAll('.chip'));
+    
+    // Clear previous states
+    allItems.forEach((i) => {
+      i.classList.remove('selected');
+      i.classList.remove('filled');
+    });
+    
+    // Set the clicked item as selected
+    item.classList.add('selected');
+
+    // Add 'filled' class to all items before the selected one
+    const selectedIndex = allItems.indexOf(item);
+    allItems.forEach((i, index) => {
+      if (index < selectedIndex) {
+        i.classList.add('filled');
+      }
+    });
+
+    // Update value and fire event
+    group.dataset.value = item.dataset.value;
+    group.dispatchEvent(new CustomEvent('scalechange', { bubbles: true }));
+  }
+
+  function scaleValue(name, root = document) {
+    const g = root.querySelector(`.scale-group[data-name="${name}"]`);
+    return g ? (g.dataset.value || null) : null;
+  }
+
+  function setScaleValue(name, value, root = document) {
+    const g = root.querySelector(`.scale-group[data-name="${name}"]`);
+    if (!g || value == null) return;
+
+    const safeVal = String(value).replace(/"/g, '\\"');
+    const item = g.querySelector(`.chip[data-value="${safeVal}"]`);
+    
+    if (item && !item.classList.contains('selected')) {
+      item.click();
+    }
+  }
+
+  // ==========================================
+  // APP NAVIGATION & HELPERS
+  // ==========================================
+
   function renderTabbar(active) {
     const tabs = [
       { id: 'today', href: 'today.html', icon: 'fa-bolt', label: 'Today' },
@@ -74,7 +162,6 @@ const UI = (() => {
     document.body.appendChild(nav);
   }
 
-  // Redirect to onboarding if no profile exists yet.
   function requireProfile() {
     if (!Store.getProfile()) {
       window.location.replace('onboarding.html');
@@ -122,7 +209,11 @@ const UI = (() => {
   }
 
   return {
+    // Chips
     initChipGroups, initMultiChipGroups, chipValue, setChipValue,
+    // Scales
+    initScaleGroups, scaleValue, setScaleValue,
+    // Utils
     renderTabbar, requireProfile, formatDate, confidenceBadge,
     scheduleTypeIcon, esc,
   };

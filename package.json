@@ -14,7 +14,7 @@
     "gemini",
     "mobile-first"
   ],
-  "author": "Striate Team",
+  "author": "David Zhang",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
