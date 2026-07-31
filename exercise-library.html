@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Exercise Library — Striate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell has-tabbar">
+
+  <header class="topbar">
+    <a class="wordmark" href="index.html">Stri<span>ate</span></a>
+    <div class="row" style="gap:8px; align-items:center;">
+      <button class="btn-ghost" id="debug-toggle-btn" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Debug Console">🐛 Debug</button>
+      <a href="onboarding.html?edit=1" class="btn-ghost" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Profile"><i class="fa-solid fa-user"></i></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="row between mb-2">
+      <h1 style="font-size:24px;">Exercise Library</h1>
+      <span class="faint" id="exercise-count-label"></span>
+    </div>
+    <p class="muted small mb-2">Search and save real exercises from WorkoutX to customize your routine.</p>
+
+    <!-- Search Bar -->
+    <div class="exercise-search-bar">
+      <input type="text" id="exercise-search-input" placeholder="Search exercises... (e.g. squat, plank, soccer)" style="flex:1;">
+      <button class="btn btn-secondary" id="reset-filters-btn" style="width:auto; padding:10px 14px; min-height:52px;" title="Reset filters">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+    </div>
+
+    <!-- Filter chips: Body Part -->
+    <span class="kicker mb-1">Body Part</span>
+    <div class="exercise-filter-group chip-group" data-name="bodyPartFilter">
+      <button class="chip selected" data-value="all">All</button>
+      <button class="chip" data-value="chest">Chest</button>
+      <button class="chip" data-value="back">Back</button>
+      <button class="chip" data-value="legs">Legs</button>
+      <button class="chip" data-value="shoulders">Shoulders</button>
+      <button class="chip" data-value="glutes">Glutes</button>
+      <button class="chip" data-value="core">Core</button>
+      <button class="chip" data-value="cardio">Cardio</button>
+      <button class="chip" data-value="calves">Calves</button>
+    </div>
+
+    <!-- Filter chips: Equipment -->
+    <span class="kicker mb-1">Equipment</span>
+    <div class="exercise-filter-group chip-group" data-name="equipmentFilter">
+      <button class="chip selected" data-value="all">All</button>
+      <button class="chip" data-value="body weight">Body weight</button>
+      <button class="chip" data-value="dumbbell">Dumbbell</button>
+      <button class="chip" data-value="bands">Bands</button>
+      <button class="chip" data-value="gym">Gym</button>
+    </div>
+
+    <!-- Filter chips: Effort Level -->
+    <span class="kicker mb-1">Difficulty</span>
+    <div class="exercise-filter-group chip-group" data-name="effortFilter">
+      <button class="chip selected" data-value="all">All</button>
+      <button class="chip" data-value="beginner">Beginner</button>
+      <button class="chip" data-value="intermediate">Intermediate</button>
+    </div>
+
+    <!-- Results List -->
+    <div id="exercise-results-list" class="mt-2"></div>
+  </main>
+</div>
+
+<!-- Exercise Detail Modal / Drawer -->
+<div id="exercise-detail-drawer-root" class="exercise-drawer-modal hidden"></div>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/debug.js"></script>
+<script src="js/exercise-library.js"></script>
+</body>
+</html>

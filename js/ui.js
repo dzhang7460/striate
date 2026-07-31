@@ -1,11 +1,11 @@
 /* ============================================================
    Striate — ui.js
-   Shared UI helpers: chip selectors, tab bar, guards, formatting.
+   Shared UI helpers: chip selectors, 5-tab navigation bar,
+   guards, formatting, icons, and escaping.
 ============================================================ */
 
 const UI = (() => {
   // Chip group behaves like a radio group.
-  // <div class="chip-group" data-name="energy"> <button class="chip" data-value="3">...
   function initChipGroups(root = document) {
     root.querySelectorAll('.chip-group[data-name]').forEach((group) => {
       group.querySelectorAll('.chip').forEach((chip) => {
@@ -20,8 +20,7 @@ const UI = (() => {
     });
   }
 
-  // Multi-select chip group (for equipment).
-  // <div class="chip-group" data-name="equipment" data-multi>
+  // Multi-select chip group (for equipment / soccer focus).
   function initMultiChipGroups(root = document) {
     root.querySelectorAll('.chip-group[data-multi]').forEach((group) => {
       group.querySelectorAll('.chip').forEach((chip) => {
@@ -56,13 +55,14 @@ const UI = (() => {
     if (chip) chip.click();
   }
 
-  // Bottom tab bar for the "app" pages.
+  // 5-tab bottom navigation bar for Striate v0.3
   function renderTabbar(active) {
     const tabs = [
       { id: 'today', href: 'today.html', icon: 'fa-bolt', label: 'Today' },
       { id: 'checkin', href: 'check-in.html', icon: 'fa-circle-check', label: 'Check-in' },
-      { id: 'history', href: 'history.html', icon: 'fa-clock-rotate-left', label: 'History' },
-      { id: 'profile', href: 'onboarding.html?edit=1', icon: 'fa-user', label: 'Profile' },
+      { id: 'exercises', href: 'exercise-library.html', icon: 'fa-dumbbell', label: 'Exercises' },
+      { id: 'calendar', href: 'history.html', icon: 'fa-calendar-days', label: 'Calendar' },
+      { id: 'stats', href: 'stats.html', icon: 'fa-chart-simple', label: 'Stats' },
     ];
     const nav = document.createElement('nav');
     nav.className = 'tabbar';
@@ -84,6 +84,7 @@ const UI = (() => {
   }
 
   function formatDate(dateKey) {
+    if (!dateKey) return 'Unknown';
     const [y, m, d] = dateKey.split('-').map(Number);
     const date = new Date(y, m - 1, d);
     const today = Store.todayKey();
@@ -101,14 +102,45 @@ const UI = (() => {
     return `<span class="badge ${cls}"><i class="fa-solid fa-signal" aria-hidden="true"></i>${label}</span>`;
   }
 
+  function scheduleTypeIcon(type) {
+    const map = {
+      meal: 'fa-utensils',
+      workout: 'fa-dumbbell',
+      rest: 'fa-couch',
+      study: 'fa-book',
+      sleep: 'fa-moon',
+      habit: 'fa-circle-check',
+      other: 'fa-clock',
+    };
+    return map[type] || 'fa-circle-dot';
+  }
+
   function esc(s) {
     return String(s ?? '').replace(/[&<>"']/g, (c) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
     })[c]);
   }
 
+  function showToast(message, duration = 3000) {
+    const existing = document.getElementById('striate-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'striate-toast';
+    toast.className = 'striate-toast';
+    toast.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> <span>${esc(message)}</span>`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 10);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
+  }
+
   return {
     initChipGroups, initMultiChipGroups, chipValue, setChipValue,
-    renderTabbar, requireProfile, formatDate, confidenceBadge, esc,
+    renderTabbar, requireProfile, formatDate, confidenceBadge,
+    scheduleTypeIcon, esc, showToast,
   };
 })();

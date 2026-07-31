@@ -84,6 +84,19 @@
     </div>
 
     <div class="field">
+      <span class="label">Dedicated workout time today</span>
+      <div class="chip-group" data-name="dedicatedWorkoutTime" role="radiogroup" aria-label="Dedicated workout time today">
+        <button class="chip" data-value="7-8 AM">7–8 AM</button>
+        <button class="chip" data-value="12-1 PM">12–1 PM</button>
+        <button class="chip" data-value="30-after-school">30 min after school/work</button>
+        <button class="chip" data-value="5-6 PM">5–6 PM</button>
+        <button class="chip" data-value="6-7 PM">6–7 PM</button>
+        <button class="chip" data-value="custom">Custom time</button>
+      </div>
+      <input type="text" id="checkin-custom-time" class="hidden mt-1" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border); background:var(--surface-light); color:var(--text);" placeholder="e.g. 8:00 PM – 8:45 PM">
+    </div>
+
+    <div class="field">
       <span class="label">Anything unusual today? <span class="optional">(optional)</span></span>
       <div class="chip-group" data-name="specialConstraint" role="radiogroup" aria-label="Unusual constraint today">
         <button class="chip selected" data-value="none">Nothing</button>

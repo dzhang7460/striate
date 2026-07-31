@@ -63,6 +63,19 @@
           <button class="chip" data-value="fat_loss">Lose fat</button>
           <button class="chip" data-value="fitness">General fitness</button>
           <button class="chip" data-value="energy">More daily energy</button>
+          <button class="chip" data-value="soccer">Soccer / Athletic</button>
+        </div>
+      </div>
+
+      <div class="field hidden" id="soccer-focus-field">
+        <span class="label">Soccer performance focus <span class="optional">(select all that apply)</span></span>
+        <div class="chip-group" data-name="soccerFocus" data-multi aria-label="Soccer focus">
+          <button class="chip" data-value="speed_agility">Speed &amp; Agility</button>
+          <button class="chip" data-value="plyometrics">Plyometrics</button>
+          <button class="chip" data-value="strength_hypertrophy">Athletic Strength</button>
+          <button class="chip" data-value="tendon_isometric">Tendon / Isometric</button>
+          <button class="chip" data-value="conditioning">Match Conditioning</button>
+          <button class="chip" data-value="technical">Technical Drills</button>
         </div>
       </div>
 
@@ -111,6 +124,31 @@
           <button class="chip" data-value="after-24">After midnight</button>
           <button class="chip" data-value="irregular">Irregular</button>
         </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Target wake-up time</span>
+        <div class="chip-group" data-name="wakeTimeTarget" role="radiogroup" aria-label="Target wake-up time">
+          <button class="chip" data-value="6:00 AM">6:00 AM</button>
+          <button class="chip" data-value="7:00 AM">7:00 AM</button>
+          <button class="chip" data-value="8:00 AM">8:00 AM</button>
+          <button class="chip" data-value="9:00 AM">9:00 AM+</button>
+          <button class="chip" data-value="irregular">Irregular</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Dedicated workout time window</span>
+        <div class="chip-group" data-name="dedicatedWorkoutTime" role="radiogroup" aria-label="Dedicated workout time window">
+          <button class="chip" data-value="7-8 AM">7–8 AM</button>
+          <button class="chip" data-value="12-1 PM">12–1 PM</button>
+          <button class="chip" data-value="30-after-school">30 min after school/work</button>
+          <button class="chip" data-value="5-6 PM">5–6 PM</button>
+          <button class="chip" data-value="6-7 PM">6–7 PM</button>
+          <button class="chip" data-value="custom">Custom time</button>
+        </div>
+        <input type="text" id="custom-workout-time" class="hidden mt-1" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border); background:var(--surface-light); color:var(--text);" placeholder="e.g. 8:00 PM – 8:45 PM">
+        <p class="faint mt-1">We'll schedule your daily workout block around this time.</p>
       </div>
     </section>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>History — Striate</title>
+<title>Calendar &amp; Logs — Striate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
@@ -14,17 +14,42 @@
 
   <header class="topbar">
     <a class="wordmark" href="index.html">Stri<span>ate</span></a>
+    <div class="row" style="gap:8px; align-items:center;">
+      <button class="btn-ghost" id="debug-toggle-btn" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Debug Console">🐛 Debug</button>
+      <a href="onboarding.html?edit=1" class="btn-ghost" style="padding:6px 10px; font-size:13px; width:auto; min-height:36px;" title="Profile"><i class="fa-solid fa-user"></i></a>
+    </div>
   </header>
 
   <main>
-    <h1 style="font-size:24px;">History</h1>
-    <p class="muted small mb-2" id="history-count"></p>
+    <div class="row between mb-2">
+      <h1 style="font-size:24px;">Calendar &amp; Logs</h1>
+      <span class="faint" id="history-count"></span>
+    </div>
+
+    <!-- Calendar View Card -->
+    <section class="card mb-3" id="calendar-view-card">
+      <div class="row between mb-1">
+        <p class="kicker" style="margin-bottom:0;" id="calendar-month-label">This Month</p>
+        <div class="row" style="gap:10px; font-size:11px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block;"></span> Done</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:var(--amber); display:inline-block;"></span> Partial</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:var(--red); display:inline-block;"></span> Skipped</span>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendar-grid">
+        <!-- Filled by js/history.js -->
+      </div>
+    </section>
+
+    <!-- Schedule Log Entries -->
+    <h2 class="mb-2" style="font-size:18px;">Schedule History &amp; Completion Logs</h2>
     <div id="history-list"><!-- Filled by js/history.js --></div>
   </main>
 </div>
 
 <script src="js/store.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/debug.js"></script>
 <script src="js/history.js"></script>
 </body>
 </html>
