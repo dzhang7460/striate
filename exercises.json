@@ -1,0 +1,6396 @@
+[
+  {
+    "id": "wall-sit",
+    "name": "Wall Sit",
+    "bodyPart": "quadriceps",
+    "targetMuscles": [
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "gluteus maximus",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Lean your back flat against a wall.",
+      "Slide down until knees are bent at a 90-degree angle.",
+      "Hold the position for the specified duration."
+    ],
+    "formTips": [
+      "Keep knees directly above ankles.",
+      "Press lower back firmly into the wall."
+    ],
+    "commonMistakes": [
+      "Letting knees cave inward",
+      "Resting hands on thighs"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "30s hold",
+      "hypertrophy": "45s hold",
+      "endurance": "60s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "isometric",
+      "quads",
+      "legs",
+      "bodyweight"
+    ]
+  },
+  {
+    "id": "single-leg-glute-bridge-hold",
+    "name": "Single-Leg Glute Bridge Hold",
+    "bodyPart": "glutes",
+    "targetMuscles": [
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Lie on back with knees bent and feet flat.",
+      "Extend one leg out straight.",
+      "Drive through non-extended heel to lift hips and hold position."
+    ],
+    "formTips": [
+      "Squeeze glutes at top.",
+      "Keep hips level and aligned."
+    ],
+    "commonMistakes": [
+      "Hyperextending lower back",
+      "Sagging hips on non-working side"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "20s hold/side",
+      "hypertrophy": "30s hold/side",
+      "endurance": "45s hold/side"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "isometric",
+      "glutes",
+      "single-leg"
+    ]
+  },
+  {
+    "id": "isometric-calf-raise-hold",
+    "name": "Isometric Calf Raise Hold",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius",
+      "soleus"
+    ],
+    "secondaryMuscles": [
+      "foot intrinsics"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Stand tall with feet hip-width apart.",
+      "Rise up onto toes as high as possible.",
+      "Squeeze calves and hold top position."
+    ],
+    "formTips": [
+      "Distribute weight evenly across ball of foot.",
+      "Keep ankles stable and upright."
+    ],
+    "commonMistakes": [
+      "Rolling ankles outward",
+      "Lowering heel height during hold"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "30s hold",
+      "hypertrophy": "45s hold",
+      "endurance": "60s hold"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "calves",
+      "isometric",
+      "ankle-stability"
+    ]
+  },
+  {
+    "id": "isometric-push-up-hold",
+    "name": "Isometric Push-Up Hold",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "triceps",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Assume a high push-up plank position.",
+      "Lower body halfway or just above ground.",
+      "Hold isometric position while keeping core rigid."
+    ],
+    "formTips": [
+      "Keep elbows tucked at 45 degrees.",
+      "Maintain straight line from head to heels."
+    ],
+    "commonMistakes": [
+      "Sagging lower back",
+      "Flaring elbows horizontally"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "15-20s hold",
+      "hypertrophy": "30s hold",
+      "endurance": "45s hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "chest",
+      "isometric",
+      "push-up"
+    ]
+  },
+  {
+    "id": "overhead-pike-push-up-hold",
+    "name": "Overhead Pike Push-Up Hold",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "anterior deltoid",
+      "medial deltoid"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "upper back"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Set up in pike position with hips raised toward ceiling.",
+      "Lower head slightly toward floor.",
+      "Hold top or midpoint position overhead."
+    ],
+    "formTips": [
+      "Maintain active shoulders pushing floor away.",
+      "Keep spine neutral."
+    ],
+    "commonMistakes": [
+      "Rounding lower back",
+      "Placing hands too far apart"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "15-20s hold",
+      "hypertrophy": "30s hold",
+      "endurance": "45s hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "shoulders",
+      "pike",
+      "isometric"
+    ]
+  },
+  {
+    "id": "inverted-row-pull-up-hold",
+    "name": "Inverted Row / Pull-Up Hold",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi",
+      "rhomboids"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "posterior deltoid"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Pull chest to bar or inverted row station.",
+      "Hold peak contraction at top position with chin over bar/handles."
+    ],
+    "formTips": [
+      "Depress and retract shoulder blades.",
+      "Keep chest open and core tight."
+    ],
+    "commonMistakes": [
+      "Kipping or swinging into position",
+      "Shrugging shoulders upward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "10-15s hold",
+      "hypertrophy": "20-30s hold",
+      "endurance": "40s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "back",
+      "pull",
+      "isometric"
+    ]
+  },
+  {
+    "id": "dead-hang",
+    "name": "Dead Hang",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "forearms",
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "rotator cuff",
+      "core"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Grip pull-up bar with overhand grip.",
+      "Hang freely with arms extended.",
+      "Relax body and allow spine to decompress."
+    ],
+    "formTips": [
+      "Keep grip firm.",
+      "Breathe deeply throughout hold."
+    ],
+    "commonMistakes": [
+      "Swinging excessively",
+      "Holding breath"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "30s hold",
+      "hypertrophy": "45s hold",
+      "endurance": "60s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "grip",
+      "decompression",
+      "isometric"
+    ]
+  },
+  {
+    "id": "isometric-bicep-hold",
+    "name": "Isometric Bicep Hold",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "biceps brachii"
+    ],
+    "secondaryMuscles": [
+      "brachialis",
+      "forearms"
+    ],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Hold dumbbells or weight at a 90-degree elbow flexion angle.",
+      "Keep elbows locked at sides.",
+      "Squeeze biceps continuously."
+    ],
+    "formTips": [
+      "Keep wrists neutral.",
+      "Stand upright without leaning back."
+    ],
+    "commonMistakes": [
+      "Swinging elbows forward",
+      "Lowering arms as fatigue sets in"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "20s hold",
+      "hypertrophy": "30-45s hold",
+      "endurance": "60s hold"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "biceps",
+      "arms",
+      "isometric"
+    ]
+  },
+  {
+    "id": "isometric-tricep-dip-hold",
+    "name": "Isometric Tricep Dip Hold",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "triceps brachii"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "chest"
+    ],
+    "equipment": "dip bars",
+    "difficulty": "intermediate",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Mount dip station with arms locked out or at 90-degree bend.",
+      "Hold position steady with core tight."
+    ],
+    "formTips": [
+      "Keep shoulders depressed away from ears.",
+      "Maintain forward gaze."
+    ],
+    "commonMistakes": [
+      "Shrugging shoulders",
+      "Dipping lower than shoulder flexibility allows"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "15s hold",
+      "hypertrophy": "30s hold",
+      "endurance": "45s hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "triceps",
+      "dips",
+      "isometric"
+    ]
+  },
+  {
+    "id": "forearm-plank",
+    "name": "Forearm Plank",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis",
+      "transverse abdominis"
+    ],
+    "secondaryMuscles": [
+      "obliques",
+      "gluteus maximus"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Rest on forearms and toes with elbows directly under shoulders.",
+      "Keep body in straight line from head to heels.",
+      "Brace core and hold position."
+    ],
+    "formTips": [
+      "Squeeze glutes and quads.",
+      "Do not arch lower back."
+    ],
+    "commonMistakes": [
+      "Sagging hips",
+      "Piking hips up into air"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "30s hold",
+      "hypertrophy": "45-60s hold",
+      "endurance": "90s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "core",
+      "plank",
+      "isometric"
+    ]
+  },
+  {
+    "id": "side-plank",
+    "name": "Side Plank",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "internal obliques",
+      "external obliques"
+    ],
+    "secondaryMuscles": [
+      "transverse abdominis",
+      "gluteus medius"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "isometric",
+    "instructions": [
+      "Lie on side supported by forearm.",
+      "Stack feet and lift hips off ground until body forms straight line.",
+      "Hold for desired duration, then switch sides."
+    ],
+    "formTips": [
+      "Keep elbow under shoulder.",
+      "Engage glutes and core."
+    ],
+    "commonMistakes": [
+      "Allowing hips to drop toward floor",
+      "Rolling chest forward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "20s hold/side",
+      "hypertrophy": "35s hold/side",
+      "endurance": "60s hold/side"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "obliques",
+      "core",
+      "isometric"
+    ]
+  },
+  {
+    "id": "box-jumps",
+    "name": "Box Jumps",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Stand facing plyo box in athletic stance.",
+      "Swing arms back, bend knees, and explode upward onto box.",
+      "Land softly on box with feet flat, absorb impact, and step down."
+    ],
+    "formTips": [
+      "Land in soft quarter-squat.",
+      "Step down rather than jumping off."
+    ],
+    "commonMistakes": [
+      "Selecting too tall of a box",
+      "Landing with knees caving in"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10-12"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "plyometrics",
+      "jumping",
+      "explosive"
+    ]
+  },
+  {
+    "id": "broad-jumps",
+    "name": "Broad Jumps",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Load hips back and swing arms backward.",
+      "Leap forward explosively for maximum distance, landing softly."
+    ],
+    "formTips": [
+      "Absorb shock through full foot roll.",
+      "Drive arms forward on takeoff."
+    ],
+    "commonMistakes": [
+      "Landing on heels forcefully",
+      "Restricting arm swing"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "plyometrics",
+      "horizontal-power",
+      "bodyweight"
+    ]
+  },
+  {
+    "id": "pogo-jumps",
+    "name": "Pogo Jumps",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius",
+      "soleus"
+    ],
+    "secondaryMuscles": [
+      "plantar fascia",
+      "quadriceps"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Stand tall with feet narrow.",
+      "Bounce rapidly off balls of feet with minimal knee bend.",
+      "Minimize ground contact time."
+    ],
+    "formTips": [
+      "Keep ankles stiff upon landing.",
+      "Use calf elasticity to bounce."
+    ],
+    "commonMistakes": [
+      "Bending knees excessively",
+      "Heels touching ground forcefully"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "10-15",
+      "hypertrophy": "20-25",
+      "endurance": "30+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Fast/Elastic",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "stiffness",
+      "ankle",
+      "plyo"
+    ]
+  },
+  {
+    "id": "drop-jumps",
+    "name": "Drop Jumps",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "secondaryMuscles": [
+      "gluteus maximus"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Step off plyo box onto ground.",
+      "Upon landing, immediately jump straight up into air as high as possible.",
+      "Focus on minimal ground contact time."
+    ],
+    "formTips": [
+      "Land balanced on balls of feet.",
+      "Rebound as fast as possible."
+    ],
+    "commonMistakes": [
+      "Jumping off box instead of stepping off",
+      "Spending too long on floor"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "5-6",
+      "endurance": "8"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "plyometrics",
+      "reactive",
+      "vertical"
+    ]
+  },
+  {
+    "id": "death-jumps",
+    "name": "Death Jumps (Drop to Lateral Bound)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus medius"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "calves"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Step off low box.",
+      "Upon ground impact, immediately bound laterally as far as possible.",
+      "Land softly on outside leg."
+    ],
+    "formTips": [
+      "Transfer vertical force into lateral momentum rapidly.",
+      "Maintain joint alignment on landing."
+    ],
+    "commonMistakes": [
+      "Valgus collapse of landing knee",
+      "Hesitating on ground contact"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3-4/side",
+      "hypertrophy": "5-6/side",
+      "endurance": "8/side"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "lateral",
+      "reactive",
+      "agility"
+    ]
+  },
+  {
+    "id": "drop-45-cut-sprint",
+    "name": "Drop to 45° Cut Sprint",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "calves"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Step off box.",
+      "Absorb ground contact and immediately push off diagonally at a 45-degree angle.",
+      "Accelerate into a 5-10m sprint."
+    ],
+    "formTips": [
+      "Plant outside foot firmly to cut.",
+      "Keep body angle low during departure."
+    ],
+    "commonMistakes": [
+      "Rounding cut angle",
+      "Standing upright before accelerating"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-4 cuts",
+      "hypertrophy": "5 cuts",
+      "endurance": "6 cuts"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "change-of-direction",
+      "agility",
+      "sprint"
+    ]
+  },
+  {
+    "id": "depth-jumps",
+    "name": "Depth Jumps",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Step off a 12-24 inch box.",
+      "React immediately upon touching ground to jump maximal height.",
+      "Land softly."
+    ],
+    "formTips": [
+      "Minimize contact time on floor.",
+      "Drive arms upward vertically."
+    ],
+    "commonMistakes": [
+      "Excessive heel striking",
+      "Bending knees too deep on landing"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "5-6",
+      "endurance": "8"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "stretch-shortening-cycle",
+      "plyometrics",
+      "power"
+    ]
+  },
+  {
+    "id": "tuck-jumps",
+    "name": "Tuck Jumps",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "rectus abdominis"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Stand upright.",
+      "Jump explosively high into air while pulling knees up to chest.",
+      "Extend legs quickly to land softly."
+    ],
+    "formTips": [
+      "Bring knees to chest, not chest down to knees.",
+      "Rebound smoothly off floor."
+    ],
+    "commonMistakes": [
+      "Slouching upper body forward",
+      "Landing with heavy feet"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6",
+      "hypertrophy": "8-10",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "tuck",
+      "plyo",
+      "vertical"
+    ]
+  },
+  {
+    "id": "single-leg-bounds",
+    "name": "Single-Leg Bounds",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Push off one leg and leap forward for maximum distance.",
+      "Land on same leg or alternate leg while maintaining forward momentum.",
+      "Repeat rhythmically."
+    ],
+    "formTips": [
+      "Drive free knee upward aggressively.",
+      "Maintain active tall torso."
+    ],
+    "commonMistakes": [
+      "Loss of balance laterally",
+      "Short strides without extension"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6 leaps/leg",
+      "hypertrophy": "8 leaps/leg",
+      "endurance": "10 leaps/leg"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "bounding",
+      "single-leg",
+      "power"
+    ]
+  },
+  {
+    "id": "depth-drop-calf-hops",
+    "name": "Depth Drop Calf Hops",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius",
+      "soleus"
+    ],
+    "secondaryMuscles": [
+      "Achilles tendon"
+    ],
+    "equipment": "plyo box",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Step off low box onto floor.",
+      "Keep knees nearly stiff.",
+      "Rebound off ankles immediately using calf elasticity."
+    ],
+    "formTips": [
+      "Maintain stiff lower leg setup.",
+      "Minimize knee bending."
+    ],
+    "commonMistakes": [
+      "Bending knees deep on impact",
+      "Dropping heels to floor"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8 hops",
+      "hypertrophy": "10 hops",
+      "endurance": "12-15 hops"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "achilles",
+      "calves",
+      "stiffness"
+    ]
+  },
+  {
+    "id": "plyo-push-ups",
+    "name": "Plyo Push-Ups",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "anterior deltoid"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Lower body into standard push-up.",
+      "Push off ground with maximum explosive power so hands leave floor.",
+      "Land softly with bent elbows and transition into next rep."
+    ],
+    "formTips": [
+      "Keep core tight.",
+      "Absorb landing smoothly."
+    ],
+    "commonMistakes": [
+      "Hips sagging on power stroke",
+      "Landing with locked elbows"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10-12"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "chest",
+      "explosive",
+      "plyo"
+    ]
+  },
+  {
+    "id": "medicine-ball-chest-passes",
+    "name": "Medicine Ball Chest Passes",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "anterior deltoid"
+    ],
+    "equipment": "medicine ball",
+    "difficulty": "beginner",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Hold medicine ball at chest height facing wall or partner.",
+      "Step forward and push ball forcefully outward.",
+      "Catch ball on rebound and absorb back to chest."
+    ],
+    "formTips": [
+      "Follow through with arms fully extended.",
+      "Drive from legs into throw."
+    ],
+    "commonMistakes": [
+      "Lobbing ball instead of pressing horizontally",
+      "Standing completely static"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-8",
+      "hypertrophy": "10-12",
+      "endurance": "15"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "medicine-ball",
+      "chest",
+      "power"
+    ]
+  },
+  {
+    "id": "plyo-pull-ups",
+    "name": "Plyo Pull-Ups",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "forearms"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "pull",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Pull up with maximum speed towards bar.",
+      "Release bar briefly at top peak momentum.",
+      "Re-grip bar instantly and lower down under control."
+    ],
+    "formTips": [
+      "Ensure strong grip security.",
+      "Keep pull trajectory vertical."
+    ],
+    "commonMistakes": [
+      "Losing control on landing",
+      "Kipping excessively"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "2-4",
+      "hypertrophy": "5-6",
+      "endurance": "8"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pull-ups",
+      "plyo",
+      "upper-body"
+    ]
+  },
+  {
+    "id": "explosive-overhead-medicine-ball-slams",
+    "name": "Explosive Overhead Medicine Ball Slams",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "latissimus dorsi",
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [
+      "deltoids",
+      "glutes"
+    ],
+    "equipment": "medicine ball",
+    "difficulty": "beginner",
+    "mechanics": "plyometric",
+    "force": "pull",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Raise medicine ball overhead extending full body.",
+      "Flex core hard and slam ball down into floor with max effort.",
+      "Catch ball on bounce and repeat."
+    ],
+    "formTips": [
+      "Use entire torso and core to slam.",
+      "Follow through with hips."
+    ],
+    "commonMistakes": [
+      "Using only arms to throw",
+      "Bending back rounded at top"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "10-12",
+      "endurance": "15+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "slams",
+      "core",
+      "medicine-ball"
+    ]
+  },
+  {
+    "id": "medicine-ball-rotational-wall-throws",
+    "name": "Medicine Ball Rotational Wall Throws",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "obliques"
+    ],
+    "secondaryMuscles": [
+      "latissimus dorsi",
+      "hip flexors"
+    ],
+    "equipment": "medicine ball",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Stand perpendicular to wall holding ball at hip.",
+      "Rotate hips and torso explosively to throw ball against wall.",
+      "Catch rebound and reload into hip."
+    ],
+    "formTips": [
+      "Pivot back foot to generate power.",
+      "Keep core tight throughout turn."
+    ],
+    "commonMistakes": [
+      "Arm-dominant movement without hip pivot",
+      "Standing too far from wall"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6/side",
+      "hypertrophy": "8-10/side",
+      "endurance": "12/side"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "rotation",
+      "obliques",
+      "power"
+    ]
+  },
+  {
+    "id": "explosive-v-ups",
+    "name": "Explosive V-Ups",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [
+      "hip flexors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "pull",
+    "exerciseType": "plyometric",
+    "instructions": [
+      "Lie flat on back with legs straight.",
+      "Explosively lift legs and upper body simultaneously to touch toes.",
+      "Lower back down under control."
+    ],
+    "formTips": [
+      "Keep legs as straight as possible.",
+      "Initiate force from core."
+    ],
+    "commonMistakes": [
+      "Bending knees excessively",
+      "Using neck momentum"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "abs",
+      "v-up",
+      "core"
+    ]
+  },
+  {
+    "id": "foam-rolling",
+    "name": "Foam Rolling",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "myofascial tissue"
+    ],
+    "secondaryMuscles": [
+      "quadriceps",
+      "hamstrings",
+      "latissimus dorsi"
+    ],
+    "equipment": "foam roller",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Place target muscle group on foam roller.",
+      "Slowly roll back and forth over muscle belly.",
+      "Pause on tender spots for 20-30 seconds."
+    ],
+    "formTips": [
+      "Breathe deeply to allow tissue relaxation.",
+      "Avoid rolling directly over joints or bones."
+    ],
+    "commonMistakes": [
+      "Rolling too fast",
+      "Applying painful excessive pressure"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "60s/group",
+      "hypertrophy": "60s/group",
+      "endurance": "60s/group"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Slow",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "foam-rolling",
+      "recovery",
+      "smr"
+    ]
+  },
+  {
+    "id": "lacrosse-ball-work",
+    "name": "Lacrosse Ball / Massage Ball Work",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "trigger points",
+      "gluteus medius",
+      "pec minor"
+    ],
+    "secondaryMuscles": [
+      "plantar fascia"
+    ],
+    "equipment": "lacrosse ball",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Place massage ball under tight trigger point.",
+      "Apply localized pressure against wall or floor.",
+      "Hold and gently oscillate across muscle knots."
+    ],
+    "formTips": [
+      "Relax surrounding muscles while pressing.",
+      "Keep breathing steady."
+    ],
+    "commonMistakes": [
+      "Tensing up against pain",
+      "Pressing directly on bone"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "30-60s/spot",
+      "hypertrophy": "30-60s/spot",
+      "endurance": "30-60s/spot"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Static",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "trigger-point",
+      "recovery",
+      "mobility"
+    ]
+  },
+  {
+    "id": "percussion-therapy",
+    "name": "Percussion Therapy (Massage Gun)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "calves",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "trapezius"
+    ],
+    "equipment": "massage gun",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Turn on massage gun to comfortable frequency.",
+      "Glide attachment head smoothly back and forth along muscle tissue.",
+      "Avoid bony prominences."
+    ],
+    "formTips": [
+      "Do not push hard into muscle.",
+      "Spend 1-2 minutes per muscle group."
+    ],
+    "commonMistakes": [
+      "Pressing gun too deep into tissue",
+      "Using over bony structures"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "1-2 mins/group",
+      "hypertrophy": "1-2 mins/group",
+      "endurance": "1-2 mins/group"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "percussion",
+      "massage-gun",
+      "recovery"
+    ]
+  },
+  {
+    "id": "dry-sauna",
+    "name": "Dry Sauna",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "cardiovascular system"
+    ],
+    "secondaryMuscles": [
+      "whole body relaxation"
+    ],
+    "equipment": "sauna",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Sit comfortably inside sauna set to 175-195°F (80-90°C).",
+      "Stay for 15-20 minutes while maintaining hydration.",
+      "Exit and cool down gradually."
+    ],
+    "formTips": [
+      "Hydrate well before and after.",
+      "Listen to body cues if overheating."
+    ],
+    "commonMistakes": [
+      "Staying in too long",
+      "Entering while dehydrated"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "15-20 mins",
+      "hypertrophy": "15-20 mins",
+      "endurance": "15-20 mins"
+    },
+    "recommendedRest": {
+      "strength": 300,
+      "hypertrophy": 300,
+      "endurance": 300
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "sauna",
+      "heat-therapy",
+      "recovery"
+    ]
+  },
+  {
+    "id": "infrared-sauna",
+    "name": "Infrared Sauna",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "systemic recovery"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "sauna",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Relax in infrared sauna cabin set to 120-150°F (50-65°C).",
+      "Remain seated for 20-30 minutes.",
+      "Cool down and rehydrate post-session."
+    ],
+    "formTips": [
+      "Maintain comfortable upright posture.",
+      "Sip water throughout session if permitted."
+    ],
+    "commonMistakes": [
+      "Ignoring signs of lightheadedness",
+      "Insufficient post-sauna fluid replacement"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "20-30 mins",
+      "hypertrophy": "20-30 mins",
+      "endurance": "20-30 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "infrared",
+      "heat-therapy",
+      "recovery"
+    ]
+  },
+  {
+    "id": "hot-epsom-salt-bath",
+    "name": "Hot Epsom Salt Bath",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "muscular system"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bathtub",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Dissolve 1-2 cups of Epsom salts into warm/hot bath water.",
+      "Submerge body for 15-20 minutes.",
+      "Rinse with clean water and dry."
+    ],
+    "formTips": [
+      "Keep water comfortably warm, not scalding.",
+      "Relax fully into tub."
+    ],
+    "commonMistakes": [
+      "Soaking in water that is too hot",
+      "Staying in longer than 30 minutes"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "15-20 mins",
+      "hypertrophy": "15-20 mins",
+      "endurance": "15-20 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "bath",
+      "magnesium",
+      "epsom",
+      "recovery"
+    ]
+  },
+  {
+    "id": "cold-water-immersion",
+    "name": "Cold Water Immersion (Ice Bath)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "systemic vascular response"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "cold tub",
+    "difficulty": "intermediate",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Submerge body up to chest in 50-59°F (10-15°C) water.",
+      "Control breath with steady slow exhales.",
+      "Remain submerged for 10-15 minutes."
+    ],
+    "formTips": [
+      "Focus on slow breathing to combat shock response.",
+      "Warm up naturally afterward."
+    ],
+    "commonMistakes": [
+      "Hyperventilating",
+      "Staying submerged beyond safe time limits"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "10-15 mins",
+      "hypertrophy": "10-15 mins",
+      "endurance": "10-15 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "ice-bath",
+      "cold-therapy",
+      "recovery"
+    ]
+  },
+  {
+    "id": "contrast-hydrotherapy",
+    "name": "Contrast Hydrotherapy",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "vascular system"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "shower/pool",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Alternate between 3 minutes hot water and 1 minute cold water.",
+      "Repeat sequence 3-4 times.",
+      "Always finish with cold shower or dip."
+    ],
+    "formTips": [
+      "Ensure hot water is safe and non-scalding.",
+      "Breathe rhythmically during transitions."
+    ],
+    "commonMistakes": [
+      "Ending session on hot water",
+      "Rapid panic breathing in cold water"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3m hot / 1m cold",
+      "hypertrophy": "3m hot / 1m cold",
+      "endurance": "3m hot / 1m cold"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "contrast-shower",
+      "hydrotherapy",
+      "circulation"
+    ]
+  },
+  {
+    "id": "zone-1-flush-spin",
+    "name": "Zone 1 Flush Spin",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "calves"
+    ],
+    "equipment": "stationary bike",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "push",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Pedal light stationary bike at very low intensity (Zone 1 heart rate).",
+      "Maintain cadence around 80-90 RPM.",
+      "Spin continuously for 15-30 minutes."
+    ],
+    "formTips": [
+      "Keep resistance minimal.",
+      "Focus on active fluid flushing."
+    ],
+    "commonMistakes": [
+      "Pedaling with too high resistance",
+      "Spiking heart rate out of Zone 1"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "15-20 mins",
+      "hypertrophy": "20-30 mins",
+      "endurance": "30 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "zone-1",
+      "active-recovery",
+      "cycling"
+    ]
+  },
+  {
+    "id": "aquajogging-pool-walking",
+    "name": "Aquajogging / Pool Walking",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "core"
+    ],
+    "equipment": "pool",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Walk or jog through waist-to-chest deep pool water.",
+      "Use exaggerated running mechanics against water resistance.",
+      "Maintain light, fluid rhythm."
+    ],
+    "formTips": [
+      "Maintain upright spine.",
+      "Drive knees forward smoothly."
+    ],
+    "commonMistakes": [
+      "Leaning too far forward",
+      "Straining hard against water"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "15-20 mins",
+      "hypertrophy": "20 mins",
+      "endurance": "30 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pool",
+      "low-impact",
+      "recovery"
+    ]
+  },
+  {
+    "id": "light-recovery-walk",
+    "name": "Light Recovery Walk",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "calves",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "cardiovascular system"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Walk at an easy, casual pace on flat ground.",
+      "Maintain relaxed posture and steady breathing.",
+      "Walk for 20-45 minutes."
+    ],
+    "formTips": [
+      "Swing arms naturally.",
+      "Focus on relaxation."
+    ],
+    "commonMistakes": [
+      "Power walking or pushing pace",
+      "Carrying heavy weights"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "20-30 mins",
+      "hypertrophy": "30 mins",
+      "endurance": "30-45 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "walking",
+      "active-recovery",
+      "low-intensity"
+    ]
+  },
+  {
+    "id": "dynamic-mobility-flows",
+    "name": "Dynamic Mobility Flows (90/90s, World's Greatest Stretch)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "hip rotators",
+      "thoracic spine"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "hip flexors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Transition fluidly through 90/90 hip switches and thoracic lunges.",
+      "Pause briefly at end ranges of motion.",
+      "Breathe through smooth rotational movements."
+    ],
+    "formTips": [
+      "Move smoothly without forcing positions.",
+      "Coordinate breath with movement."
+    ],
+    "commonMistakes": [
+      "Rushing through movements",
+      "Bouncing aggressively in end ranges"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "5 reps/flow",
+      "hypertrophy": "8 reps/flow",
+      "endurance": "10 reps/flow"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Flowing",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "mobility",
+      "90-90",
+      "flexibility"
+    ]
+  },
+  {
+    "id": "down-regulation-breathwork",
+    "name": "Down-Regulation Breathwork (Box Breathing, Physiological Sighs)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "diaphragm",
+      "parasympathetic nervous system"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "none",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Inhale through nose for 4s, hold 4s, exhale through mouth 4s, hold 4s.",
+      "Or perform double inhale through nose followed by long slow exhale.",
+      "Repeat for 5-10 minutes."
+    ],
+    "formTips": [
+      "Expand belly on inhale rather than chest.",
+      "Keep shoulders relaxed."
+    ],
+    "commonMistakes": [
+      "Shallow chest breathing",
+      "Rushing exhale counts"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "5-10 mins",
+      "hypertrophy": "5-10 mins",
+      "endurance": "5-10 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Slow",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "breathwork",
+      "parasympathetic",
+      "box-breathing"
+    ]
+  },
+  {
+    "id": "non-sleep-deep-rest",
+    "name": "Non-Sleep Deep Rest (NSDR) / Yoga Nidra",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "nervous system"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "none",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Lie flat on back in quiet room.",
+      "Follow audio body-scan recording keeping mind awake while body rests.",
+      "Remain still for 10-20 minutes."
+    ],
+    "formTips": [
+      "Maintain comfortable supine posture.",
+      "Allow body to completely relax."
+    ],
+    "commonMistakes": [
+      "Fidgeting frequently",
+      "Falling fully asleep"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "10-20 mins",
+      "hypertrophy": "10-20 mins",
+      "endurance": "10-20 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "nsdr",
+      "yoga-nidra",
+      "neural-recovery"
+    ]
+  },
+  {
+    "id": "pneumatic-compression-boots",
+    "name": "Pneumatic Compression Boots",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "calves",
+      "quadriceps",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "lymphatic system"
+    ],
+    "equipment": "compression boots",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Zip legs into compression boots.",
+      "Select pressure level and cycle mode.",
+      "Relax in seated or reclined position for 20-30 minutes."
+    ],
+    "formTips": [
+      "Elevate legs slightly during use.",
+      "Select comfortable pressure without pinch."
+    ],
+    "commonMistakes": [
+      "Setting pressure too painful",
+      "Wearing restrictive clothes underneath"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "20-30 mins",
+      "hypertrophy": "20-30 mins",
+      "endurance": "20-30 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "compression",
+      "boots",
+      "flush"
+    ]
+  },
+  {
+    "id": "legs-up-the-wall-pose",
+    "name": "Legs-Up-The-Wall Pose",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings",
+      "lower back"
+    ],
+    "secondaryMuscles": [
+      "circulatory system"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "recovery",
+    "force": "n/a",
+    "exerciseType": "recovery",
+    "instructions": [
+      "Lie on back with hips near wall.",
+      "Extend legs vertically up wall resting heels against surface.",
+      "Relax arms at sides and hold position for 5-15 minutes."
+    ],
+    "formTips": [
+      "Place pillow under hips if hamstrings feel tight.",
+      "Breathe deeply and slowly."
+    ],
+    "commonMistakes": [
+      "Placing hips too close if hamstrings strain",
+      "Arching lower back"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "5-10 mins",
+      "hypertrophy": "10 mins",
+      "endurance": "15 mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Passive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "restoration",
+      "venous-return",
+      "yoga"
+    ]
+  },
+  {
+    "id": "norwegian-4x4-vo2-max-intervals",
+    "name": "Norwegian 4×4 VO₂ Max Intervals",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "cardiovascular system"
+    ],
+    "secondaryMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "equipment": "treadmill",
+    "difficulty": "advanced",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Run/spin 4 minutes at 85-95% max heart rate.",
+      "Follow with 3 minutes active recovery at 60-70% max heart rate.",
+      "Repeat for 4 total work intervals."
+    ],
+    "formTips": [
+      "Maintain consistent pace across all 4 intervals.",
+      "Pace active recovery to drop heart rate."
+    ],
+    "commonMistakes": [
+      "Sprinting too hard in interval 1",
+      "Stopping completely during recovery breaks"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "4x4 min",
+      "hypertrophy": "4x4 min",
+      "endurance": "4x4 min"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 180,
+      "endurance": 180
+    },
+    "tempo": "High-Intensity",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "vo2max",
+      "intervals",
+      "norwegian-4x4"
+    ]
+  },
+  {
+    "id": "zone-2-runs",
+    "name": "Zone 2 Runs",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "cardiovascular system"
+    ],
+    "secondaryMuscles": [
+      "quadriceps",
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Run at steady conversational pace (60-70% max heart rate).",
+      "Maintain comfortable nasal breathing standard.",
+      "Sustain pace for 30 to 60+ minutes."
+    ],
+    "formTips": [
+      "Keep stride light and fast cadence.",
+      "Slow down if heart rate spikes."
+    ],
+    "commonMistakes": [
+      "Running too fast out of Zone 2",
+      "Inconsistent pacing"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 1,
+      "advanced": 1
+    },
+    "recommendedReps": {
+      "strength": "30 mins",
+      "hypertrophy": "45 mins",
+      "endurance": "60+ mins"
+    },
+    "recommendedRest": {
+      "strength": 0,
+      "hypertrophy": 0,
+      "endurance": 0
+    },
+    "tempo": "Steady",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "zone-2",
+      "aerobic",
+      "endurance"
+    ]
+  },
+  {
+    "id": "high-knee-sprints",
+    "name": "High-Knee Sprints",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "rectus abdominis"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Sprint forward driving knees up to waist level at maximum turnover rate.",
+      "Pump arms vigorously opposite to legs.",
+      "Maintain upright posture."
+    ],
+    "formTips": [
+      "Stay on balls of feet.",
+      "Drive arms from shoulders."
+    ],
+    "commonMistakes": [
+      "Leaning backward excessively",
+      "Low knee height"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "15s burst",
+      "hypertrophy": "20s burst",
+      "endurance": "30s burst"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "high-knees",
+      "cardio",
+      "sprint"
+    ]
+  },
+  {
+    "id": "burpees",
+    "name": "Burpees",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "deltoids",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Drop into push-up position from standing stance.",
+      "Perform push-up chest to floor.",
+      "Kick feet back under hips and jump upward explosively with arms overhead."
+    ],
+    "formTips": [
+      "Keep core engaged during push-up phase.",
+      "Land softly on jump transition."
+    ],
+    "commonMistakes": [
+      "Sagging back in push-up",
+      "Omitting jump at top"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "burpee",
+      "conditioning",
+      "cardio"
+    ]
+  },
+  {
+    "id": "jump-squats",
+    "name": "Jump Squats",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Lower into parallel bodyweight squat.",
+      "Drive through heels to leap vertically.",
+      "Absorb landing softly back into squat position."
+    ],
+    "formTips": [
+      "Land toe-to-heel quietly.",
+      "Keep chest up throughout squat."
+    ],
+    "commonMistakes": [
+      "Valgus knee collapse on landing",
+      "Partial squat depth"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "squat-jump",
+      "plyo",
+      "cardio"
+    ]
+  },
+  {
+    "id": "mountain-climbers",
+    "name": "Mountain Climbers",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [
+      "deltoids",
+      "quadriceps"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Start in high push-up plank position.",
+      "Drive alternate knees rapidly toward chest in running movement.",
+      "Maintain flat hips and steady core support."
+    ],
+    "formTips": [
+      "Keep shoulders directly above hands.",
+      "Maintain fast rapid rhythm."
+    ],
+    "commonMistakes": [
+      "Bouncing hips in air",
+      "Hand placement too far forward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "20s",
+      "hypertrophy": "35s",
+      "endurance": "50-60s"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "core",
+      "conditioning",
+      "cardio"
+    ]
+  },
+  {
+    "id": "lateral-skater-hops",
+    "name": "Lateral Skater Hops",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "gluteus medius",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Leap laterally off outer leg landing softly on opposite leg.",
+      "Sweep trailing leg behind body with arm motion like a speed skater.",
+      "Bounding back and forth rhythmically."
+    ],
+    "formTips": [
+      "Hinge at hips slightly.",
+      "Absorb shock on landing knee."
+    ],
+    "commonMistakes": [
+      "Upright stiff knees",
+      "Losing lateral distance"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "10 leaps/side",
+      "hypertrophy": "15 leaps/side",
+      "endurance": "20 leaps/side"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "skater",
+      "lateral",
+      "cardio"
+    ]
+  },
+  {
+    "id": "speed-rope",
+    "name": "Speed Rope (Jumping Rope)",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius",
+      "soleus"
+    ],
+    "secondaryMuscles": [
+      "forearms",
+      "cardiovascular system"
+    ],
+    "equipment": "speed rope",
+    "difficulty": "beginner",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Hold rope handles at waist level.",
+      "Turn rope with wrist rotation while bouncing lightly on balls of feet.",
+      "Maintain quick rapid double-unders or single bounces."
+    ],
+    "formTips": [
+      "Keep elbows close to torso.",
+      "Jump 1-2 inches off ground only."
+    ],
+    "commonMistakes": [
+      "Bending knees excessively backwards",
+      "Rotating arms from shoulders instead of wrists"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "30s",
+      "hypertrophy": "60s",
+      "endurance": "2-3 mins"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "jump-rope",
+      "calves",
+      "cardio"
+    ]
+  },
+  {
+    "id": "kettlebell-swings",
+    "name": "Kettlebell Swings",
+    "bodyPart": "posterior chain",
+    "targetMuscles": [
+      "gluteus maximus",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "erector spinae",
+      "deltoids"
+    ],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Hinge hips back to swing kettlebell between legs.",
+      "Snap hips forward explosively to drive kettlebell to chest level.",
+      "Allow kettlebell to fall back into hip hinge smoothly."
+    ],
+    "formTips": [
+      "Movement is a hip hinge, not a squat.",
+      "Keep arms relaxed like ropes."
+    ],
+    "commonMistakes": [
+      "Lifting weight with shoulders",
+      "Rounding lower back at bottom"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "10-12",
+      "hypertrophy": "15-20",
+      "endurance": "25+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "kettlebell",
+      "swings",
+      "posterior-chain"
+    ]
+  },
+  {
+    "id": "shuttle-runs-suicides",
+    "name": "Shuttle Runs (Suicides)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "glutes"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Sprint to first cone/line, touch floor, and sprint back to start line.",
+      "Immediately turn and sprint to second cone, back, and so forth.",
+      "Maintain high speed transitions."
+    ],
+    "formTips": [
+      "Drop center of gravity when changing directions.",
+      "Drive off outside foot during turns."
+    ],
+    "commonMistakes": [
+      "Rounding cone turns loosely",
+      "Slowing down before lines"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3 lines",
+      "hypertrophy": "4 lines",
+      "endurance": "5 lines"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "shuttle",
+      "conditioning",
+      "agility"
+    ]
+  },
+  {
+    "id": "rowing-machine-assault-bike-sprints",
+    "name": "Rowing Machine / Assault Bike Sprints",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "deltoids",
+      "core"
+    ],
+    "equipment": "rowing machine",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "cardio",
+    "instructions": [
+      "Execute maximal wattage sprint on rower or air bike for 20-30 seconds.",
+      "Rest or pedal slowly during recovery interval.",
+      "Maintain stroke power or RPM."
+    ],
+    "formTips": [
+      "Push hard through legs before pulling with upper body.",
+      "Keep core braced."
+    ],
+    "commonMistakes": [
+      "Pulling early with arms on rower",
+      "Fading effort mid-sprint"
+    ],
+    "recommendedSets": {
+      "beginner": 4,
+      "intermediate": 6,
+      "advanced": 8
+    },
+    "recommendedReps": {
+      "strength": "15s max effort",
+      "hypertrophy": "20s max effort",
+      "endurance": "30s max effort"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Max Effort",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "rower",
+      "assault-bike",
+      "sprints"
+    ]
+  },
+  {
+    "id": "100m-200m-flying-sprints",
+    "name": "100m / 200m Flying Sprints",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hip flexors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Build up acceleration over 20-30m run-in zone.",
+      "Hit maximum velocity and maintain top speed over 20-30m fly zone.",
+      "Decelerate smoothly."
+    ],
+    "formTips": [
+      "Maintain relaxed tall sprinter mechanics.",
+      "Strike ground underneath hips."
+    ],
+    "commonMistakes": [
+      "Overstriding ahead of body",
+      "Tensing shoulders and neck at top speed"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "20m fly zone",
+      "hypertrophy": "30m fly zone",
+      "endurance": "50m fly zone"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 180,
+      "endurance": 120
+    },
+    "tempo": "Max Speed",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "sprint",
+      "top-speed",
+      "flying-sprint"
+    ]
+  },
+  {
+    "id": "hill-sprints",
+    "name": "Hill Sprints",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "gluteus maximus",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Sprint uphill at maximum effort over 20-50 meters.",
+      "Walk down slowly for full recovery before next rep."
+    ],
+    "formTips": [
+      "Drive knees high up hill incline.",
+      "Maintain forward body lean."
+    ],
+    "commonMistakes": [
+      "Jogging down hill too fast",
+      "Shortening arm drive"
+    ],
+    "recommendedSets": {
+      "beginner": 4,
+      "intermediate": 6,
+      "advanced": 8
+    },
+    "recommendedReps": {
+      "strength": "20m hill",
+      "hypertrophy": "35m hill",
+      "endurance": "50m hill"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "hill-sprint",
+      "acceleration",
+      "power"
+    ]
+  },
+  {
+    "id": "sled-pushes-sled-pull-sprints",
+    "name": "Sled Pushes / Sled Pull Sprints",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "core"
+    ],
+    "equipment": "sled",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Grip sled upright poles with low body angle.",
+      "Drive feet backward aggressively into floor to accelerate sled.",
+      "Sprint 15-30 meters."
+    ],
+    "formTips": [
+      "Maintain rigid straight line from head to back heel.",
+      "Drive through ball of foot."
+    ],
+    "commonMistakes": [
+      "Bending spine/rounding lower back",
+      "Taking short shuffling steps"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "15m push",
+      "hypertrophy": "20m push",
+      "endurance": "30m push"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "sled",
+      "sprint",
+      "acceleration"
+    ]
+  },
+  {
+    "id": "resistance-band-sprints",
+    "name": "Resistance Band Sprints",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "glutes",
+      "calves"
+    ],
+    "equipment": "resistance band",
+    "difficulty": "intermediate",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Attach heavy resistance band around waist anchored behind.",
+      "Sprint forward against band tension driving legs powerfully.",
+      "Maintain sprint forward angle."
+    ],
+    "formTips": [
+      "Drive knees forcefully against resistance.",
+      "Keep core braced."
+    ],
+    "commonMistakes": [
+      "Upright leaning posture",
+      "Short incomplete stride"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "10m sprint",
+      "hypertrophy": "15m sprint",
+      "endurance": "20m sprint"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "resisted-sprint",
+      "band",
+      "speed"
+    ]
+  },
+  {
+    "id": "a-skips-and-b-skips",
+    "name": "A-Skips and B-Skips",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Perform rhythmical skipping motion driving knee up to 90 degrees (A-skip).",
+      "For B-skip, extend lower leg forward from 90 degrees before clawing foot back.",
+      "Travel forward 15-20 meters."
+    ],
+    "formTips": [
+      "Stay tall on stance leg.",
+      "Maintain energetic rhythm."
+    ],
+    "commonMistakes": [
+      "Slouching upper back",
+      "Lacking rhythm or timing"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "15m",
+      "hypertrophy": "20m",
+      "endurance": "30m"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Rhythmic",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "track-drills",
+      "skips",
+      "sprint-mechanics"
+    ]
+  },
+  {
+    "id": "high-knees-and-butt-kicks",
+    "name": "High Knees & Butt Kicks",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Run forward rapidly alternate driving knees to waist level.",
+      "Transition into pulling heels straight up to contact glutes under hips.",
+      "Perform over 20m distance."
+    ],
+    "formTips": [
+      "Maintain high stride frequency.",
+      "Keep upper body vertical."
+    ],
+    "commonMistakes": [
+      "Kicking heels backward behind body rather than up under glutes",
+      "Leaning back"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "15m",
+      "hypertrophy": "20m",
+      "endurance": "30m"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "drills",
+      "warmup",
+      "sprint"
+    ]
+  },
+  {
+    "id": "acceleration-wall-drills",
+    "name": "Acceleration Wall Drills",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Lean against wall at 45-degree angle with hands placed on wall.",
+      "Drive one knee up forcefully in flexed sprinting posture.",
+      "Perform rapid leg exchanges driving ball of foot into floor."
+    ],
+    "formTips": [
+      "Keep body line straight from head to back heel.",
+      "Triple extend ankle, knee, and hip."
+    ],
+    "commonMistakes": [
+      "Bending waist/hips",
+      "Landing on heel"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5 exchanges/leg",
+      "hypertrophy": "8 exchanges/leg",
+      "endurance": "12 exchanges/leg"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "wall-drill",
+      "acceleration",
+      "sprint-technique"
+    ]
+  },
+  {
+    "id": "falling-starts",
+    "name": "Falling Starts",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Stand tall on toes.",
+      "Lean forward at ankles without bending waist until balance is lost.",
+      "Explode out into a 10-15 meter acceleration sprint."
+    ],
+    "formTips": [
+      "Let gravity pull body forward before first step.",
+      "Drive arms violently on first foot strike."
+    ],
+    "commonMistakes": [
+      "Bending forward at hips",
+      "Stepping out too early"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "10m sprint",
+      "hypertrophy": "15m sprint",
+      "endurance": "20m sprint"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "starts",
+      "acceleration",
+      "sprint"
+    ]
+  },
+  {
+    "id": "bounds-and-single-leg-bounding",
+    "name": "Bounds & Single-Leg Bounding",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "gluteus maximus",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "plyometric",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Perform oversized bounding running steps focused on vertical projection and distance.",
+      "Drive lead knee high and forcefully extend back leg.",
+      "Bound across 20-30 meters."
+    ],
+    "formTips": [
+      "Maximize air time on each bound.",
+      "Plow through ground with active foot strike."
+    ],
+    "commonMistakes": [
+      "Short quick steps without amplitude",
+      "Collapsing on landing knee"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "20m bound",
+      "hypertrophy": "30m bound",
+      "endurance": "40m bound"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "Explosive",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "bounding",
+      "power",
+      "sprint"
+    ]
+  },
+  {
+    "id": "shuttle-runs-cone-agility-drills",
+    "name": "Shuttle Runs / Cone Agility Drills",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "sprint",
+    "force": "push",
+    "exerciseType": "sprint",
+    "instructions": [
+      "Set up cones in T-shape or grid pattern.",
+      "Sprint forward, shuffle laterally, backpedal around cones at maximum speed.",
+      "Stay low through directional changes."
+    ],
+    "formTips": [
+      "Keep center of gravity low.",
+      "Plant foot firmly when changing velocity."
+    ],
+    "commonMistakes": [
+      "Crossing feet during lateral shuffle",
+      "Standing upright during cuts"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "1 drill rep",
+      "hypertrophy": "2 drill reps",
+      "endurance": "3 drill reps"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Agile/Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "agility",
+      "cones",
+      "change-of-direction"
+    ]
+  },
+  {
+    "id": "barbell-bench-press",
+    "name": "Barbell Bench Press",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "triceps"
+    ],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Lie flat on the bench.",
+      "Grip the bar slightly wider than shoulder width.",
+      "Lower under control to mid-chest.",
+      "Press until elbows are extended."
+    ],
+    "formTips": [
+      "Keep shoulder blades retracted.",
+      "Keep feet planted.",
+      "Do not bounce the bar."
+    ],
+    "commonMistakes": [
+      "Flaring elbows too much",
+      "Lifting hips off bench",
+      "Partial range of motion"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "4-6",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "bench",
+      "chest",
+      "barbell"
+    ]
+  },
+  {
+    "id": "machine-chest-press",
+    "name": "Machine Chest Press",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "triceps"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Adjust seat height so handles align with lower/mid chest.",
+      "Press handles forward until arms are almost fully extended.",
+      "Return handles under control without letting weights slam."
+    ],
+    "formTips": [
+      "Press back firmly into seat cushion.",
+      "Retract scapula before starting press."
+    ],
+    "commonMistakes": [
+      "Shrugging shoulders forward",
+      "Locking elbows hard at end"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "machine",
+      "chest",
+      "press"
+    ]
+  },
+  {
+    "id": "machine-row",
+    "name": "Machine Row",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi",
+      "rhomboids"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "posterior deltoid"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit with chest braced against pad.",
+      "Grip handles with arms extended.",
+      "Pull handles toward abdomen squeezing shoulder blades.",
+      "Extend arms back under control."
+    ],
+    "formTips": [
+      "Keep chest flat against pad throughout movement.",
+      "Lead movement with elbows."
+    ],
+    "commonMistakes": [
+      "Leaning back off chest pad",
+      "Using momentum to jerk handles"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "machine",
+      "row",
+      "back"
+    ]
+  },
+  {
+    "id": "barbell-row",
+    "name": "Barbell Row",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi",
+      "rhomboids"
+    ],
+    "secondaryMuscles": [
+      "posterior deltoid",
+      "biceps brachii",
+      "erector spinae"
+    ],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Hinge at waist with knees slightly bent and back flat.",
+      "Grip barbell overhand wider than shoulder width.",
+      "Pull bar to lower sternum/navel.",
+      "Lower bar under control."
+    ],
+    "formTips": [
+      "Keep torso stationary at 45 degrees.",
+      "Drive elbows behind body."
+    ],
+    "commonMistakes": [
+      "Standing up during pulling phase",
+      "Rounding lower back"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "barbell",
+      "row",
+      "back"
+    ]
+  },
+  {
+    "id": "overhead-press",
+    "name": "Overhead Press",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "anterior deltoid",
+      "medial deltoid"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "upper chest",
+      "core"
+    ],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Rack bar at shoulder height.",
+      "Unrack bar resting on collarbones, grip just outside shoulders.",
+      "Press bar straight overhead until arms lock out.",
+      "Lower under control back to shoulders."
+    ],
+    "formTips": [
+      "Squeeze glutes and core tight.",
+      "Move head back slightly as bar passes face."
+    ],
+    "commonMistakes": [
+      "Excessive arching of lower back",
+      "Pressing bar forward away from body"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "4-6",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "shoulders",
+      "ohp",
+      "barbell"
+    ]
+  },
+  {
+    "id": "incline-db-press",
+    "name": "Incline DB Press",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "clavicular head pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "triceps"
+    ],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Set bench to 30-45 degree incline.",
+      "Sit back with dumbbells at chest level.",
+      "Press dumbbells upward until arms extend fully.",
+      "Lower controlled to upper chest height."
+    ],
+    "formTips": [
+      "Keep feet flat on floor.",
+      "Angle dumbbells 45 degrees to body."
+    ],
+    "commonMistakes": [
+      "Bench incline set too steep (>45 deg)",
+      "Flaring elbows horizontally"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "incline",
+      "chest",
+      "dumbbell"
+    ]
+  },
+  {
+    "id": "tricep-pushdown",
+    "name": "Tricep Pushdown",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "triceps brachii"
+    ],
+    "secondaryMuscles": [
+      "forearms"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Attach rope or bar to high pulley.",
+      "Grip attachment with elbows locked at sides.",
+      "Push attachment down until elbows lock fully.",
+      "Return slowly to 90 degrees elbow bend."
+    ],
+    "formTips": [
+      "Keep elbows fixed at ribs.",
+      "Squeeze triceps at bottom lockout."
+    ],
+    "commonMistakes": [
+      "Letting elbows flare or swing forward",
+      "Leaning body over cable"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "triceps",
+      "cable",
+      "isolation"
+    ]
+  },
+  {
+    "id": "ez-bar-curl",
+    "name": "EZ Bar Curl",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "biceps brachii"
+    ],
+    "secondaryMuscles": [
+      "brachialis",
+      "forearms"
+    ],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Stand tall holding EZ bar on angled grips.",
+      "Keep elbows pinned at sides and curl weight upward toward shoulders.",
+      "Lower under control to straight arms."
+    ],
+    "formTips": [
+      "Avoid swinging torso for momentum.",
+      "Squeeze biceps at top contraction."
+    ],
+    "commonMistakes": [
+      "Swinging body backward",
+      "Lifting elbows forward to cheat"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "biceps",
+      "ez-bar",
+      "arms"
+    ]
+  },
+  {
+    "id": "cable-row",
+    "name": "Cable Row",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi",
+      "rhomboids"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "posterior deltoid"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit facing cable machine with feet on footrests.",
+      "Grip handle attachment with arms extended and back straight.",
+      "Pull handle to abdomen squeezing shoulder blades.",
+      "Extend arms back slowly."
+    ],
+    "formTips": [
+      "Maintain upright torso posture.",
+      "Avoid excessive leaning backward."
+    ],
+    "commonMistakes": [
+      "Rocking back and forth dramatically",
+      "Rounding upper back"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "cable",
+      "row",
+      "back"
+    ]
+  },
+  {
+    "id": "db-shoulder-press",
+    "name": "DB Shoulder Press",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "anterior deltoid",
+      "medial deltoid"
+    ],
+    "secondaryMuscles": [
+      "triceps"
+    ],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit on vertical bench with dumbbells held at ear height.",
+      "Press dumbbells upward until arms extend overhead.",
+      "Lower dumbbells under control to shoulder line."
+    ],
+    "formTips": [
+      "Keep core engaged flat to bench backrest.",
+      "Avoid clinking dumbbells together at top."
+    ],
+    "commonMistakes": [
+      "Arching lower back",
+      "Lowering dumbbells too short"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "shoulders",
+      "dumbbell",
+      "press"
+    ]
+  },
+  {
+    "id": "lat-pulldown",
+    "name": "Lat Pulldown",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "rhomboids"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit in machine with thighs secured under pads.",
+      "Grip wide bar with overhand grip.",
+      "Pull bar down to upper chest while depressing shoulder blades.",
+      "Return bar under control to full arm extension."
+    ],
+    "formTips": [
+      "Puff chest up toward bar.",
+      "Focus on elbow drive downward."
+    ],
+    "commonMistakes": [
+      "Pulling bar behind neck",
+      "Leaning back excessively into horizontal pull"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "lat-pulldown",
+      "back",
+      "cable"
+    ]
+  },
+  {
+    "id": "pec-deck",
+    "name": "Pec Deck",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit back against machine with arms bent at 90 degrees on pads or handles.",
+      "Bring handles together in front of chest squeezing pectorals.",
+      "Return arms outward under control until stretch is felt."
+    ],
+    "formTips": [
+      "Keep chest puffed and shoulders back.",
+      "Control the stretch phase."
+    ],
+    "commonMistakes": [
+      "Letting weights slam at stretch",
+      "Allowing shoulders to roll forward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pec-deck",
+      "fly",
+      "chest"
+    ]
+  },
+  {
+    "id": "reverse-pec-deck",
+    "name": "Reverse Pec Deck",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "posterior deltoid"
+    ],
+    "secondaryMuscles": [
+      "rhomboids",
+      "trapezius"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit facing pec deck machine chest against pad.",
+      "Grip handles with arms extended forward.",
+      "Pull handles out to sides squeezing rear delts.",
+      "Return to start position under control."
+    ],
+    "formTips": [
+      "Keep slight bend in elbows.",
+      "Focus squeeze on back of shoulders."
+    ],
+    "commonMistakes": [
+      "Shrugging shoulders upward",
+      "Using heavy momentum"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "rear-delt",
+      "reverse-fly",
+      "shoulders"
+    ]
+  },
+  {
+    "id": "cable-lateral-raises",
+    "name": "Cable Lateral Raises",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "lateral deltoid"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Stand next to low cable pulley holding handle across body.",
+      "Raise arm sideways out to shoulder height with slight elbow bend.",
+      "Lower under control back across torso."
+    ],
+    "formTips": [
+      "Lead movement with elbow.",
+      "Maintain constant cable tension."
+    ],
+    "commonMistakes": [
+      "Leaning away or swinging torso",
+      "Lifting hands higher than elbows"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "lateral-raise",
+      "cable",
+      "shoulders"
+    ]
+  },
+  {
+    "id": "overhead-tricep-extension",
+    "name": "Overhead Tricep Extension",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "long head triceps brachii"
+    ],
+    "secondaryMuscles": [
+      "forearms"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Attach rope/bar to pulley facing away from machine.",
+      "Hold attachment overhead with elbows pointing forward.",
+      "Extend arms upward until triceps lock out.",
+      "Lower weight behind head slowly."
+    ],
+    "formTips": [
+      "Keep upper arms locked in place.",
+      "Maintain core bracing to avoid spine arch."
+    ],
+    "commonMistakes": [
+      "Flaring elbows wide to sides",
+      "Arching lower back under weight"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "triceps",
+      "overhead",
+      "arms"
+    ]
+  },
+  {
+    "id": "cable-curl",
+    "name": "Cable Curl",
+    "bodyPart": "arms",
+    "targetMuscles": [
+      "biceps brachii"
+    ],
+    "secondaryMuscles": [
+      "brachialis"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Stand facing low pulley holding straight or EZ bar handle.",
+      "Keep elbows tight to ribs and curl weight up to chest.",
+      "Lower bar under control."
+    ],
+    "formTips": [
+      "Keep tension constant throughout path.",
+      "Squeeze biceps at top."
+    ],
+    "commonMistakes": [
+      "Swinging hips for momentum",
+      "Moving elbows back during pull"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "biceps",
+      "cable",
+      "arms"
+    ]
+  },
+  {
+    "id": "barbell-back-squat",
+    "name": "Barbell Back Squat",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "erector spinae"
+    ],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Position bar across upper back traps.",
+      "Unrack bar and step back with feet shoulder-width apart.",
+      "Lower hips back and down until thighs reach parallel.",
+      "Drive through heels to stand back up."
+    ],
+    "formTips": [
+      "Keep chest lifted and core braced.",
+      "Ensure knees track in line with toes."
+    ],
+    "commonMistakes": [
+      "Knees caving inward (valgus)",
+      "Rounding spine at bottom"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "squat",
+      "barbell",
+      "legs"
+    ]
+  },
+  {
+    "id": "romanian-deadlift",
+    "name": "Romanian Deadlift (RDL)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "erector spinae",
+      "forearms"
+    ],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Stand holding barbell at hip height with soft knee bend.",
+      "Hinge at hips pushing glutes backward while lowering bar along thighs.",
+      "Lower until hamstring stretch is felt, then drive hips forward to stand."
+    ],
+    "formTips": [
+      "Keep bar close to legs throughout motion.",
+      "Maintain flat spine."
+    ],
+    "commonMistakes": [
+      "Rounding lower back",
+      "Bending knees into standard squat"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "3-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "rdl",
+      "hamstrings",
+      "glutes"
+    ]
+  },
+  {
+    "id": "leg-press",
+    "name": "Leg Press",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit in leg press sled with feet hip-width apart on platform.",
+      "Release safety latches and lower sled until knees form 90 degrees.",
+      "Press platform back up driving through heels."
+    ],
+    "formTips": [
+      "Keep lower back flat against seat.",
+      "Do not lock knees completely at top."
+    ],
+    "commonMistakes": [
+      "Lifting tailbone off backrest",
+      "Hyperextending knees at lockout"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "leg-press",
+      "machine",
+      "quads"
+    ]
+  },
+  {
+    "id": "seated-leg-curl",
+    "name": "Seated Leg Curl",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "calves"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit in machine with pad secured above knees and lower lever pad against calves.",
+      "Flex knees to pull lower pad downward behind legs.",
+      "Return slowly to extended knee position."
+    ],
+    "formTips": [
+      "Secure top thigh pad firmly.",
+      "Squeeze hamstrings at deep flexion."
+    ],
+    "commonMistakes": [
+      "Allowing hips to slide forward off seat",
+      "Swinging weight back fast"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-12",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "hamstrings",
+      "curl",
+      "machine"
+    ]
+  },
+  {
+    "id": "standing-calf-raise",
+    "name": "Standing Calf Raise",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius"
+    ],
+    "secondaryMuscles": [
+      "soleus"
+    ],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Position shoulder pads on shoulders with balls of feet on block.",
+      "Lower heels into deep stretched position.",
+      "Drive up onto toes as high as possible squeezing calves."
+    ],
+    "formTips": [
+      "Keep knees nearly straight.",
+      "Pause briefly at peak contraction."
+    ],
+    "commonMistakes": [
+      "Bouncing fast at bottom",
+      "Bending knees to assist lift"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "calves",
+      "standing-raise",
+      "legs"
+    ]
+  },
+  {
+    "id": "bulgarian-split-squat",
+    "name": "Bulgarian Split Squat",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "adductors"
+    ],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Stand facing away from bench, place top of rear foot on bench behind you.",
+      "Lower front thigh to parallel with floor keeping chest tall.",
+      "Drive through front heel to return to standing."
+    ],
+    "formTips": [
+      "Maintain tall torso with slight hip hinge.",
+      "Keep front foot flat."
+    ],
+    "commonMistakes": [
+      "Placing front foot too close to bench",
+      "Knee collapsing inward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8/leg",
+      "hypertrophy": "8-12/leg",
+      "endurance": "12-15/leg"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "split-squat",
+      "single-leg",
+      "quads"
+    ]
+  },
+  {
+    "id": "leg-extension",
+    "name": "Leg Extension",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "machine",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit with back flat against pad and lower shin against pad attachment.",
+      "Extend knees to lift weight up until legs are straight.",
+      "Lower under control to starting bend."
+    ],
+    "formTips": [
+      "Align knee joint with machine pivot axis.",
+      "Hold peak contraction for 1 second."
+    ],
+    "commonMistakes": [
+      "Kicking legs up rapidly",
+      "Lifting hips off seat"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "quads",
+      "leg-extension",
+      "machine"
+    ]
+  },
+  {
+    "id": "hip-thrust",
+    "name": "Hip Thrust",
+    "bodyPart": "glutes",
+    "targetMuscles": [
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "quadriceps"
+    ],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "strength",
+    "instructions": [
+      "Sit on floor with upper back against bench and barbell over hips.",
+      "Plant feet flat on floor shoulder-width apart.",
+      "Drive hips up through heels until torso and thighs form straight horizontal line.",
+      "Lower hips under control."
+    ],
+    "formTips": [
+      "Keep chin tucked throughout thrust.",
+      "Full squeeze at top lockout."
+    ],
+    "commonMistakes": [
+      "Arching lower back instead of hinging hips",
+      "Rising onto toes"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "8-12",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "glutes",
+      "hip-thrust",
+      "barbell"
+    ]
+  },
+  {
+    "id": "cable-crunch",
+    "name": "Cable Crunch",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [
+      "obliques"
+    ],
+    "equipment": "cable",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "strength",
+    "instructions": [
+      "Kneel in front of cable pulley with rope attachment held beside head.",
+      "Flex spine downward pulling elbows toward knees using abs.",
+      "Return under control allowing spine to extend slightly."
+    ],
+    "formTips": [
+      "Keep hips static; flex through spine.",
+      "Focus on abdominal contraction."
+    ],
+    "commonMistakes": [
+      "Sitting back onto heels using bodyweight",
+      "Pulling with arms instead of abs"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "10-15",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "abs",
+      "cable",
+      "crunch"
+    ]
+  },
+  {
+    "id": "push-ups",
+    "name": "Push-Ups",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid",
+      "triceps",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Set up in high plank with hands slightly wider than shoulders.",
+      "Lower chest to floor keeping elbows at 45 degrees.",
+      "Press through palms back to locked plank."
+    ],
+    "formTips": [
+      "Keep core and glutes squeezed.",
+      "Maintain rigid head-to-heel line."
+    ],
+    "commonMistakes": [
+      "Sagging hips",
+      "Flaring elbows wide"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20+"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pushup",
+      "calisthenics",
+      "chest"
+    ]
+  },
+  {
+    "id": "pike-push-ups",
+    "name": "Pike Push-Ups",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "anterior deltoid"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "upper back"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Form inverted V-shape pike position with hips high.",
+      "Lower top of head forward toward ground between hands.",
+      "Press back up along diagonal path to starting pike."
+    ],
+    "formTips": [
+      "Look back at feet during press.",
+      "Keep legs straight if hamstring mobility allows."
+    ],
+    "commonMistakes": [
+      "Lowering head straight down instead of forward tripod angle",
+      "Flaring elbows"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-8",
+      "hypertrophy": "8-12",
+      "endurance": "12-15"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pike",
+      "shoulders",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "dips",
+    "name": "Dips",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "triceps brachii",
+      "pectoralis major"
+    ],
+    "secondaryMuscles": [
+      "anterior deltoid"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Mount dip station with arms locked out.",
+      "Lower body until elbows reach 90-degree angle.",
+      "Press body straight back up to full lockout."
+    ],
+    "formTips": [
+      "Lean torso forward slightly for chest focus.",
+      "Keep shoulders depressed down."
+    ],
+    "commonMistakes": [
+      "Going too deep straining shoulders",
+      "Shrugging shoulders upward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-8",
+      "hypertrophy": "8-12",
+      "endurance": "15+"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "dips",
+      "calisthenics",
+      "triceps"
+    ]
+  },
+  {
+    "id": "pull-ups",
+    "name": "Pull-Ups",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "rhomboids"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Hang from pull-up bar with overhand grip wider than shoulders.",
+      "Pull chest up to bar pulling elbows down to ribs.",
+      "Lower back down under control to dead hang."
+    ],
+    "formTips": [
+      "Engage lats before bending elbows.",
+      "Avoid swinging legs."
+    ],
+    "commonMistakes": [
+      "Kipping or swinging",
+      "Partial chin extension at top"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "4-6",
+      "hypertrophy": "8-10",
+      "endurance": "12+"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pull-up",
+      "back",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "chin-ups",
+    "name": "Chin-Ups",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "biceps brachii",
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "brachialis",
+      "posterior deltoid"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Grip bar underhand shoulder-width apart.",
+      "Pull body up until chin clears bar.",
+      "Lower under control to full arm stretch."
+    ],
+    "formTips": [
+      "Keep core tight.",
+      "Squeeze biceps at top peak."
+    ],
+    "commonMistakes": [
+      "Half reps at bottom",
+      "Reaching chin up awkwardly"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "5-6",
+      "hypertrophy": "8-10",
+      "endurance": "12+"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "chin-up",
+      "biceps",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "inverted-rows",
+    "name": "Inverted Rows",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "rhomboids",
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Hang under low bar or rings with heels on floor.",
+      "Pull chest up to bar keeping body in straight plank.",
+      "Lower back down smoothly."
+    ],
+    "formTips": [
+      "Puff chest up to touch bar.",
+      "Keep glutes engaged."
+    ],
+    "commonMistakes": [
+      "Sagging hips",
+      "Craning neck forward"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "10-12",
+      "endurance": "15+"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "inverted-row",
+      "calisthenics",
+      "back"
+    ]
+  },
+  {
+    "id": "pistol-squats",
+    "name": "Pistol Squats",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "calves",
+      "core"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Balance on one leg extending opposite leg straight forward.",
+      "Squat down fully on stance leg until hamstrings touch calf.",
+      "Drive back up to standing."
+    ],
+    "formTips": [
+      "Reach arms forward for counter-balance.",
+      "Keep standing heel firmly planted."
+    ],
+    "commonMistakes": [
+      "Lifting heel off ground",
+      "Collapsing knee inward"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3-5/leg",
+      "hypertrophy": "6-8/leg",
+      "endurance": "10/leg"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "3-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "pistol-squat",
+      "single-leg",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "calisthenics-bulgarian-split-squats",
+    "name": "Bulgarian Split Squats (Bodyweight)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Place rear foot on bench behind you.",
+      "Lower front knee to 90 degrees using bodyweight.",
+      "Drive back up to standing single-leg position."
+    ],
+    "formTips": [
+      "Keep front foot flat.",
+      "Torso upright."
+    ],
+    "commonMistakes": [
+      "Knee tracking past toes excessively",
+      "Losing balance laterally"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10/leg",
+      "hypertrophy": "12-15/leg",
+      "endurance": "20/leg"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "split-squat",
+      "calisthenics",
+      "legs"
+    ]
+  },
+  {
+    "id": "nordic-hamstring-curls",
+    "name": "Nordic Hamstring Curls",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "gluteus maximus",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Kneel with ankles anchored behind.",
+      "Lower body forward under eccentric control resisting with hamstrings.",
+      "Catch hands lightly on floor, push off slightly, and curl back up."
+    ],
+    "formTips": [
+      "Keep hips fully extended straight.",
+      "Control eccentric descent as slow as possible."
+    ],
+    "commonMistakes": [
+      "Bending waist/hips backward",
+      "Falling too fast without control"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 120,
+      "endurance": 90
+    },
+    "tempo": "4-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "nordic",
+      "hamstrings",
+      "eccentric"
+    ]
+  },
+  {
+    "id": "bodyweight-calf-raises",
+    "name": "Bodyweight Calf Raises",
+    "bodyPart": "calves",
+    "targetMuscles": [
+      "gastrocnemius",
+      "soleus"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "push",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Stand on step edge with heels hanging off.",
+      "Lower heels into stretch.",
+      "Raise up onto toes fully and squeeze."
+    ],
+    "formTips": [
+      "Perform full range of motion.",
+      "Pause at top squeeze."
+    ],
+    "commonMistakes": [
+      "Partial reps",
+      "Bouncing fast"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "12-15",
+      "hypertrophy": "15-20",
+      "endurance": "25+"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "calves",
+      "bodyweight",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "hanging-leg-raises",
+    "name": "Hanging Leg Raises",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [
+      "obliques",
+      "forearms"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Hang from pull-up bar with dead hang grip.",
+      "Raise straight legs up until parallel or touching bar.",
+      "Lower legs slowly without swinging."
+    ],
+    "formTips": [
+      "Curler pelvis upward at top of movement.",
+      "Control descent phase."
+    ],
+    "commonMistakes": [
+      "Using momentum/kipping hips",
+      "Arching lower back on descent"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "6-8",
+      "hypertrophy": "10-12",
+      "endurance": "15-20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-0-2",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "hanging-leg-raise",
+      "abs",
+      "core"
+    ]
+  },
+  {
+    "id": "l-sits",
+    "name": "L-Sits",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [
+      "triceps",
+      "quadriceps"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Press hands down into parallettes or floor extending arms.",
+      "Lift legs straight out parallel to ground forming L-shape.",
+      "Hold position steady."
+    ],
+    "formTips": [
+      "Depress shoulders down strongly.",
+      "Keep quad muscle locked out."
+    ],
+    "commonMistakes": [
+      "Bending knees",
+      "Shrugging shoulders into ears"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "10s hold",
+      "hypertrophy": "20s hold",
+      "endurance": "30s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "l-sit",
+      "core",
+      "isometric"
+    ]
+  },
+  {
+    "id": "plank",
+    "name": "Plank",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis",
+      "transverse abdominis"
+    ],
+    "secondaryMuscles": [
+      "deltoids",
+      "gluteus maximus"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isometric",
+    "force": "hold",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Hold high push-up or forearm plank posture.",
+      "Keep spine rigid in straight horizontal line.",
+      "Brace core muscles tight."
+    ],
+    "formTips": [
+      "Squeeze glutes and quads.",
+      "Keep head in neutral gaze."
+    ],
+    "commonMistakes": [
+      "Sagging back",
+      "Piking hips"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "30s hold",
+      "hypertrophy": "60s hold",
+      "endurance": "90s+ hold"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "Hold",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "plank",
+      "core",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "dragon-fly",
+    "name": "Dragon Fly",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [
+      "obliques",
+      "latissimus dorsi"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Lie on bench gripping behind head.",
+      "Lift entire body up vertically resting on shoulder blades.",
+      "Lower straight body down slowly keeping line rigid until above bench."
+    ],
+    "formTips": [
+      "Do not break/bend at hips.",
+      "Resist gravity on descent."
+    ],
+    "commonMistakes": [
+      "Bending hips/piking body",
+      "Dropping lower back forcefully"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10"
+    },
+    "recommendedRest": {
+      "strength": 150,
+      "hypertrophy": 90,
+      "endurance": 60
+    },
+    "tempo": "3-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "dragon-fly",
+      "abs",
+      "calisthenics"
+    ]
+  },
+  {
+    "id": "leg-raises",
+    "name": "Leg Raises",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "lower rectus abdominis",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Lie on back with legs extended.",
+      "Raise legs vertically up to 90 degrees.",
+      "Lower legs slowly back down toward floor without arching back."
+    ],
+    "formTips": [
+      "Press lower back into ground flat.",
+      "Keep legs straight."
+    ],
+    "commonMistakes": [
+      "Arching lower back off floor",
+      "Dropping legs fast"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20+"
+    },
+    "recommendedRest": {
+      "strength": 60,
+      "hypertrophy": 45,
+      "endurance": 30
+    },
+    "tempo": "2-0-2",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "leg-raise",
+      "abs",
+      "floor"
+    ]
+  },
+  {
+    "id": "weighted-pull-ups",
+    "name": "Weighted Pull-ups",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "latissimus dorsi"
+    ],
+    "secondaryMuscles": [
+      "biceps brachii",
+      "rhomboids"
+    ],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "mechanics": "compound",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Attach weight belt with weight plate around waist.",
+      "Grip bar wider than shoulder width.",
+      "Pull chest to bar and lower controlled to dead hang."
+    ],
+    "formTips": [
+      "Secure weight between legs.",
+      "Full arm lockout at bottom."
+    ],
+    "commonMistakes": [
+      "Kipping or kicking weight",
+      "Partial depth"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 4,
+      "advanced": 5
+    },
+    "recommendedReps": {
+      "strength": "3-5",
+      "hypertrophy": "6-8",
+      "endurance": "10-12"
+    },
+    "recommendedRest": {
+      "strength": 180,
+      "hypertrophy": 120,
+      "endurance": 90
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "weighted-pullup",
+      "strength",
+      "back"
+    ]
+  },
+  {
+    "id": "reverse-hyperextensions",
+    "name": "Reverse Hyperextensions",
+    "bodyPart": "glutes",
+    "targetMuscles": [
+      "gluteus maximus",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "erector spinae"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "mechanics": "isolation",
+    "force": "pull",
+    "exerciseType": "calisthenics",
+    "instructions": [
+      "Lie face down on bench with legs hanging off edge.",
+      "Contract glutes and hamstrings to raise straight legs up horizontal.",
+      "Lower legs slowly back down."
+    ],
+    "formTips": [
+      "Initiate drive from glutes.",
+      "Do not hyperextend lower back excessively."
+    ],
+    "commonMistakes": [
+      "Swinging legs forcefully",
+      "Overarching spine"
+    ],
+    "recommendedSets": {
+      "beginner": 3,
+      "intermediate": 3,
+      "advanced": 4
+    },
+    "recommendedReps": {
+      "strength": "8-10",
+      "hypertrophy": "12-15",
+      "endurance": "20"
+    },
+    "recommendedRest": {
+      "strength": 90,
+      "hypertrophy": 60,
+      "endurance": 45
+    },
+    "tempo": "2-1-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "reverse-hyper",
+      "glutes",
+      "posterior-chain"
+    ]
+  },
+  {
+    "id": "400m-build-ups",
+    "name": "400m Build-Ups (Slow Jogging to Sprinting)",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "secondaryMuscles": [
+      "cardiovascular system"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Begin jogging at slow easy pace over 100m.",
+      "Gradually increase speed every 100m ending in 90% sprint effort over final stretch."
+    ],
+    "formTips": [
+      "Focus on gradual progression of speed.",
+      "Stay relaxed through upper body."
+    ],
+    "commonMistakes": [
+      "Sprinting immediately at start",
+      "Overstriding early"
+    ],
+    "recommendedSets": {
+      "beginner": 1,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "400m total",
+      "hypertrophy": "400m total",
+      "endurance": "400m total"
+    },
+    "recommendedRest": {
+      "strength": 120,
+      "hypertrophy": 120,
+      "endurance": 120
+    },
+    "tempo": "Accelerating",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "warmup",
+      "jogging",
+      "build-up"
+    ]
+  },
+  {
+    "id": "arm-circles",
+    "name": "Arm Circles",
+    "bodyPart": "shoulders",
+    "targetMuscles": [
+      "deltoids",
+      "rotator cuff"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand tall with arms extended outward at shoulder height.",
+      "Rotate arms forward in circular motions starting small and expanding.",
+      "Reverse circle direction."
+    ],
+    "formTips": [
+      "Maintain active shoulder blades.",
+      "Control circle velocity."
+    ],
+    "commonMistakes": [
+      "Rushing circles uncontrolled",
+      "Humping shoulders up"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "15 circles/dir",
+      "hypertrophy": "15 circles/dir",
+      "endurance": "20 circles/dir"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "warmup",
+      "shoulders",
+      "dynamic"
+    ]
+  },
+  {
+    "id": "shoulder-swirls-hugs",
+    "name": "Shoulder Swirls / Hugs",
+    "bodyPart": "chest",
+    "targetMuscles": [
+      "pectoralis major",
+      "rhomboids"
+    ],
+    "secondaryMuscles": [
+      "deltoids"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Swing arms horizontally wide apart stretching chest.",
+      "Cross arms in front of chest hugging upper back rhythmically.",
+      "Alternate top arm on each crossover."
+    ],
+    "formTips": [
+      "Keep movement loose and fluid.",
+      "Breathe rhythmically."
+    ],
+    "commonMistakes": [
+      "Forcing range past flexibility limit",
+      "Arching lower back violently"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "12-15 hugs",
+      "hypertrophy": "12-15 hugs",
+      "endurance": "15-20 hugs"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Rhythmic",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "warmup",
+      "chest",
+      "upper-body"
+    ]
+  },
+  {
+    "id": "torso-twists",
+    "name": "Torso Twists",
+    "bodyPart": "core",
+    "targetMuscles": [
+      "obliques",
+      "erector spinae"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Rotate torso side to side allowing arms to swing loosely.",
+      "Pivot feet naturally as body rotates."
+    ],
+    "formTips": [
+      "Allow smooth rotational spinal motion.",
+      "Keep head following movement smoothly."
+    ],
+    "commonMistakes": [
+      "Planting feet stiffly twisting knees",
+      "Jerking spine forcefully"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "10 twists/side",
+      "hypertrophy": "10 twists/side",
+      "endurance": "15 twists/side"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Rhythmic",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "torso",
+      "twists",
+      "spine",
+      "warmup"
+    ]
+  },
+  {
+    "id": "cat-cow-stretches",
+    "name": "Cat-Cow Stretches",
+    "bodyPart": "back",
+    "targetMuscles": [
+      "erector spinae",
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "On all fours, arch back upward tucking chin (Cat).",
+      "Inhale and drop belly down lifting head and tailbone (Cow).",
+      "Flow back and forth steadily."
+    ],
+    "formTips": [
+      "Synchronize breath with movement.",
+      "Move whole spine segmentally."
+    ],
+    "commonMistakes": [
+      "Rushing through movement",
+      "Bending arms during transition"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "8-10 cycles",
+      "hypertrophy": "8-10 cycles",
+      "endurance": "12 cycles"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Slow Flow",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "cat-cow",
+      "spine",
+      "warmup"
+    ]
+  },
+  {
+    "id": "worlds-greatest-stretch",
+    "name": "World's Greatest Stretch",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "hip flexors",
+      "hamstrings",
+      "thoracic spine"
+    ],
+    "secondaryMuscles": [
+      "glutes",
+      "adductors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Lunge forward with right foot, placing left hand on floor.",
+      "Reach right elbow down inside right instep.",
+      "Rotate right arm overhead toward ceiling opening chest, then push back onto heel to stretch hamstrings."
+    ],
+    "formTips": [
+      "Keep back leg straight and active.",
+      "Follow raised hand with eyes."
+    ],
+    "commonMistakes": [
+      "Letting back knee touch ground continuously",
+      "Rushing steps"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "5 reps/side",
+      "hypertrophy": "5 reps/side",
+      "endurance": "8 reps/side"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Flowing",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "mobility",
+      "warmup",
+      "full-body"
+    ]
+  },
+  {
+    "id": "hip-circles",
+    "name": "Hip Circles",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip rotators",
+      "gluteus medius"
+    ],
+    "secondaryMuscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand on one leg, lift opposite knee to 90 degrees.",
+      "Rotate knee outward in large circular path.",
+      "Complete reps and reverse circle direction."
+    ],
+    "formTips": [
+      "Maintain balance on stance leg.",
+      "Isolate circle to hip joint."
+    ],
+    "commonMistakes": [
+      "Twisting hips away from center",
+      "Rushing circle path"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "8 circles/dir",
+      "hypertrophy": "8 circles/dir",
+      "endurance": "10 circles/dir"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "hips",
+      "mobility",
+      "warmup"
+    ]
+  },
+  {
+    "id": "leg-swings",
+    "name": "Leg Swings (Front-to-Back & Side-to-Side)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings",
+      "hip flexors"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "abductors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "n/a",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Hold onto wall or pole for support.",
+      "Swing one leg dynamically front to back expanding range smoothly.",
+      "Turn facing wall and swing leg side to side across body."
+    ],
+    "formTips": [
+      "Keep torso tall and stable.",
+      "Increase height naturally with each swing."
+    ],
+    "commonMistakes": [
+      "Arching lower back dramatically on backward swing",
+      "Forcing height stiffly"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 2
+    },
+    "recommendedReps": {
+      "strength": "10 swings/plane",
+      "hypertrophy": "10 swings/plane",
+      "endurance": "15 swings/plane"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Dynamic",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "leg-swings",
+      "dynamic",
+      "warmup"
+    ]
+  },
+  {
+    "id": "bodyweight-squats",
+    "name": "Bodyweight Squats",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand feet hip-width apart.",
+      "Sit hips back down until thighs reach parallel.",
+      "Drive through feet to stand up."
+    ],
+    "formTips": [
+      "Keep chest up.",
+      "Press knees slightly outward."
+    ],
+    "commonMistakes": [
+      "Heels lifting off ground",
+      "Rounding spine"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "10-12",
+      "hypertrophy": "12-15",
+      "endurance": "20"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "2-0-1",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "squat",
+      "warmup",
+      "legs"
+    ]
+  },
+  {
+    "id": "walking-lunges-with-a-twist",
+    "name": "Walking Lunges with a Twist",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "quadriceps",
+      "gluteus maximus"
+    ],
+    "secondaryMuscles": [
+      "obliques",
+      "hip flexors"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "compound",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Step forward into a lunge bending both knees to 90 degrees.",
+      "Rotate torso over front thigh.",
+      "Rotate back to center and step into next lunge stride."
+    ],
+    "formTips": [
+      "Keep front knee behind toes.",
+      "Maintain balanced upright posture."
+    ],
+    "commonMistakes": [
+      "Twisting toward back leg side",
+      "Losing footing balance"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "8 steps/leg",
+      "hypertrophy": "10 steps/leg",
+      "endurance": "12 steps/leg"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Controlled",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "lunges",
+      "twist",
+      "warmup"
+    ]
+  },
+  {
+    "id": "inchworms",
+    "name": "Inchworms",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "hamstrings",
+      "core"
+    ],
+    "secondaryMuscles": [
+      "deltoids",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "dynamic stretch",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand tall, hinge at waist to touch hands to floor with straight legs.",
+      "Walk hands forward out into high plank position.",
+      "Walk feet forward toward hands using short ankle steps to return to standing fold."
+    ],
+    "formTips": [
+      "Keep legs as straight as hamstring mobility permits.",
+      "Brace core during hand walk."
+    ],
+    "commonMistakes": [
+      "Sagging lower back in plank",
+      "Bending knees excessively"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 2,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "5 reps",
+      "hypertrophy": "6-8 reps",
+      "endurance": "10 reps"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Continuous",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "inchworm",
+      "hamstrings",
+      "warmup"
+    ]
+  },
+  {
+    "id": "jumping-jacks",
+    "name": "Jumping Jacks",
+    "bodyPart": "full body",
+    "targetMuscles": [
+      "calves",
+      "cardiovascular system"
+    ],
+    "secondaryMuscles": [
+      "deltoids"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Stand with feet together and arms at sides.",
+      "Jump feet out wide while clapping hands overhead simultaneously.",
+      "Jump back to starting posture."
+    ],
+    "formTips": [
+      "Land softly on balls of feet.",
+      "Keep continuous rhythm."
+    ],
+    "commonMistakes": [
+      "Heavy heel landing",
+      "Incomplete arm sweep"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "30s",
+      "hypertrophy": "45s",
+      "endurance": "60s"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "jumping-jacks",
+      "cardio",
+      "warmup"
+    ]
+  },
+  {
+    "id": "warmup-high-knees",
+    "name": "High Knees (Warm Up)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hip flexors",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Jog in place bringing knees up to hip height.",
+      "Pump arms rhythmically with movement.",
+      "Maintain light quick foot contacts."
+    ],
+    "formTips": [
+      "Stay tall on toes.",
+      "Keep core engaged."
+    ],
+    "commonMistakes": [
+      "Leaning backward",
+      "Low knee lift"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "20s",
+      "hypertrophy": "30s",
+      "endurance": "45s"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "high-knees",
+      "warmup",
+      "cardio"
+    ]
+  },
+  {
+    "id": "warmup-butt-kicks",
+    "name": "Butt Kicks (Warm Up)",
+    "bodyPart": "legs",
+    "targetMuscles": [
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "quadriceps",
+      "calves"
+    ],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "mechanics": "cardio",
+    "force": "push",
+    "exerciseType": "warmup",
+    "instructions": [
+      "Jog in place pulling heels straight up to make light contact with glutes.",
+      "Keep thighs perpendicular to floor.",
+      "Maintain rapid foot speed."
+    ],
+    "formTips": [
+      "Land lightly on forefeet.",
+      "Keep chest upright."
+    ],
+    "commonMistakes": [
+      "Kicking legs out forward",
+      "Heavy heel strikes"
+    ],
+    "recommendedSets": {
+      "beginner": 2,
+      "intermediate": 3,
+      "advanced": 3
+    },
+    "recommendedReps": {
+      "strength": "20s",
+      "hypertrophy": "30s",
+      "endurance": "45s"
+    },
+    "recommendedRest": {
+      "strength": 30,
+      "hypertrophy": 30,
+      "endurance": 30
+    },
+    "tempo": "Fast",
+    "video": "https://...",
+    "image": "https://...",
+    "tags": [
+      "butt-kicks",
+      "warmup",
+      "hamstrings"
+    ]
+  }
+]
