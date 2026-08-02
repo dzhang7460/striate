@@ -699,8 +699,49 @@ function handleLocalEndpoint(endpoint, params) {
 
 // ---------- Public API wrappers for endpoints ----------
 
+async function fetchAllExercises(params = {}) {
+  const all = [];
+  let offset = Number(params.offset) || 0;
+
+  // First request probes the plan’s page size.
+  const firstPage = await fetchWorkoutX('/v1/exercises', {
+    ...params,
+    limit: Number(params.limit) || 100,
+    offset,
+  });
+
+  const firstItems = Array.isArray(firstPage?.data) ? firstPage.data : [];
+  const pageSize = firstItems.length || 10;
+
+  all.push(...firstItems);
+  offset += pageSize;
+
+  // Keep paging until a short page comes back.
+  for (let safety = 0; safety < 50; safety += 1) {
+    const page = await fetchWorkoutX('/v1/exercises', {
+      ...params,
+      limit: pageSize,
+      offset,
+    });
+
+    const items = Array.isArray(page?.data) ? page.data : [];
+    if (!items.length) break;
+
+    all.push(...items);
+
+    if (items.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  return {
+    total: all.length,
+    count: all.length,
+    data: all,
+  };
+}
+
 async function searchExercises(params = {}) {
-  return fetchWorkoutX('/v1/exercises/search', params);
+  return fetchAllExercises(params);
 }
 
 async function getExerciseById(id) {

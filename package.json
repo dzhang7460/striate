@@ -1,6 +1,6 @@
 {
   "name": "striate",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An honest, adaptive AI coach for fitness beginners with WorkoutX exercise library, sleep-first core loop, and soccer athletic mode.",
   "main": "server.js",
   "scripts": {
@@ -14,9 +14,12 @@
     "gemini",
     "mobile-first"
   ],
-  "author": "Striate Team",
+  "author": "David Zhang, Rafeen Ibn Sadique",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

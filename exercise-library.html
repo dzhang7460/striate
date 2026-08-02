@@ -55,8 +55,6 @@
       <button class="chip selected" data-value="all">All</button>
       <button class="chip" data-value="body weight">Body weight</button>
       <button class="chip" data-value="dumbbell">Dumbbell</button>
-      <button class="chip" data-value="bands">Bands</button>
-      <button class="chip" data-value="gym">Gym</button>
     </div>
 
     <!-- Filter chips: Effort Level -->
@@ -65,6 +63,7 @@
       <button class="chip selected" data-value="all">All</button>
       <button class="chip" data-value="beginner">Beginner</button>
       <button class="chip" data-value="intermediate">Intermediate</button>
+      <button class="chip" data-value="advanced">Advanced</button>
     </div>
 
     <!-- Results List -->
@@ -79,5 +78,22 @@
 <script src="js/ui.js"></script>
 <script src="js/debug.js"></script>
 <script src="js/exercise-library.js"></script>
+
+<nav class="tabbar" aria-label="Main navigation"><div class="tabbar-inner">
+      <a class="tab " href="today.html">
+        <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Today</span>
+      </a>
+      <a class="tab " href="check-in.html" aria-current="page">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>Check-in</span>
+      </a>
+      <a class="tab active" href="exercise-library.html">
+        <i class="fa-solid fa-dumbbell" aria-hidden="true"></i><span>Exercises</span>
+      </a>
+      <a class="tab " href="history.html">
+        <i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>Calendar</span>
+      </a>
+      <a class="tab " href="stats.html">
+        <i class="fa-solid fa-chart-simple" aria-hidden="true"></i><span>Stats</span>
+      </a></div></nav>
 </body>
 </html>

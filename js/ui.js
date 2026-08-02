@@ -6,8 +6,10 @@
 
 const UI = (() => {
   // Chip group behaves like a radio group.
+// Chip group behaves like a radio group.
   function initChipGroups(root = document) {
-    root.querySelectorAll('.chip-group[data-name]').forEach((group) => {
+    // FIX: Exclude [data-multi] so they don't receive single-select listeners
+    root.querySelectorAll('.chip-group[data-name]:not([data-multi])').forEach((group) => {
       group.querySelectorAll('.chip').forEach((chip) => {
         chip.type = 'button';
         chip.addEventListener('click', () => {
@@ -48,11 +50,90 @@ const UI = (() => {
     return g ? g.dataset.value || null : null;
   }
 
+  // Programmatically set chip values, supporting both single and multi-select
   function setChipValue(name, value, root = document) {
     const g = root.querySelector(`.chip-group[data-name="${name}"]`);
     if (!g || value == null) return;
-    const chip = g.querySelector(`.chip[data-value="${CSS.escape(String(value))}"]`);
-    if (chip) chip.click();
+
+    if (g.hasAttribute('data-multi')) {
+      // FIX: Handle parsing an array or JSON string of multiple values
+      let values = [];
+      try {
+        values = typeof value === 'string' ? JSON.parse(value) : value;
+      } catch (e) {
+        values = [value];
+      }
+      if (!Array.isArray(values)) values = [values];
+
+      // Clear existing selections
+      g.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
+      
+      // Select all provided values
+      values.forEach((v) => {
+        const chip = g.querySelector(`.chip[data-value=${CSS.escape(String(v))}]`);
+        if (chip) chip.classList.add('selected');
+      });
+      
+      g.dataset.value = JSON.stringify(values);
+    } else {
+      // Original single-select behavior
+      const chip = g.querySelector(`.chip[data-value=${CSS.escape(String(value))}]`);
+      if (chip) chip.click();
+    }
+  }
+
+    function initScaleGroups(root = document) {
+    root.querySelectorAll('.scale-group[data-name]').forEach((group) => {
+      group.removeEventListener('click', handleScaleClick);
+      group.addEventListener('click', handleScaleClick);
+    });
+  }
+
+  function handleScaleClick(e) {
+    const item = e.target.closest('.chip'); // Works perfectly with your HTML
+    if (!item) return;
+    e.preventDefault(); 
+
+    const group = e.currentTarget;
+    const allItems = Array.from(group.querySelectorAll('.chip'));
+    
+    // Clear previous states
+    allItems.forEach((i) => {
+      i.classList.remove('selected');
+      i.classList.remove('filled');
+    });
+    
+    // Set the clicked item as selected
+    item.classList.add('selected');
+
+    // Add 'filled' class to all items before the selected one
+    const selectedIndex = allItems.indexOf(item);
+    allItems.forEach((i, index) => {
+      if (index < selectedIndex) {
+        i.classList.add('filled');
+      }
+    });
+
+    // Update value and fire event
+    group.dataset.value = item.dataset.value;
+    group.dispatchEvent(new CustomEvent('scalechange', { bubbles: true }));
+  }
+
+  function scaleValue(name, root = document) {
+    const g = root.querySelector(`.scale-group[data-name="${name}"]`);
+    return g ? (g.dataset.value || null) : null;
+  }
+
+  function setScaleValue(name, value, root = document) {
+    const g = root.querySelector(`.scale-group[data-name="${name}"]`);
+    if (!g || value == null) return;
+
+    const safeVal = String(value).replace(/"/g, '\\"');
+    const item = g.querySelector(`.chip[data-value="${safeVal}"]`);
+    
+    if (item && !item.classList.contains('selected')) {
+      item.click();
+    }
   }
 
   // 5-tab bottom navigation bar for Striate v0.3
@@ -140,6 +221,7 @@ const UI = (() => {
 
   return {
     initChipGroups, initMultiChipGroups, chipValue, setChipValue,
+    initScaleGroups, scaleValue, setScaleValue,
     renderTabbar, requireProfile, formatDate, confidenceBadge,
     scheduleTypeIcon, esc, showToast,
   };

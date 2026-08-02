@@ -20,6 +20,7 @@
   const msg = document.getElementById('validation-msg');
 
   UI.initChipGroups();
+  UI.initScaleGroups();
   UI.initMultiChipGroups();
 
   const customTimeInput = document.getElementById('custom-workout-time');
@@ -53,7 +54,7 @@
       });
     }
     UI.setChipValue('experienceLevel', p.experienceLevel);
-    UI.setChipValue('availableDays', p.availableDays);
+    UI.setScaleValue('availableDays', p.availableDays);
     UI.setChipValue('availableTime', p.availableTime);
     UI.setChipValue('sleepSchedule', p.sleepSchedule);
     UI.setChipValue('wakeTimeTarget', p.wakeTimeTarget || '7:00 AM');
@@ -105,7 +106,7 @@
       if (!UI.chipValue('experienceLevel')) return 'Pick your experience level.';
     }
     if (n === 3) {
-      if (!UI.chipValue('availableDays')) return 'Pick how many days you can train.';
+      if (!UI.scaleValue('availableDays')) return 'Pick how many days you can train.';
       if (!UI.chipValue('availableTime')) return 'Pick a typical session length.';
       if (!UI.chipValue('sleepSchedule')) return 'Pick your usual bedtime.';
       if (!UI.chipValue('wakeTimeTarget')) return 'Pick a target wake-up time.';
@@ -139,7 +140,7 @@
       goal: UI.chipValue('goal'),
       soccerFocus,
       experienceLevel: UI.chipValue('experienceLevel'),
-      availableDays: UI.chipValue('availableDays'),
+      availableDays: UI.scaleValue('availableDays'),
       availableTime: UI.chipValue('availableTime'),
       sleepSchedule: UI.chipValue('sleepSchedule'),
       wakeTimeTarget: UI.chipValue('wakeTimeTarget') || '7:00 AM',

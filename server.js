@@ -13,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { callGemini, getApiKey, getModel } = require('./server/gemini');
 const workoutx = require('./server/workoutx');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -79,6 +80,52 @@ const server = http.createServer(async (req, res) => {
       model: getModel(),
       timestamp: new Date().toISOString(),
     });
+    return;
+  }
+
+  // GIFs
+  if (pathname === '/api/exercises/media' && req.method === 'GET') {
+    try {
+      const targetUrl = urlObj.searchParams.get('url');
+      if (!targetUrl) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, error: 'Missing url' }));
+        return;
+      }
+
+      const apiKey = process.env.WORKOUTX_API_KEY || process.env.WORKOUT_X_KEY;
+      if (!apiKey) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, error: 'WORKOUTX_API_KEY not configured' }));
+        return;
+      }
+
+      const upstream = await fetch(targetUrl, {
+        headers: {
+          'X-WorkoutX-Key': apiKey,
+          'Accept': 'image/gif,image/*;q=0.9,*/*;q=0.8',
+        },
+      });
+
+      if (!upstream.ok) {
+        const text = await upstream.text().catch(() => '');
+        res.writeHead(upstream.status, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, error: text || `Upstream HTTP ${upstream.status}` }));
+        return;
+      }
+
+      const contentType = upstream.headers.get('content-type') || 'image/gif';
+      const buffer = Buffer.from(await upstream.arrayBuffer());
+
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=86400',
+      });
+      res.end(buffer);
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: false, error: err.message }));
+    }
     return;
   }
 

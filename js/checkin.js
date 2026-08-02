@@ -7,6 +7,7 @@
   if (!UI.requireProfile()) return;
 
   UI.initChipGroups();
+  UI.initScaleGroups();
   UI.renderTabbar('checkin');
 
   // Header date
@@ -44,7 +45,9 @@
 
   // The "none" default chip needs its group value set.
   const constraintGroup = document.querySelector('.chip-group[data-name="specialConstraint"]');
-  constraintGroup.dataset.value = 'none';
+  if (constraintGroup) {
+    constraintGroup.dataset.value = 'none';
+  }
 
   const submitBtn = document.getElementById('submit-btn');
   const msg = document.getElementById('validation-msg');
@@ -59,7 +62,8 @@
       ['dedicatedWorkoutTime', 'Pick a dedicated workout time today.'],
     ];
     for (const [name, text] of required) {
-      if (!UI.chipValue(name)) return text;
+      // FIX: Fail only if it is missing BOTH a chip value AND a scale value
+      if (!UI.chipValue(name) && !UI.scaleValue(name)) return text;
     }
     return null;
   }
@@ -81,9 +85,9 @@
 
     const checkin = {
       sleep: UI.chipValue('sleep'),
-      energy: Number(UI.chipValue('energy')),
-      soreness: Number(UI.chipValue('soreness')),
-      mood: Number(UI.chipValue('mood')),
+      energy: Number(UI.scaleValue('energy') || UI.chipValue('energy')), 
+      soreness: Number(UI.scaleValue('soreness') || UI.chipValue('soreness')),
+      mood: Number(UI.scaleValue('mood') || UI.chipValue('mood')),
       timeAvailable: UI.chipValue('timeAvailable'),
       dedicatedWorkoutTime: dedicatedTime,
       specialConstraint: UI.chipValue('specialConstraint') || 'none',
