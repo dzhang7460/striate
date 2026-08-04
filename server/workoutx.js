@@ -636,11 +636,13 @@ async function fetchWorkoutX(endpoint, params = {}) {
 
 function parseAndNormalizeApiResponse(endpoint, json, params) {
   if (endpoint === '/v1/exercises/bodyPartList') {
-    const list = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : ['chest', 'back', 'legs', 'shoulders', 'glutes', 'core', 'cardio']);
+    const fallback = [...new Set(LOCAL_EXERCISES.map((e) => String(e.bodyPart)))].sort();
+    const list = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : fallback);
     return { ok: true, data: list.map(String) };
   }
   if (endpoint === '/v1/exercises/targetList') {
-    const list = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : ['pectorals', 'lats', 'quadriceps', 'hamstrings', 'gluteus maximus', 'anterior deltoid', 'rectus abdominis', 'cardiovascular system', 'patellar tendon']);
+    const fallback = [...new Set(LOCAL_EXERCISES.map((e) => String(e.target)))].sort();
+    const list = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : fallback);
     return { ok: true, data: list.map(String) };
   }
 
@@ -758,40 +760,45 @@ async function getTargetList() {
 
 // ---------- AI Coach Shortlisting Function ----------
 
-async function shortlistExercises(profile = {}, checkin = {}) {
-  const goal = profile.goal || 'general';
-  const userEquip = Array.isArray(profile.equipment) ? profile.equipment : ['bodyweight'];
+async function shortlistExercises(profile = {}, checkin = {}, context = {}) {
+  const goal = profile.goal || 'fitness';
+  const userEquip = Array.isArray(profile.equipment) ? profile.equipment : ['none'];
   const hasGym = userEquip.includes('gym');
   const hasDumbbells = userEquip.includes('dumbbells');
   const hasBands = userEquip.includes('bands');
+  const experience = profile.experienceLevel || 'new';
   const timeAvail = checkin.timeAvailable || '30-45';
+  const sleepQuality = Number(checkin.sleepQuality) || 3;
+  const trainingMethods = Array.isArray(profile.preferences?.trainingMethods) ? profile.preferences.trainingMethods : [];
+  const disliked = Array.isArray(profile.preferences?.dislikedSuggestions) ? profile.preferences.dislikedSuggestions : [];
+  const avoidedIds = new Set((profile.preferences?.avoidedExercises || []).map((item) => String(item.id || '')));
+  const preferredIds = new Set((profile.preferences?.preferredExercises || []).map((item) => String(item.id || '')));
+
   const isShortTime = timeAvail === '0-15' || timeAvail === '15-30' || checkin.specialConstraint === 'busy' || checkin.specialConstraint === 'exam';
+  const isLowSleep = ['<5', '5-6'].includes(checkin.sleep) || sleepQuality <= 2 || Number(checkin.energy) <= 2 || ['90_late', 'irregular'].includes(checkin.bedtimeConsistency);
+  const frictionFlag = disliked.some((item) => /annoy|unrealistic|too demanding|too long/i.test(String(item.reason || item.note || '')));
 
-  // Check injury flags
-  const injuryNote = `${profile.injuryNotes || ''} ${checkin.extraNote || ''}`.toLowerCase();
-  const hasKneeInjury = /knee|patell|quad|leg/i.test(injuryNote);
-  const hasShoulderInjury = /shoulder|overhead|deltoid/i.test(injuryNote);
-  const hasBackInjury = /back|lumbar|spine/i.test(injuryNote);
+  const limitationNote = `${profile.injuryNotes || ''} ${checkin.extraNote || ''}`.toLowerCase();
+  const hasKneeInjury = /knee|patell|quad|leg/i.test(limitationNote);
+  const hasShoulderInjury = /shoulder|overhead|deltoid|press/i.test(limitationNote);
+  const hasBackInjury = /back|lumbar|spine|deadlift|hinge/i.test(limitationNote);
 
-  // Check if sleep is <6h or flagged as main issue -> include mobility and light cardio
-  const sleepHrsStr = checkin.sleep || '7-8';
-  const isLowSleep = sleepHrsStr === '<5' || sleepHrsStr === '5-6' || Number(checkin.energy) <= 2;
+  const result = await searchExercises({ limit: 80 });
+  let pool = Array.isArray(result.data) ? result.data : [];
 
-  // Retrieve candidate exercises from WorkoutX search / local library
-  const result = await searchExercises({ limit: 40 });
-  let pool = result.data || [];
+  pool = pool.filter((exercise) => {
+    if (!exercise?.id || avoidedIds.has(String(exercise.id))) return false;
 
-  // Filter out injured areas
-  pool = pool.filter((e) => {
-    if (hasKneeInjury && (e.bodyPart === 'legs' || /squat|lunge|jump|bound/i.test(e.name))) return false;
-    if (hasShoulderInjury && (/overhead|press|shoulder/i.test(e.name) || e.bodyPart === 'shoulders')) return false;
-    if (hasBackInjury && (/deadlift|rdl|swing/i.test(e.name))) return false;
+    const name = String(exercise.name || '').toLowerCase();
+    const bodyPart = String(exercise.bodyPart || '').toLowerCase();
+    if (hasKneeInjury && (bodyPart.includes('leg') || /squat|lunge|jump|bound|skater|calf/i.test(name))) return false;
+    if (hasShoulderInjury && (bodyPart.includes('shoulder') || /press|overhead|raise/i.test(name))) return false;
+    if (hasBackInjury && /deadlift|rdl|hinge|swing/i.test(name)) return false;
     return true;
   });
 
-  // Filter by user equipment
-  pool = pool.filter((e) => {
-    const eq = (e.equipment || 'body weight').toLowerCase();
+  pool = pool.filter((exercise) => {
+    const eq = String(exercise.equipment || 'body weight').toLowerCase();
     if (hasGym) return true;
     if (eq.includes('body weight') || eq.includes('bodyweight') || eq === 'none') return true;
     if (hasDumbbells && eq.includes('dumbbell')) return true;
@@ -799,65 +806,69 @@ async function shortlistExercises(profile = {}, checkin = {}) {
     return false;
   });
 
-  // Goal & Sport-specific (Soccer) prioritization
+  if (experience === 'new') {
+    pool = pool.filter((exercise) => String(exercise.effortLevel || 'beginner').toLowerCase() !== 'advanced');
+  }
+
+  const methodNames = trainingMethods.map((item) => String(item.name || item).toLowerCase());
   const shortlisted = [];
 
-  // 1. Always prioritize user's preferred exercises from profile memory
-  const prefIds = new Set((profile.preferences?.preferredExercises || []).map((p) => p.id));
-  pool.forEach((e) => {
-    if (prefIds.has(e.id)) {
-      shortlisted.push({ ...e, isUserPreferred: true });
-    }
-  });
+  function scoreExercise(exercise) {
+    const name = String(exercise.name || '').toLowerCase();
+    const bodyPart = String(exercise.bodyPart || '').toLowerCase();
+    const target = String(exercise.target || '').toLowerCase();
+    const equipment = String(exercise.equipment || '').toLowerCase();
+    let score = 0;
 
-  // 2. Goal-based curation
-  pool.forEach((e) => {
-    if (prefIds.has(e.id)) return; // already added
+    if (preferredIds.has(String(exercise.id))) score += 12;
     if (goal === 'soccer') {
-      // Soccer mode: speed/agility, plyometrics, tendon isometric, lower body strength, core
-      if (/pogo|skater|spanish|nordic|squat|lunge|calf|plank|bug/i.test(e.name) || e.bodyPart === 'legs' || e.bodyPart === 'core') {
-        shortlisted.push(e);
-      }
-    } else if (isLowSleep) {
-      // Sleep-first adaptation: active recovery walk, mobility, gentle compounds
-      if (/walk|stretch|mobility|glute bridge|plank/i.test(e.name) || e.bodyPart === 'cardio' || e.bodyPart === 'core') {
-        shortlisted.push(e);
-      }
-    } else if (goal === 'strength' || goal === 'muscle') {
-      if (/squat|push-up|row|bench|press|deadlift|pulldown/i.test(e.name) && !isShortTime) {
-        shortlisted.push(e);
-      } else if (shortlisted.length < 12) {
-        shortlisted.push(e);
-      }
-    } else {
-      // General fitness / fat loss / energy
-      if (shortlisted.length < 12) {
-        shortlisted.push(e);
-      }
+      if (/pogo|skater|spanish|nordic|calf|hamstring/i.test(name)) score += 10;
+      if (bodyPart.includes('legs') || bodyPart.includes('core') || target.includes('patellar')) score += 5;
     }
-  });
+    if (isLowSleep) {
+      if (/walk|mobility|stretch|bridge|plank|bug/i.test(name)) score += 10;
+      if (bodyPart.includes('cardio') || target.includes('mobility')) score += 4;
+    }
+    if (!isLowSleep && (goal === 'strength' || goal === 'muscle')) {
+      if (/squat|row|press|bench|pulldown|deadlift|push-up/i.test(name)) score += 7;
+    }
+    if (!isLowSleep && (goal === 'fat_loss' || goal === 'energy' || goal === 'fitness')) {
+      if (/walk|squat|push-up|row|bridge|mobility/i.test(name)) score += 5;
+    }
+    if (methodNames.some((method) => method.includes('walking')) && /walk/i.test(name)) score += 6;
+    if (methodNames.some((method) => method.includes('machine')) && equipment.includes('gym')) score += 5;
+    if (methodNames.some((method) => method.includes('dumbbell')) && equipment.includes('dumbbell')) score += 5;
+    if (methodNames.some((method) => method.includes('mobility')) && (/mobility|stretch/i.test(name) || target.includes('mobility'))) score += 5;
+    if (isShortTime && /walk|bridge|push-up|squat|plank|bug/i.test(name)) score += 3;
+    if (frictionFlag && equipment.includes('gym') && !hasGym) score -= 4;
+    if (experience === 'new' && String(exercise.effortLevel || '').toLowerCase() === 'beginner') score += 2;
+    return score;
+  }
 
-  // Deduplicate and cap to 12-15 items so we don't overflow AI context
+  pool
+    .map((exercise) => ({ ...exercise, _score: scoreExercise(exercise) }))
+    .sort((a, b) => b._score - a._score || a.name.localeCompare(b.name))
+    .forEach((exercise) => shortlisted.push(exercise));
+
   const unique = [];
   const seen = new Set();
-  shortlisted.forEach((e) => {
-    if (!seen.has(e.id)) {
-      seen.add(e.id);
-      unique.push(e);
+  shortlisted.forEach((exercise) => {
+    if (!seen.has(exercise.id)) {
+      seen.add(exercise.id);
+      unique.push({ ...exercise, score: exercise._score });
     }
   });
 
-  // If pool was very restrictive, pad with safe bodyweight basics
   if (unique.length < 6) {
-    LOCAL_EXERCISES.forEach((e) => {
-      if (!seen.has(e.id) && unique.length < 10) {
-        seen.add(e.id);
-        unique.push(normalizeExercise(e));
+    LOCAL_EXERCISES.map(normalizeExercise).forEach((exercise) => {
+      if (!seen.has(exercise.id) && !avoidedIds.has(String(exercise.id)) && unique.length < 10) {
+        seen.add(exercise.id);
+        unique.push(exercise);
       }
     });
   }
 
-  console.log(`[Striate WorkoutX] Shortlisted ${unique.length} candidate exercises for AI Coach (Goal: ${goal}, LowSleep: ${isLowSleep})`);
+  console.log(`[Striate WorkoutX] Shortlisted ${unique.length} candidate exercises (goal=${goal}, lowSleep=${isLowSleep}, shortTime=${isShortTime})`);
   return unique.slice(0, 14);
 }
 

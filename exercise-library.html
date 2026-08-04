@@ -11,7 +11,6 @@
 </head>
 <body>
 <div class="shell has-tabbar">
-
   <header class="topbar">
     <a class="wordmark" href="index.html">Stri<span>ate</span></a>
     <div class="row" style="gap:8px; align-items:center;">
@@ -25,39 +24,30 @@
       <h1 style="font-size:24px;">Exercise Library</h1>
       <span class="faint" id="exercise-count-label"></span>
     </div>
-    <p class="muted small mb-2">Search and save real exercises from WorkoutX to customize your routine.</p>
+    <p class="muted small mb-2">Browse real exercises from WorkoutX or the fallback library. Tap an exercise to see the details and save it to memory.</p>
 
-    <!-- Search Bar -->
     <div class="exercise-search-bar">
-      <input type="text" id="exercise-search-input" placeholder="Search exercises... (e.g. squat, plank, soccer)" style="flex:1;">
+      <input type="text" id="exercise-search-input" placeholder="Search exercises... (e.g. squat, walk, row)">
       <button class="btn btn-secondary" id="reset-filters-btn" style="width:auto; padding:10px 14px; min-height:52px;" title="Reset filters">
         <i class="fa-solid fa-rotate-left"></i>
       </button>
     </div>
 
-    <!-- Filter chips: Body Part -->
-    <span class="kicker mb-1">Body Part</span>
+    <span class="kicker mb-1">Body part</span>
     <div class="exercise-filter-group chip-group" data-name="bodyPartFilter">
       <button class="chip selected" data-value="all">All</button>
-      <button class="chip" data-value="chest">Chest</button>
-      <button class="chip" data-value="back">Back</button>
-      <button class="chip" data-value="legs">Legs</button>
-      <button class="chip" data-value="shoulders">Shoulders</button>
-      <button class="chip" data-value="glutes">Glutes</button>
-      <button class="chip" data-value="core">Core</button>
-      <button class="chip" data-value="cardio">Cardio</button>
-      <button class="chip" data-value="calves">Calves</button>
     </div>
 
-    <!-- Filter chips: Equipment -->
+    <span class="kicker mb-1">Target</span>
+    <div class="exercise-filter-group chip-group" data-name="targetFilter">
+      <button class="chip selected" data-value="all">All</button>
+    </div>
+
     <span class="kicker mb-1">Equipment</span>
     <div class="exercise-filter-group chip-group" data-name="equipmentFilter">
       <button class="chip selected" data-value="all">All</button>
-      <button class="chip" data-value="body weight">Body weight</button>
-      <button class="chip" data-value="dumbbell">Dumbbell</button>
     </div>
 
-    <!-- Filter chips: Effort Level -->
     <span class="kicker mb-1">Difficulty</span>
     <div class="exercise-filter-group chip-group" data-name="effortFilter">
       <button class="chip selected" data-value="all">All</button>
@@ -66,34 +56,15 @@
       <button class="chip" data-value="advanced">Advanced</button>
     </div>
 
-    <!-- Results List -->
     <div id="exercise-results-list" class="mt-2"></div>
   </main>
 </div>
 
-<!-- Exercise Detail Modal / Drawer -->
 <div id="exercise-detail-drawer-root" class="exercise-drawer-modal hidden"></div>
 
 <script src="js/store.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/debug.js"></script>
 <script src="js/exercise-library.js"></script>
-
-<nav class="tabbar" aria-label="Main navigation"><div class="tabbar-inner">
-      <a class="tab " href="today.html">
-        <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Today</span>
-      </a>
-      <a class="tab " href="check-in.html" aria-current="page">
-        <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>Check-in</span>
-      </a>
-      <a class="tab active" href="exercise-library.html">
-        <i class="fa-solid fa-dumbbell" aria-hidden="true"></i><span>Exercises</span>
-      </a>
-      <a class="tab " href="history.html">
-        <i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>Calendar</span>
-      </a>
-      <a class="tab " href="stats.html">
-        <i class="fa-solid fa-chart-simple" aria-hidden="true"></i><span>Stats</span>
-      </a></div></nav>
 </body>
 </html>

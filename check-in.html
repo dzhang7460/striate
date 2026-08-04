@@ -19,7 +19,7 @@
 
   <main id="checkin-main">
     <h1 style="font-size:24px;">Daily check-in</h1>
-    <p class="muted small mb-2">7 quick answers. Today's plan is built from this.</p>
+    <p class="muted small mb-2">Quick sleep + readiness check. Today's plan is built from this.</p>
 
     <div id="already-note" class="callout callout-info hidden mb-2">
       You already checked in today. Submitting again will replace today's recommendation.
@@ -34,6 +34,18 @@
         <button class="chip" data-value="7-8">7–8 h</button>
         <button class="chip" data-value="8+">8+ h</button>
       </div>
+    </div>
+
+    <div class="field">
+      <span class="label">Sleep quality</span>
+      <div class="scale-group" data-name="sleepQuality" role="radiogroup" aria-label="Sleep quality 1 to 5">
+        <button class="chip" data-value="1">1</button>
+        <button class="chip" data-value="2">2</button>
+        <button class="chip" data-value="3">3</button>
+        <button class="chip" data-value="4">4</button>
+        <button class="chip" data-value="5">5</button>
+      </div>
+      <div class="scale-labels"><span>Restless</span><span>Deep sleep</span></div>
     </div>
 
     <div class="field">
@@ -70,6 +82,26 @@
         <button class="chip" data-value="5">5</button>
       </div>
       <div class="scale-labels"><span>Rough</span><span>Great</span></div>
+    </div>
+
+    <div class="field">
+      <span class="label">How close were you to your target bedtime?</span>
+      <div class="chip-group" data-name="bedtimeConsistency" role="radiogroup" aria-label="Bedtime consistency">
+        <button class="chip" data-value="on_target">On target</button>
+        <button class="chip" data-value="30_late">~30 min late</button>
+        <button class="chip" data-value="60_late">~60 min late</button>
+        <button class="chip" data-value="90_late">90+ min late</button>
+        <button class="chip" data-value="irregular">Completely irregular</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="label">Did you cut off screens before bed?</span>
+      <div class="chip-group" data-name="screenCutoff" role="radiogroup" aria-label="Screen cutoff before bed">
+        <button class="chip" data-value="yes">Yes</button>
+        <button class="chip" data-value="some">Partly</button>
+        <button class="chip" data-value="no">No</button>
+      </div>
     </div>
 
     <div class="field">

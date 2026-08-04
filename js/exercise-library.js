@@ -1,11 +1,9 @@
 /* ============================================================
-   Striate — js/exercise-library.js
-   Exercise Library page logic.
-   - Uses existing HTML IDs from exercise-library.html
-   - Fetches once per search/filter change
-   - Reveals more exercises progressively on scroll
-   - Supports all free WorkoutX query params
-   - Handles gif/image fallback display
+   Striate — exercise-library.js
+   - Real exercise browsing with WorkoutX-backed filters
+   - Dynamic chips from API-supported values
+   - Deep-linkable detail drawer
+   - Save preferred / avoid exercise memory
 ============================================================ */
 
 (() => {
@@ -24,22 +22,21 @@
     allExercises: [],
     visibleCount: 12,
     pageSize: 12,
-    isLoading: false,
     requestSeq: 0,
     observer: null,
     sentinel: null,
-    advancedPanelReady: false,
+    metadataLoaded: false,
   };
 
   const DEFAULTS = {
     bodyPart: 'all',
+    target: 'all',
     equipment: 'all',
     effortLevel: 'all',
-    target: '',
     mechanics: 'all',
     force: 'all',
     isUnilateral: 'all',
-    sortMethod: 'popularityRank',
+    sortMethod: 'name',
     sortOrder: 'ascending',
     lang: 'en',
     limit: '100',
@@ -64,63 +61,43 @@
   }
 
   function debounce(fn, delay = 250) {
-    let t = null;
+    let timer = null;
     return (...args) => {
-      window.clearTimeout(t);
-      t = window.setTimeout(() => fn(...args), delay);
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...args), delay);
     };
   }
 
-  function log(...args) {
-    console.log('[Striate Exercise Library]', ...args);
-  }
-
-function normalizeExercise(raw) {
-  if (!raw || typeof raw !== 'object') return null;
-
-  return {
-    id: String(raw.id || raw.exerciseId || raw._id || ''),
-    name: String(raw.name || raw.title || 'Unnamed Exercise').trim(),
-    bodyPart: String(raw.bodyPart || raw.category || 'full body').toLowerCase(),
-    target: String(raw.target || raw.targetMuscle || raw.muscle || 'general').toLowerCase(),
-    equipment: String(raw.equipment || 'body weight').toLowerCase(),
-    effortLevel: String(raw.effortLevel || raw.difficulty || 'beginner').toLowerCase(),
-    mechanics: raw.mechanics ? String(raw.mechanics).toLowerCase() : '',
-    force: raw.force ? String(raw.force).toLowerCase() : '',
-    isUnilateral: Boolean(raw.isUnilateral || raw.unilateral || false),
-    gifUrl: raw.gifUrl || raw.imageUrl || raw.image || raw.thumbnail || '',
-    imageUrl: raw.imageUrl || raw.image || raw.thumbnail || raw.gifUrl || '',
-    instructions: Array.isArray(raw.instructions)
-      ? raw.instructions.map(String)
-      : (typeof raw.instructions === 'string' && raw.instructions.trim()
+  function normalizeExercise(raw) {
+    if (!raw || typeof raw !== 'object') return null;
+    return {
+      exerciseId: String(raw.exerciseId || raw.id || raw._id || ''),
+      id: String(raw.id || raw.exerciseId || raw._id || ''),
+      name: String(raw.name || raw.title || 'Unnamed Exercise').trim(),
+      bodyPart: String(raw.bodyPart || raw.category || 'unknown').toLowerCase(),
+      target: String(raw.target || raw.targetMuscle || raw.muscle || 'general').toLowerCase(),
+      equipment: String(raw.equipment || 'body weight').toLowerCase(),
+      effortLevel: String(raw.effortLevel || raw.difficulty || 'beginner').toLowerCase(),
+      mechanics: raw.mechanics ? String(raw.mechanics).toLowerCase() : '',
+      force: raw.force ? String(raw.force).toLowerCase() : '',
+      isUnilateral: Boolean(raw.isUnilateral || raw.unilateral || false),
+      gifUrl: String(raw.gifUrl || raw.imageUrl || raw.image || raw.thumbnail || ''),
+      instructions: Array.isArray(raw.instructions)
+        ? raw.instructions.map(String)
+        : typeof raw.instructions === 'string' && raw.instructions.trim()
           ? [raw.instructions]
-          : ['Perform the movement with control and good form.']),
-    secondaryMuscles: Array.isArray(raw.secondaryMuscles) ? raw.secondaryMuscles.map(String) : [],
-    caloriesPerMinute: typeof raw.caloriesPerMinute === 'number' ? raw.caloriesPerMinute : null,
-    formTips: Array.isArray(raw.formTips) ? raw.formTips.map(String) : [],
-    alternatives: Array.isArray(raw.alternatives) ? raw.alternatives.map(String) : [],
-  };
-  }
-
-  function getActiveChipValue(groupName) {
-    const group = qs(`.exercise-filter-group[data-name="${groupName}"]`);
-    if (!group) return 'all';
-    const selected = qs('.chip.selected', group);
-    return selected?.dataset?.value || 'all';
-  }
-
-  function setActiveChipValue(groupName, value) {
-    const group = qs(`.exercise-filter-group[data-name="${groupName}"]`);
-    if (!group) return;
-    qsa('.chip', group).forEach((chip) => {
-      chip.classList.toggle('selected', chip.dataset.value === value);
-    });
+          : ['Perform with control and stop if form breaks down.'],
+      secondaryMuscles: Array.isArray(raw.secondaryMuscles) ? raw.secondaryMuscles.map(String) : [],
+      caloriesPerMinute: typeof raw.caloriesPerMinute === 'number' ? raw.caloriesPerMinute : null,
+      formTips: Array.isArray(raw.formTips) ? raw.formTips.map(String) : [],
+      alternatives: Array.isArray(raw.alternatives) ? raw.alternatives.map(String) : [],
+    };
   }
 
   function buildAdvancedFilters() {
-    if (state.advancedPanelReady) return;
-    const searchBar = qs('.exercise-search-bar');
-    if (!searchBar) return;
+    if (qs('#advanced-workoutx-filters')) return;
+    const bar = qs('.exercise-search-bar');
+    if (!bar) return;
 
     const panel = document.createElement('details');
     panel.id = 'advanced-workoutx-filters';
@@ -129,33 +106,30 @@ function normalizeExercise(raw) {
       <summary style="cursor:pointer; font-weight:600; margin-bottom:10px;">Advanced filters</summary>
       <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px;">
         <label style="display:flex; flex-direction:column; gap:6px;">
-          <span class="muted small">Target</span>
-          <input type="text" id="filter-target" placeholder="e.g. pectorals" style="min-height:44px;">
-        </label>
-
-        <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Mechanics</span>
-          <select id="filter-mechanics" style="min-height:44px;">
+          <select id="filter-mechanics">
             <option value="all">All</option>
             <option value="compound">Compound</option>
             <option value="isolation">Isolation</option>
+            <option value="isometric">Isometric</option>
+            <option value="plyometric">Plyometric</option>
           </select>
         </label>
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Force</span>
-          <select id="filter-force" style="min-height:44px;">
+          <select id="filter-force">
             <option value="all">All</option>
             <option value="push">Push</option>
             <option value="pull">Pull</option>
-            <option value="hold">Hold</option>
-            <option value="carry">Carry</option>
+            <option value="static">Static</option>
+            <option value="cardio">Cardio</option>
           </select>
         </label>
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Unilateral</span>
-          <select id="filter-is-unilateral" style="min-height:44px;">
+          <select id="filter-is-unilateral">
             <option value="all">All</option>
             <option value="true">Single-sided only</option>
             <option value="false">Two-sided only</option>
@@ -164,22 +138,17 @@ function normalizeExercise(raw) {
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Sort method</span>
-          <select id="filter-sort-method" style="min-height:44px;">
-            <option value="popularityRank">Popularity</option>
+          <select id="filter-sort-method">
             <option value="name">Name</option>
             <option value="bodyPart">Body part</option>
             <option value="target">Target</option>
             <option value="equipment">Equipment</option>
-            <option value="effortLevel">Difficulty</option>
-            <option value="mechanics">Mechanics</option>
-            <option value="force">Force</option>
-            <option value="caloriesBurnPerMin">Calories/min</option>
           </select>
         </label>
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Sort order</span>
-          <select id="filter-sort-order" style="min-height:44px;">
+          <select id="filter-sort-order">
             <option value="ascending">Ascending</option>
             <option value="descending">Descending</option>
           </select>
@@ -187,7 +156,7 @@ function normalizeExercise(raw) {
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Language</span>
-          <select id="filter-lang" style="min-height:44px;">
+          <select id="filter-lang">
             <option value="en">English</option>
             <option value="fr">French</option>
             <option value="es">Spanish</option>
@@ -199,7 +168,7 @@ function normalizeExercise(raw) {
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Limit</span>
-          <select id="filter-limit" style="min-height:44px;">
+          <select id="filter-limit">
             <option value="20">20</option>
             <option value="40">40</option>
             <option value="60">60</option>
@@ -209,18 +178,30 @@ function normalizeExercise(raw) {
 
         <label style="display:flex; flex-direction:column; gap:6px;">
           <span class="muted small">Offset</span>
-          <input type="number" id="filter-offset" min="0" step="1" value="0" style="min-height:44px;">
+          <input type="number" id="filter-offset" min="0" step="1" value="0">
         </label>
       </div>
     `;
 
-    searchBar.insertAdjacentElement('afterend', panel);
-    state.advancedPanelReady = true;
+    bar.insertAdjacentElement('afterend', panel);
   }
 
-  function getAdvancedControls() {
+  function activeChipValue(groupName) {
+    const group = qs(`.exercise-filter-group[data-name="${groupName}"]`);
+    const selected = group?.querySelector('.chip.selected');
+    return selected?.dataset?.value || 'all';
+  }
+
+  function setActiveChip(groupName, value) {
+    const group = qs(`.exercise-filter-group[data-name="${groupName}"]`);
+    if (!group) return;
+    qsa('.chip', group).forEach((chip) => {
+      chip.classList.toggle('selected', chip.dataset.value === value);
+    });
+  }
+
+  function currentAdvancedFilters() {
     return {
-      target: qs('#filter-target')?.value?.trim() || DEFAULTS.target,
       mechanics: qs('#filter-mechanics')?.value || DEFAULTS.mechanics,
       force: qs('#filter-force')?.value || DEFAULTS.force,
       isUnilateral: qs('#filter-is-unilateral')?.value || DEFAULTS.isUnilateral,
@@ -233,13 +214,13 @@ function normalizeExercise(raw) {
   }
 
   function buildFilters() {
-    const advanced = getAdvancedControls();
+    const advanced = currentAdvancedFilters();
     return {
       name: (els.searchInput?.value || '').trim(),
-      bodyPart: getActiveChipValue('bodyPartFilter'),
-      equipment: getActiveChipValue('equipmentFilter'),
-      effortLevel: getActiveChipValue('effortFilter'),
-      target: advanced.target,
+      bodyPart: activeChipValue('bodyPartFilter'),
+      target: activeChipValue('targetFilter'),
+      equipment: activeChipValue('equipmentFilter'),
+      effortLevel: activeChipValue('effortFilter'),
       mechanics: advanced.mechanics,
       force: advanced.force,
       isUnilateral: advanced.isUnilateral,
@@ -253,32 +234,13 @@ function normalizeExercise(raw) {
 
   function buildQueryString(filters) {
     const params = new URLSearchParams();
-
     Object.entries(filters).forEach(([key, value]) => {
       if (value === undefined || value === null) return;
       const str = String(value).trim();
       if (!str || str === 'all') return;
       params.set(key, str);
     });
-
     return params.toString();
-  }
-
-  function setLoading(isLoading) {
-    state.isLoading = isLoading;
-    if (els.countLabel) {
-      els.countLabel.textContent = isLoading ? 'Loading…' : '';
-    }
-  }
-
-  function renderEmptyState(message = 'No exercises found.') {
-    els.resultsList.innerHTML = `
-      <div class="card" style="padding:16px; border:1px solid rgba(255,255,255,.08); border-radius:16px;">
-        <p style="margin:0 0 6px 0; font-weight:600;">${escapeHtml(message)}</p>
-        <p class="muted small" style="margin:0;">Try clearing filters or searching a broader term.</p>
-      </div>
-    `;
-    updateCountLabel();
   }
 
   function updateCountLabel() {
@@ -288,73 +250,78 @@ function normalizeExercise(raw) {
     els.countLabel.textContent = total ? `${visible} / ${total}` : '';
   }
 
-  function mediaHtml(ex) {
-  const src = ex.gifUrl
-  ? `/api/exercises/media?url=${encodeURIComponent(ex.gifUrl)}`
-  : ex.imageUrl
-    ? `/api/exercises/media?url=${encodeURIComponent(ex.imageUrl)}`
-    : '';
-  const fallbackLabel = ex.name ? escapeHtml(ex.name.slice(0, 2).toUpperCase()) : 'EX';
-
-  if (!src) {
-    return `
-      <div style="width:100%; height:100%; display:grid; place-items:center; background:rgba(255,255,255,.06); color:rgba(255,255,255,.72); font-weight:700; font-size:18px;">
-        ${fallbackLabel}
+  function renderSkeletons() {
+    els.resultsList.innerHTML = Array.from({ length: 5 }).map(() => `
+      <div class="card" style="display:grid; grid-template-columns:100px 1fr; gap:12px; padding:12px; border-radius:18px; margin-bottom:12px;">
+        <div style="width:100px; height:100px; border-radius:14px; background:rgba(255,255,255,.06);"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="height:14px; width:55%; background:rgba(255,255,255,.06); border-radius:999px;"></div>
+          <div style="height:12px; width:85%; background:rgba(255,255,255,.05); border-radius:999px;"></div>
+          <div style="height:12px; width:70%; background:rgba(255,255,255,.05); border-radius:999px;"></div>
+        </div>
       </div>
+    `).join('');
+    if (els.countLabel) els.countLabel.textContent = '';
+  }
+
+  function renderEmptyState(message = 'No exercises found.') {
+    els.resultsList.innerHTML = `
+      <div class="card" style="padding:16px;">
+        <p style="margin:0 0 6px 0; font-weight:600;">${escapeHtml(message)}</p>
+        <p class="muted small" style="margin:0;">Try clearing filters or broadening the search.</p>
+      </div>
+    `;
+    updateCountLabel();
+    ensureSentinel(false);
+  }
+
+  function mediaUrl(exercise) {
+    return exercise.gifUrl
+      ? `/api/exercises/media?url=${encodeURIComponent(exercise.gifUrl)}`
+      : '';
+  }
+
+  function mediaHtml(exercise) {
+    const src = mediaUrl(exercise);
+    const fallbackLabel = escapeHtml((exercise.name || 'EX').slice(0, 2).toUpperCase());
+    if (!src) {
+      return `<div style="width:100%;height:100%;display:grid;place-items:center;background:rgba(255,255,255,.06);font-weight:700;">${fallbackLabel}</div>`;
+    }
+    return `
+      <img
+        src="${escapeHtml(src)}"
+        alt="${escapeHtml(exercise.name)}"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:grid;place-items:center;background:rgba(255,255,255,.06);font-weight:700;&quot;>${fallbackLabel}</div>'"
+        style="width:100%;height:100%;object-fit:cover;display:block;"
+      >
     `;
   }
 
-  return `
-    <img
-      src="${escapeHtml(src)}"
-      alt="${escapeHtml(ex.name)}"
-      loading="lazy"
-      decoding="async"
-      referrerpolicy="no-referrer"
-      onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:grid;place-items:center;background:rgba(255,255,255,.06);color:rgba(255,255,255,.72);font-weight:700;font-size:18px;&quot;>${escapeHtml(fallbackLabel)}</div>'"
-      style="width:100%; height:100%; object-fit:cover; display:block;"
-    >
-  `;
-}
-
-  function cardHtml(ex, index) {
-    const badges = [
-      ex.bodyPart,
-      ex.equipment,
-      ex.effortLevel,
-      ex.mechanics ? ex.mechanics : '',
-      ex.force ? ex.force : '',
-      ex.isUnilateral ? 'single-sided' : '',
-    ].filter(Boolean);
+  function cardHtml(exercise) {
+    const badges = [exercise.bodyPart, exercise.target, exercise.equipment, exercise.effortLevel]
+      .filter(Boolean)
+      .slice(0, 4);
 
     return `
-      <article
-        class="card exercise-card"
-        data-exercise-id="${escapeHtml(ex.id)}"
-        data-index="${index}"
-        style="display:grid; grid-template-columns:100px 1fr; gap:12px; align-items:start; padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:18px; margin-bottom:12px; cursor:pointer;"
-      >
-        <div style="width:100px; height:100px; border-radius:14px; overflow:hidden; background:rgba(255,255,255,.05); flex:none;">
-          ${mediaHtml(ex)}
+      <article class="card exercise-library-card" data-exercise-id="${escapeHtml(exercise.id)}" style="display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:start;padding:12px;border-radius:18px;margin-bottom:12px;cursor:pointer;">
+        <div style="width:100px;height:100px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.05);">
+          ${mediaHtml(exercise)}
         </div>
-
         <div style="min-width:0;">
-          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
-            <h3 style="margin:0; font-size:16px; line-height:1.25;">${escapeHtml(ex.name)}</h3>
-            <span class="faint small" style="white-space:nowrap;">${escapeHtml(ex.effortLevel)}</span>
+          <div class="row between" style="align-items:flex-start;gap:10px;">
+            <div style="min-width:0;">
+              <h3 style="margin:0;font-size:16px;line-height:1.25;">${escapeHtml(exercise.name)}</h3>
+              <p class="faint mt-1">ID ${escapeHtml(exercise.id)}</p>
+            </div>
+            <span class="badge badge-neutral" style="font-size:11px;white-space:nowrap;">${escapeHtml(exercise.effortLevel)}</span>
           </div>
-
-          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
-            ${badges.map((b) => `<span class="chip selected" style="padding:4px 8px; font-size:12px;">${escapeHtml(b)}</span>`).join('')}
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+            ${badges.map((badge) => `<span class="chip selected" style="padding:4px 8px;font-size:12px;min-height:auto;">${escapeHtml(badge)}</span>`).join('')}
           </div>
-
-          <p class="muted small" style="margin:8px 0 0 0;">
-            Target: ${escapeHtml(ex.target)}
-          </p>
-
-          <p class="muted small" style="margin:6px 0 0 0;">
-            ${escapeHtml((ex.instructions || []).slice(0, 1).join(' '))}
-          </p>
+          <p class="muted small" style="margin:8px 0 0 0;">${escapeHtml((exercise.instructions || [])[0] || 'Tap for full details.')}</p>
         </div>
       </article>
     `;
@@ -362,19 +329,16 @@ function normalizeExercise(raw) {
 
   function renderResults() {
     const visible = state.allExercises.slice(0, state.visibleCount);
-
     if (!visible.length) {
       renderEmptyState();
-      ensureSentinelVisibility(false);
       return;
     }
-
-    els.resultsList.innerHTML = visible.map((ex, i) => cardHtml(ex, i)).join('');
+    els.resultsList.innerHTML = visible.map(cardHtml).join('');
     updateCountLabel();
-    ensureSentinelVisibility(state.visibleCount < state.allExercises.length);
+    ensureSentinel(state.visibleCount < state.allExercises.length);
   }
 
-  function ensureSentinelVisibility(show) {
+  function ensureSentinel(show) {
     if (!state.sentinel) return;
     state.sentinel.style.display = show ? 'block' : 'none';
   }
@@ -388,204 +352,192 @@ function normalizeExercise(raw) {
   }
 
   function setupObserver() {
-    if (state.observer) {
-      state.observer.disconnect();
-      state.observer = null;
-    }
-
+    if (state.observer) state.observer.disconnect();
     if (!state.sentinel || !('IntersectionObserver' in window)) return;
 
     state.observer = new IntersectionObserver((entries) => {
-      const first = entries[0];
-      if (!first?.isIntersecting) return;
-      loadMore();
-    }, {
-      root: null,
-      rootMargin: '250px',
-      threshold: 0.1,
-    });
+      if (!entries[0]?.isIntersecting) return;
+      if (state.visibleCount >= state.allExercises.length) {
+        ensureSentinel(false);
+        return;
+      }
+      state.visibleCount = Math.min(state.visibleCount + state.pageSize, state.allExercises.length);
+      renderResults();
+    }, { rootMargin: '240px', threshold: 0.1 });
 
     state.observer.observe(state.sentinel);
   }
 
-  function loadMore() {
-    if (state.visibleCount >= state.allExercises.length) {
-      ensureSentinelVisibility(false);
-      return;
-    }
-
-    state.visibleCount = Math.min(state.visibleCount + state.pageSize, state.allExercises.length);
-    renderResults();
-  }
-
-  function renderLoading() {
-    els.resultsList.innerHTML = `
-      <div class="card" style="padding:16px; border:1px solid rgba(255,255,255,.08); border-radius:16px;">
-        <p style="margin:0; font-weight:600;">Loading exercises…</p>
-        <p class="muted small" style="margin:6px 0 0 0;">Fetching WorkoutX results.</p>
-      </div>
-    `;
-    if (els.countLabel) els.countLabel.textContent = '';
-  }
-
-  function renderSkeletons() {
-    const placeholders = Array.from({ length: 6 }).map(() => `
-      <div class="card" style="display:grid; grid-template-columns:100px 1fr; gap:12px; padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:18px; margin-bottom:12px;">
-        <div style="width:100px; height:100px; border-radius:14px; background:rgba(255,255,255,.06);"></div>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div style="height:14px; width:60%; background:rgba(255,255,255,.06); border-radius:999px;"></div>
-          <div style="height:12px; width:80%; background:rgba(255,255,255,.05); border-radius:999px;"></div>
-          <div style="height:12px; width:70%; background:rgba(255,255,255,.05); border-radius:999px;"></div>
-        </div>
-      </div>
-    `).join('');
-
-    els.resultsList.innerHTML = placeholders;
-    if (els.countLabel) els.countLabel.textContent = '';
-  }
-
-  function extractExerciseList(json) {
+  function extractList(json) {
     if (!json) return [];
     if (Array.isArray(json)) return json;
     if (Array.isArray(json.data)) return json.data;
     if (Array.isArray(json.exercises)) return json.exercises;
-    if (Array.isArray(json.results)) return json.results;
     return [];
+  }
+
+  function renderFilterGroup(groupName, values, formatter) {
+    const group = qs(`.exercise-filter-group[data-name="${groupName}"]`);
+    if (!group) return;
+
+    const current = activeChipValue(groupName);
+    const items = Array.from(new Set(values.map(String).filter(Boolean)));
+    group.innerHTML = `
+      <button class="chip ${current === 'all' ? 'selected' : ''}" data-value="all">All</button>
+      ${items.map((value) => `
+        <button class="chip ${current === value ? 'selected' : ''}" data-value="${escapeHtml(value)}">${escapeHtml(formatter ? formatter(value) : value)}</button>
+      `).join('')}
+    `;
+
+    qsa('.chip', group).forEach((chip) => {
+      chip.addEventListener('click', () => {
+        qsa('.chip', group).forEach((item) => item.classList.remove('selected'));
+        chip.classList.add('selected');
+        fetchExercises();
+      });
+    });
+  }
+
+  function formatLabel(value) {
+    return String(value)
+      .split(/[_\s-]+/)
+      .map((part) => part ? part[0].toUpperCase() + part.slice(1) : part)
+      .join(' ');
+  }
+
+  async function loadMetadata() {
+    if (state.metadataLoaded) return;
+
+    try {
+      const [bodyPartRes, targetRes, sampleRes] = await Promise.all([
+        fetch('/api/exercises/bodyPartList'),
+        fetch('/api/exercises/targetList'),
+        fetch('/api/exercises/search?limit=100'),
+      ]);
+
+      const [bodyPartJson, targetJson, sampleJson] = await Promise.all([
+        bodyPartRes.json(),
+        targetRes.json(),
+        sampleRes.json(),
+      ]);
+
+      const bodyParts = Array.isArray(bodyPartJson?.data) ? bodyPartJson.data : [];
+      const targets = Array.isArray(targetJson?.data) ? targetJson.data : [];
+      const sampleExercises = extractList(sampleJson).map(normalizeExercise).filter(Boolean);
+      const equipments = [...new Set(sampleExercises.map((item) => item.equipment).filter(Boolean))].sort();
+
+      renderFilterGroup('bodyPartFilter', bodyParts, formatLabel);
+      renderFilterGroup('targetFilter', targets, formatLabel);
+      renderFilterGroup('equipmentFilter', equipments, formatLabel);
+      state.metadataLoaded = true;
+    } catch (error) {
+      console.warn('[Striate Exercise Library] Failed to load metadata:', error);
+    }
   }
 
   async function fetchExercises() {
     const seq = ++state.requestSeq;
     const filters = buildFilters();
-    const qs = buildQueryString(filters);
-
-    setLoading(true);
+    const query = buildQueryString(filters);
     renderSkeletons();
 
     try {
-      const res = await fetch(`/api/exercises/search${qs ? `?${qs}` : ''}`, {
-        method: 'GET',
+      const res = await fetch(`/api/exercises/search${query ? `?${query}` : ''}`, {
         headers: { 'Accept': 'application/json' },
       });
-
       const json = await res.json().catch(() => null);
-
       if (seq !== state.requestSeq) return;
+      if (!res.ok) throw new Error(json?.error || `HTTP ${res.status}`);
 
-      if (!res.ok) {
-        const msg = json?.error || `HTTP ${res.status}`;
-        throw new Error(msg);
-      }
-
-      const raw = extractExerciseList(json);
-      const normalized = raw.map(normalizeExercise).filter(Boolean);
-
-      state.allExercises = normalized;
+      state.allExercises = extractList(json).map(normalizeExercise).filter(Boolean);
       state.visibleCount = Math.min(state.pageSize, state.allExercises.length);
-
       renderResults();
       setupObserver();
-
-      log(`Loaded ${state.allExercises.length} exercises`, filters);
-    } catch (err) {
-      log('Fetch failed:', err);
+    } catch (error) {
       if (seq !== state.requestSeq) return;
-
       state.allExercises = [];
       state.visibleCount = 0;
-      renderEmptyState(`WorkoutX fetch failed: ${err.message}`);
-    } finally {
-      if (seq === state.requestSeq) setLoading(false);
+      renderEmptyState(`Couldn’t load exercises: ${error.message}`);
     }
   }
 
-  async function loadBodyPartChips() {
-    const group = document.querySelector('.exercise-filter-group[data-name="bodyPartFilter"]');
-    if (!group) return;
+  async function fetchExerciseById(id) {
+    const existing = state.allExercises.find((item) => item.id === id);
+    if (existing) return existing;
 
-    try {
-      const res = await fetch('/api/exercises/bodyPartList');
-      const json = await res.json();
-      const parts = Array.isArray(json?.data) ? json.data : Array.isArray(json) ? json : [];
-
-      const labelMap = {
-        'back': 'Back',
-        'cardio': 'Cardio',
-        'chest': 'Chest',
-        'lower arms': 'Lower Arms',
-        'lower legs': 'Lower Legs',
-        'neck': 'Neck',
-        'shoulders': 'Shoulders',
-        'upper arms': 'Upper Arms',
-        'upper legs': 'Upper Legs',
-        'waist': 'Waist',
-      };
-
-      group.innerHTML = `
-        <button class="chip selected" data-value="all">All</button>
-        ${parts.map((part) => `
-          <button class="chip" data-value="${part}">${labelMap[part] || part}</button>
-        `).join('')}
-      `;
-
-      group.querySelectorAll('.chip').forEach((chip) => {
-        chip.addEventListener('click', () => {
-          group.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
-          chip.classList.add('selected');
-          fetchExercises();
-        });
-      });
-    } catch (err) {
-      console.warn('[Striate Exercise Library] Failed to load body part chips:', err);
-    }
+    const res = await fetch(`/api/exercises/${encodeURIComponent(id)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    return normalizeExercise(json?.data || json);
   }
 
-  function populateDrawer(ex) {
-    const equipment = ex.equipment || 'body weight';
-    const muscles = (ex.secondaryMuscles || []).length
-      ? ex.secondaryMuscles.map(escapeHtml).join(', ')
+  function updateLibraryUrl(exerciseId = null) {
+    const nextPath = exerciseId ? `/exercise/${encodeURIComponent(exerciseId)}` : '/exercise-library';
+    history.replaceState({ exerciseId }, '', nextPath);
+  }
+
+  function closeDrawer() {
+    els.drawerRoot.classList.add('hidden');
+    els.drawerRoot.innerHTML = '';
+    updateLibraryUrl(null);
+  }
+
+  function drawerActionButtons(exercise) {
+    const isPreferred = Store.isPreferredExercise(exercise.id);
+    const isAvoided = Store.isAvoidedExercise(exercise.id);
+
+    return `
+      <div class="row" style="gap:10px; flex-wrap:wrap; margin-top:14px;">
+        <button class="btn ${isPreferred ? 'btn-secondary' : 'btn-primary'}" id="save-pref-btn" style="flex:1; min-width:180px;">
+          <i class="fa-solid ${isPreferred ? 'fa-check' : 'fa-plus'}"></i>
+          ${isPreferred ? 'Saved to preferred' : 'Save to preferred'}
+        </button>
+        <button class="btn ${isAvoided ? 'btn-secondary' : 'btn-secondary'}" id="save-avoid-btn" style="flex:1; min-width:180px; border-color:${isAvoided ? 'rgba(240,113,108,0.45)' : 'var(--border-strong)'}; color:${isAvoided ? 'var(--red)' : 'var(--text)'};">
+          <i class="fa-solid ${isAvoided ? 'fa-ban' : 'fa-thumbs-down'}"></i>
+          ${isAvoided ? 'Marked as avoid' : 'Avoid in future plans'}
+        </button>
+      </div>
+    `;
+  }
+
+  function populateDrawer(exercise) {
+    const instructions = (exercise.instructions || []).map((step) => `<li>${escapeHtml(step)}</li>`).join('');
+    const tips = (exercise.formTips || []).length
+      ? `<ul style="margin:8px 0 0 18px;">${exercise.formTips.map((tip) => `<li>${escapeHtml(tip)}</li>`).join('')}</ul>`
+      : '<p class="muted small" style="margin:8px 0 0 0;">No extra form tips available.</p>';
+    const alternatives = (exercise.alternatives || []).length
+      ? `<ul style="margin:8px 0 0 18px;">${exercise.alternatives.map((alt) => `<li>${escapeHtml(alt)}</li>`).join('')}</ul>`
+      : '<p class="muted small" style="margin:8px 0 0 0;">No alternatives listed.</p>';
+    const muscles = (exercise.secondaryMuscles || []).length
+      ? exercise.secondaryMuscles.map(escapeHtml).join(', ')
       : 'N/A';
-
-    const tips = (ex.formTips || []).length
-      ? `<ul style="margin:8px 0 0 18px;">${ex.formTips.map((tip) => `<li>${escapeHtml(tip)}</li>`).join('')}</ul>`
-      : '<p class="muted small" style="margin:8px 0 0 0;">No extra tips available.</p>';
-
-    const alternatives = (ex.alternatives || []).length
-      ? `<ul style="margin:8px 0 0 18px;">${ex.alternatives.map((alt) => `<li>${escapeHtml(alt)}</li>`).join('')}</ul>`
-      : '<p class="muted small" style="margin:8px 0 0 0;">No listed alternatives.</p>';
-
-    const instructions = (ex.instructions || []).length
-      ? `<ol style="margin:8px 0 0 18px;">${ex.instructions.map((step) => `<li>${escapeHtml(step)}</li>`).join('')}</ol>`
-      : '<p class="muted small" style="margin:8px 0 0 0;">No instructions available.</p>';
-
-    const media = ex.gifUrl
-      ? `<img src="${escapeHtml(ex.gifUrl)}" alt="${escapeHtml(ex.name)}" loading="lazy" decoding="async" style="width:100%; max-height:260px; object-fit:cover; border-radius:18px; margin-bottom:14px;">`
-      : `<div style="width:100%; height:220px; border-radius:18px; margin-bottom:14px; background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); display:grid; place-items:center; color:rgba(255,255,255,.72); font-weight:700;">${escapeHtml(ex.name)}</div>`;
 
     els.drawerRoot.innerHTML = `
       <div class="drawer-backdrop" style="position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(6px);"></div>
-      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="${escapeHtml(ex.name)}" style="position:fixed; left:0; right:0; bottom:0; max-height:88vh; overflow:auto; background:#0f1115; border-top-left-radius:22px; border-top-right-radius:22px; padding:16px; box-shadow:0 -10px 30px rgba(0,0,0,.35);">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="${escapeHtml(exercise.name)}" style="position:fixed; left:0; right:0; bottom:0; max-height:88vh; overflow:auto; background:#0f1115; border-top-left-radius:22px; border-top-right-radius:22px; padding:16px; box-shadow:0 -10px 30px rgba(0,0,0,.35);">
+        <div class="row between" style="align-items:flex-start; gap:12px; margin-bottom:12px;">
           <div>
-            <h2 style="margin:0; font-size:20px;">${escapeHtml(ex.name)}</h2>
-            <p class="muted small" style="margin:4px 0 0 0;">${escapeHtml(ex.bodyPart)} • ${escapeHtml(ex.target)} • ${escapeHtml(equipment)} • ${escapeHtml(ex.effortLevel)}</p>
+            <h2 style="margin:0; font-size:20px;">${escapeHtml(exercise.name)}</h2>
+            <p class="muted small" style="margin:4px 0 0 0;">ID ${escapeHtml(exercise.id)} · ${escapeHtml(exercise.bodyPart)} · ${escapeHtml(exercise.target)} · ${escapeHtml(exercise.equipment)}</p>
           </div>
           <button class="btn btn-secondary" id="close-exercise-drawer" style="min-height:40px; width:auto;">Close</button>
         </div>
 
-        ${media}
+        <div style="width:100%; max-height:260px; border-radius:18px; overflow:hidden; background:rgba(255,255,255,.05); margin-bottom:14px;">
+          ${mediaHtml(exercise)}
+        </div>
 
         <div class="row" style="flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-          <span class="chip selected">${escapeHtml(ex.bodyPart)}</span>
-          <span class="chip selected">${escapeHtml(ex.equipment)}</span>
-          <span class="chip selected">${escapeHtml(ex.effortLevel)}</span>
-          ${ex.mechanics ? `<span class="chip selected">${escapeHtml(ex.mechanics)}</span>` : ''}
-          ${ex.force ? `<span class="chip selected">${escapeHtml(ex.force)}</span>` : ''}
-          ${ex.isUnilateral ? '<span class="chip selected">unilateral</span>' : ''}
+          <span class="chip selected">${escapeHtml(exercise.bodyPart)}</span>
+          <span class="chip selected">${escapeHtml(exercise.target)}</span>
+          <span class="chip selected">${escapeHtml(exercise.equipment)}</span>
+          <span class="chip selected">${escapeHtml(exercise.effortLevel)}</span>
+          ${exercise.isUnilateral ? '<span class="chip selected">unilateral</span>' : ''}
         </div>
 
         <section style="margin-bottom:14px;">
           <h3 style="margin:0 0 8px 0; font-size:16px;">Instructions</h3>
-          ${instructions}
+          <ol style="margin:8px 0 0 18px;">${instructions}</ol>
         </section>
 
         <section style="margin-bottom:14px;">
@@ -603,50 +555,64 @@ function normalizeExercise(raw) {
           ${alternatives}
         </section>
 
-        <section style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-bottom:8px;">
-          <div class="card" style="padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:14px;">
-            <div class="faint small">Calories/min</div>
-            <div style="font-weight:700;">${ex.caloriesPerMinute ?? 'N/A'}</div>
-          </div>
-          <div class="card" style="padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:14px;">
-            <div class="faint small">Media</div>
-            <div style="font-weight:700;">${escapeHtml(ex.mediaType || 'none')}</div>
-          </div>
-        </section>
+        ${drawerActionButtons(exercise)}
       </div>
     `;
 
     els.drawerRoot.classList.remove('hidden');
+    updateLibraryUrl(exercise.id);
 
     const closeBtn = document.getElementById('close-exercise-drawer');
     const backdrop = els.drawerRoot.querySelector('.drawer-backdrop');
-
-    const closeDrawer = () => {
-      els.drawerRoot.classList.add('hidden');
-      els.drawerRoot.innerHTML = '';
-    };
-
     closeBtn?.addEventListener('click', closeDrawer);
     backdrop?.addEventListener('click', closeDrawer);
+
+    document.getElementById('save-pref-btn')?.addEventListener('click', () => {
+      if (!Store.isPreferredExercise(exercise.id)) {
+        Store.savePreferredExercise(exercise);
+        UI.showToast(`Saved ${exercise.name} to preferred exercises.`);
+      } else {
+        UI.showToast(`${exercise.name} is already saved.`);
+      }
+      populateDrawer(exercise);
+    });
+
+    document.getElementById('save-avoid-btn')?.addEventListener('click', () => {
+      if (!Store.isAvoidedExercise(exercise.id)) {
+        Store.saveAvoidedExercise(exercise);
+        UI.showToast(`Striate will avoid ${exercise.name} in future plans.`);
+      } else {
+        UI.showToast(`${exercise.name} is already marked to avoid.`);
+      }
+      populateDrawer(exercise);
+    });
   }
 
-  function handleResultClick(e) {
-    const card = e.target.closest('[data-exercise-id]');
+  async function maybeOpenDeepLinkedExercise() {
+    const match = window.location.pathname.match(/\/exercise\/([^/]+)$/);
+    if (!match) return;
+    try {
+      const exercise = await fetchExerciseById(decodeURIComponent(match[1]));
+      if (exercise) populateDrawer(exercise);
+    } catch (error) {
+      console.warn('[Striate Exercise Library] Failed to load deep-linked exercise:', error);
+    }
+  }
+
+  function handleResultClick(event) {
+    const card = event.target.closest('[data-exercise-id]');
     if (!card) return;
     const id = card.dataset.exerciseId;
-    const ex = state.allExercises.find((x) => x.id === id);
-    if (!ex) return;
-    populateDrawer(ex);
+    const exercise = state.allExercises.find((item) => item.id === id);
+    if (!exercise) return;
+    populateDrawer(exercise);
   }
 
-  function wireChipGroups() {
+  function wireFilterGroups() {
     qsa('.exercise-filter-group .chip').forEach((chip) => {
       chip.addEventListener('click', () => {
         const group = chip.closest('.exercise-filter-group');
-        const groupName = group?.dataset?.name;
-        if (!groupName) return;
-
-        qsa('.chip', group).forEach((c) => c.classList.remove('selected'));
+        qsa('.chip', group).forEach((item) => item.classList.remove('selected'));
         chip.classList.add('selected');
         fetchExercises();
       });
@@ -654,118 +620,71 @@ function normalizeExercise(raw) {
   }
 
   function wireAdvancedControls() {
-    const ids = [
-      '#filter-target',
-      '#filter-mechanics',
-      '#filter-force',
-      '#filter-is-unilateral',
-      '#filter-sort-method',
-      '#filter-sort-order',
-      '#filter-lang',
-      '#filter-limit',
-      '#filter-offset',
-    ];
-
-    ids.forEach((id) => {
-      const el = qs(id);
-      if (!el) return;
-      const handler = id.includes('target') ? debounce(fetchExercises, 250) : fetchExercises;
-      el.addEventListener('input', handler);
-      el.addEventListener('change', handler);
-    });
+    ['#filter-mechanics', '#filter-force', '#filter-is-unilateral', '#filter-sort-method', '#filter-sort-order', '#filter-lang', '#filter-limit', '#filter-offset']
+      .forEach((selector) => {
+        const element = qs(selector);
+        if (!element) return;
+        const handler = selector === '#filter-offset' ? debounce(fetchExercises, 200) : fetchExercises;
+        element.addEventListener('input', handler);
+        element.addEventListener('change', handler);
+      });
   }
 
   function resetFilters() {
     if (els.searchInput) els.searchInput.value = '';
-    setActiveChipValue('bodyPartFilter', 'all');
-    setActiveChipValue('equipmentFilter', 'all');
-    setActiveChipValue('effortFilter', 'all');
+    setActiveChip('bodyPartFilter', 'all');
+    setActiveChip('targetFilter', 'all');
+    setActiveChip('equipmentFilter', 'all');
+    setActiveChip('effortFilter', 'all');
 
-    const target = qs('#filter-target');
-    const mechanics = qs('#filter-mechanics');
-    const force = qs('#filter-force');
-    const unilateral = qs('#filter-is-unilateral');
-    const sortMethod = qs('#filter-sort-method');
-    const sortOrder = qs('#filter-sort-order');
-    const lang = qs('#filter-lang');
-    const limit = qs('#filter-limit');
-    const offset = qs('#filter-offset');
+    const controls = {
+      '#filter-mechanics': DEFAULTS.mechanics,
+      '#filter-force': DEFAULTS.force,
+      '#filter-is-unilateral': DEFAULTS.isUnilateral,
+      '#filter-sort-method': DEFAULTS.sortMethod,
+      '#filter-sort-order': DEFAULTS.sortOrder,
+      '#filter-lang': DEFAULTS.lang,
+      '#filter-limit': DEFAULTS.limit,
+      '#filter-offset': DEFAULTS.offset,
+    };
 
-    if (target) target.value = DEFAULTS.target;
-    if (mechanics) mechanics.value = DEFAULTS.mechanics;
-    if (force) force.value = DEFAULTS.force;
-    if (unilateral) unilateral.value = DEFAULTS.isUnilateral;
-    if (sortMethod) sortMethod.value = DEFAULTS.sortMethod;
-    if (sortOrder) sortOrder.value = DEFAULTS.sortOrder;
-    if (lang) lang.value = DEFAULTS.lang;
-    if (limit) limit.value = DEFAULTS.limit;
-    if (offset) offset.value = DEFAULTS.offset;
+    Object.entries(controls).forEach(([selector, value]) => {
+      const element = qs(selector);
+      if (element) element.value = value;
+    });
 
     fetchExercises();
   }
 
   function wireControls() {
-    if (els.searchInput) {
-      els.searchInput.addEventListener('input', debounce(fetchExercises, 250));
-    }
-
-    if (els.resetBtn) {
-      els.resetBtn.addEventListener('click', resetFilters);
-    }
-
-    if (els.resultsList) {
-      els.resultsList.addEventListener('click', handleResultClick);
-    }
-
+    els.searchInput?.addEventListener('input', debounce(fetchExercises, 250));
+    els.resetBtn?.addEventListener('click', resetFilters);
+    els.resultsList?.addEventListener('click', handleResultClick);
     wireAdvancedControls();
-  }
 
-  function wireDebugButton() {
-    if (!els.debugBtn) return;
-    els.debugBtn.addEventListener('click', () => {
-      const payload = {
-        visibleCount: state.visibleCount,
-        total: state.allExercises.length,
-        filters: buildFilters(),
-        advanced: getAdvancedControls(),
-      };
-      console.log('[Striate Exercise Library Debug]', payload);
-      alert(`Debug:\nVisible: ${payload.visibleCount}\nTotal: ${payload.total}\nFilters logged in console.`);
-    });
+    if (els.debugBtn) {
+      els.debugBtn.addEventListener('click', () => {
+        console.log('[Striate Exercise Library Debug]', {
+          filters: buildFilters(),
+          loaded: state.allExercises.length,
+        });
+        alert('Exercise library debug details were logged to the console.');
+      });
+    }
   }
 
   async function init() {
-    if (!els.resultsList) return;
+    if (window.UI?.renderTabbar) UI.renderTabbar('exercises');
 
     buildAdvancedFilters();
     createSentinel();
     setupObserver();
-    wireChipGroups();
+    wireFilterGroups();
     wireControls();
-    wireDebugButton();
-
-    // Ensure advanced panel controls are wired after insertion.
-    wireAdvancedControls();
-
-    // Load initial data.
-    await loadBodyPartChips();
-    fetchExercises();
+    await loadMetadata();
+    await fetchExercises();
+    await maybeOpenDeepLinkedExercise();
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Render the navigation bar
-    if (window.UI?.renderTabbar) {
-      UI.renderTabbar('exercises');
-    }
-
-    // Chip helpers
-    if (window.UI?.initChipGroups) {
-      UI.initChipGroups(document);
-    }
-    if (window.UI?.initMultiChipGroups) {
-      UI.initMultiChipGroups(document);
-    }
-
-    init();
-  });
+  document.addEventListener('DOMContentLoaded', init);
 })();

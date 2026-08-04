@@ -138,6 +138,17 @@
       </div>
 
       <div class="field">
+        <span class="label">Screen cutoff before bed</span>
+        <div class="chip-group" data-name="deviceCutoffMinutes" role="radiogroup" aria-label="Screen cutoff before bed">
+          <button class="chip" data-value="15">15 min</button>
+          <button class="chip" data-value="30">30 min</button>
+          <button class="chip" data-value="45">45 min</button>
+          <button class="chip" data-value="60">60 min</button>
+        </div>
+        <p class="faint mt-1">We'll build your nightly device cutoff and wind-down around this.</p>
+      </div>
+
+      <div class="field">
         <span class="label">Dedicated workout time window</span>
         <div class="chip-group" data-name="dedicatedWorkoutTime" role="radiogroup" aria-label="Dedicated workout time window">
           <button class="chip" data-value="7-8 AM">7–8 AM</button>
@@ -164,6 +175,25 @@
           <button class="chip" data-value="bands">Resistance bands</button>
           <button class="chip" data-value="gym">Full gym</button>
         </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Training methods you already like <span class="optional">(select any)</span></span>
+        <div class="chip-group" data-name="trainingMethods" data-multi aria-label="Training methods you already like">
+          <button class="chip" data-value="Walking">Walking</button>
+          <button class="chip" data-value="Gym machines">Gym machines</button>
+          <button class="chip" data-value="Dumbbell basics">Dumbbell basics</button>
+          <button class="chip" data-value="Short circuits">Short circuits</button>
+          <button class="chip" data-value="Mobility">Mobility</button>
+          <button class="chip" data-value="Soccer footwork">Soccer footwork</button>
+        </div>
+        <input type="text" id="training-methods-input" class="mt-1" placeholder="Add anything else you like, comma separated">
+      </div>
+
+      <div class="field">
+        <label for="schedule-note-input">What usually makes a plan unrealistic? <span class="optional">(optional)</span></label>
+        <textarea id="schedule-note-input" rows="2" placeholder="e.g. too much setup, long sessions after class, hate complicated circuits…"></textarea>
+        <p class="faint mt-1">Striate will remember this and stop recommending annoying versions of the plan.</p>
       </div>
 
       <div class="field">

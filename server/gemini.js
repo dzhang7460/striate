@@ -1,9 +1,8 @@
 /* ============================================================
    Striate — server/gemini.js
-   Server-side AI service module for Google AI Studio / Gemini API.
-   - Upgraded for v0.3: WorkoutX integration, candidate shortlist,
-     concrete exercise routines (sets, reps, rest, form cues),
-     sleep schedule optimization, soccer mode, & preference memory.
+   Server-side Gemini integration.
+   Gemini never sees WorkoutX directly; it only receives the
+   backend-filtered shortlist.
 ============================================================ */
 
 const { validateRecommendation } = require('./validator');
@@ -17,49 +16,50 @@ function getModel() {
 }
 
 function buildSystemPrompt() {
-  return `You are Striate, an honest, adaptive AI coach for fitness beginners with a sleep-first and schedule-aware core loop.
-Your personality contract:
-- Truthful, direct, evidence-based, realistic about uncertainty.
-- Never flatter. Never preachy. Avoid generic chatbot fluff.
-- Explain reasoning clearly and briefly.
+  return `You are Striate, an honest and realistic daily health coach.
 
-WORKOUTX INTEGRATION & EXERCISE RULES (CRITICAL):
-1. You MUST build the workout routine ONLY from the provided candidateExercises shortlist. Do NOT invent or hallucinate exercise names outside candidateExercises unless the shortlist is completely empty.
-2. For each selected exercise in the workout.exercises array, include: id, name, sets (e.g. 3), reps (e.g. "8-12"), rest (e.g. "60-90s"), formCue (one concise form tip), bodyPart, target, and gifUrl matching the candidate exercise.
-3. Keep workouts beginner-friendly and realistic for the user's available time. If available time is <=15 minutes, shorten the routine to 1-2 key movements (do not skip unless injured or extremely depleted).
+Personality contract:
+- Direct, calm, specific.
+- No generic wellness fluff.
+- No fake certainty.
+- If sleep is poor, say so clearly and reduce the workload.
 
-SLEEP-FIRST ADAPTATION & CORE LOOP:
-1. Sleep consistency is Striate's first core loop. If sleep is low (<6h) or sleep quality is poor, generate a sleep-focused daily schedule in todaySchedule:
-   - Include consistent bedtime and wake-up time targets.
-   - Include a hard phone/device cutoff 30-45 minutes before bedtime.
-   - Include a bedtime wind-down routine block.
-   - Trim workout intensity to an active recovery walk or gentle mobility so CNS recovery is prioritized.
-2. Always schedule the workout block at the user's dedicatedWorkoutTime.
+CRITICAL ARCHITECTURE RULES:
+1. WorkoutX access already happened on the backend. You do NOT have access to WorkoutX directly.
+2. You MUST build the workout only from candidateExercises supplied in the prompt.
+3. Every workout exercise must reference a real backend shortlist item using its real exerciseId.
+4. If the shortlist is small, choose from it anyway. Do not invent exercise names.
 
-SPORT-SPECIFIC MODE (SOCCER):
-1. If the user's primary goal is "soccer" (Soccer / Athletic Performance), build around soccer-specific training:
-   - Prioritize speed/agility, plyometrics (e.g. pogo jumps, lateral bounds), tendon/isometric health (e.g. Spanish squats), eccentric hamstring strength (e.g. Nordic curls), and match conditioning.
+SLEEP-FIRST RULES:
+1. Sleep consistency is a first-class part of the plan.
+2. Always include target bedtime, target wake time, wind-down action, and screen/device cutoff support.
+3. If sleep hours are low, sleep quality is poor, bedtime drifted badly, or screen cutoff failed, reduce the next-day workload and explain why.
+4. When sleep is poor, the schedule itself should change: easier workout, clearer evening cutoff, and honest coaching.
 
-MEMORY & USER PREFERENCE FRICTION:
-1. Always incorporate any preferredExercises that the user saved to their profile memory.
-2. If the user previously marked any suggestions as annoying, too demanding, or unrealistic (dislikedSuggestions), adapt automatically and do not repeat them.
+MEMORY RULES:
+1. Respect saved trainingMethods, preferredExercises, avoidedExercises, injuries/limitations, scheduleNotes, and dislikedSuggestions.
+2. If the user previously said a plan was annoying, unrealistic, or too demanding, adapt automatically.
+3. Explain why recommendations changed when memory or prior completion changed the plan.
+4. Keep the plan low-friction and centered on what to do today.
 
-Output format: You MUST return ONLY valid JSON with no markdown formatting or extra text, matching this exact schema:
+WORKOUT RULES:
+1. Keep workouts realistic for available time.
+2. If timeAvailable is <= 15 minutes, use 1-3 movements maximum.
+3. Include real exerciseId references plus the matching canonical fields from the shortlist.
+4. Each exercise item should include: exerciseId, id, name, sets, reps, rest, formCue, bodyPart, target, gifUrl.
+
+Return ONLY valid JSON matching this schema:
 {
-  "summary": string (one-line honest summary of user's state today),
-  "readinessScore": number (0 to 10 rounded to 1 decimal place),
-  "todaySchedule": Array<{
-    "time": string (e.g. "7:00 AM", "3:45 PM", "6:00 PM", "9:30 PM", "10:00 PM"),
-    "title": string,
-    "detail": string,
-    "type": "meal" | "workout" | "rest" | "study" | "sleep" | "habit" | "other"
-  }>,
+  "summary": string,
+  "readinessScore": number,
+  "todaySchedule": Array<{"time": string, "title": string, "detail": string, "type": "meal" | "workout" | "rest" | "study" | "sleep" | "habit" | "other"}>,
   "workout": {
     "title": string,
     "detail": string,
     "durationMinutes": number,
     "type": "strength" | "cardio" | "recovery" | "soccer" | "mobility",
     "exercises": Array<{
+      "exerciseId": string,
       "id": string,
       "name": string,
       "sets": number | string,
@@ -71,35 +71,51 @@ Output format: You MUST return ONLY valid JSON with no markdown formatting or ex
       "gifUrl": string
     }>
   } | null,
-  "nutrition": {
-    "title": string,
-    "detail": string
-  } | null,
-  "sleep": {
-    "title": string,
-    "detail": string,
-    "targetBedtime": string,
-    "targetWakeTime": string,
-    "windDownAction": string
-  } | null,
-  "habits": Array<{
-    "title": string,
-    "detail": string
-  }>,
-  "explanation": string (why this plan was chosen),
-  "thingsToAvoid": string[] (array of cautions or things to avoid today),
-  "whyChanged": string | null (how today changed vs previous day),
-  "followUpQuestion": string | null (one short follow-up question if needed, else null),
+  "nutrition": {"title": string, "detail": string} | null,
+  "sleep": {"title": string, "detail": string, "targetBedtime": string, "targetWakeTime": string, "windDownAction": string} | null,
+  "habits": Array<{"title": string, "detail": string}>,
+  "explanation": string,
+  "thingsToAvoid": string[],
+  "whyChanged": string | null,
+  "followUpQuestion": string | null,
   "confidence": "high" | "medium" | "low",
-  "confidenceNote": string (honest note about certainty),
-  "sevenDayPlan": Array<{
-    "day": string (e.g. "Day 1 (Today)", "Day 2", etc. up to "Day 7"),
-    "focus": string,
-    "mainAction": string,
-    "note": string
-  }>,
-  "structuredData": object (raw signals or metadata)
+  "confidenceNote": string,
+  "sevenDayPlan": Array<{"day": string, "focus": string, "mainAction": string, "note": string}>,
+  "structuredData": object
 }`;
+}
+
+function reconcileWorkoutWithShortlist(recommendation, shortlist = []) {
+  if (!recommendation || typeof recommendation !== 'object') return recommendation;
+  if (!recommendation.workout || !Array.isArray(recommendation.workout.exercises)) return recommendation;
+
+  const byId = new Map(shortlist.map((exercise) => [String(exercise.id), exercise]));
+  const byName = new Map(shortlist.map((exercise) => [String(exercise.name).trim().toLowerCase(), exercise]));
+
+  const normalizedExercises = recommendation.workout.exercises
+    .map((exercise) => {
+      const rawId = String(exercise?.exerciseId || exercise?.id || '').trim();
+      const rawName = String(exercise?.name || '').trim().toLowerCase();
+      const match = byId.get(rawId) || byName.get(rawName);
+      if (!match) return null;
+
+      return {
+        exerciseId: String(match.id),
+        id: String(match.id),
+        name: String(match.name),
+        sets: exercise.sets ?? 3,
+        reps: exercise.reps ?? '8-12',
+        rest: String(exercise.rest || '60s'),
+        formCue: String(exercise.formCue || match.formTips?.[0] || 'Use clean, controlled form.'),
+        bodyPart: String(match.bodyPart || 'general'),
+        target: String(match.target || 'general'),
+        gifUrl: String(match.gifUrl || ''),
+      };
+    })
+    .filter(Boolean);
+
+  recommendation.workout.exercises = normalizedExercises;
+  return recommendation;
 }
 
 async function callGemini(profile, checkin, prevEntry, entryCount, context = {}) {
@@ -123,24 +139,25 @@ async function callGemini(profile, checkin, prevEntry, entryCount, context = {})
               entryCount,
               candidateExercises: context.candidateExercises || [],
               recentCompletions: context.recentCompletions || [],
+              recentSleepLogs: context.recentSleepLogs || [],
               prevCompletion: context.prevCompletion || null,
+              weeklyReview: context.weeklyReview || null,
+              recentAdvice: context.recentAdvice || [],
               preferences: profile.preferences || {},
-            }, null, 2)}`
-          }
-        ]
-      }
+            }, null, 2)}`,
+          },
+        ],
+      },
     ],
     generationConfig: {
-      temperature: 0.35,
+      temperature: 0.3,
       responseMimeType: 'application/json',
     },
   };
 
   const response = await fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
 
@@ -158,8 +175,14 @@ async function callGemini(profile, checkin, prevEntry, entryCount, context = {})
   let parsed;
   try {
     parsed = JSON.parse(candidateText);
-  } catch (e) {
-    throw new Error(`Failed to parse Gemini JSON output: ${e.message}`);
+  } catch (error) {
+    throw new Error(`Failed to parse Gemini JSON output: ${error.message}`);
+  }
+
+  parsed = reconcileWorkoutWithShortlist(parsed, context.candidateExercises || []);
+
+  if (parsed?.workout && Array.isArray(parsed.workout.exercises) && parsed.workout.exercises.length === 0) {
+    throw new Error('Gemini returned workout exercises that did not match the shortlist.');
   }
 
   const validation = validateRecommendation(parsed);

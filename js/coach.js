@@ -1,692 +1,895 @@
 /* ============================================================
    Striate — coach.js
-   Adaptive recommendation engine for Striate v0.3.
-   - Integrates WorkoutX exercises & shortlisting (/api/coach)
-   - Builds concrete workout routines (sets, reps, rest, form cues)
-   - Sleep-First Core Loop & Sleep-Focused Daily Plans
-   - Sport-Specific Mode (Soccer performance & athletic agility)
-   - Long-term Memory & Preference retention (preferredExercises,
-     dislikedSuggestions adaptation)
-   - Automatic fallback to local rules engine with full routine tables
+   Adaptive recommendation engine for Striate.
+   - Sleep-first daily schedule
+   - Memory + progression aware
+   - WorkoutX-compatible exercise references
+   - Honest, low-friction coaching
 ============================================================ */
 
 const Coach = (() => {
   let provider = 'auto'; // 'auto' | 'local' | 'llm'
 
-  // ---------- Curated Beginner Exercise Templates (with full WorkoutX exercise routines) ----------
   const EXERCISE_TEMPLATES = {
     beginner_gym_full_body: {
       id: 'beginner_gym_full_body',
-      title: 'Beginner Gym Full Body',
-      durationMinutes: 45,
+      title: 'Gym Full-Body Basics',
+      durationMinutes: 40,
       type: 'strength',
-      action: 'Do a 45-minute full-body basics session at the gym',
-      detail: '3 sets each: goblet squat (8–12), dumbbell bench press (8–12), lat pulldown (8–12). Pick weights where you could do 2 more reps with good form.',
-      why: 'Full-body basics build overall strength efficiently for beginners without overwhelming recovery.',
+      trainingMethod: 'Gym machines',
+      detail: '3 quality sets each. Nothing fancy. Keep 1–2 reps in reserve and stop short of grindy reps.',
       exercises: [
-        { id: 'wx-002', name: 'Goblet Squat', sets: 3, reps: '8–12', rest: '90s', formCue: 'Keep dumbbell tight to chest; knees track over toes', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-017', name: 'Dumbbell Bench Press', sets: 3, reps: '8–12', rest: '90s', formCue: 'Feet flat on floor, elbows tucked at ~45 degrees', bodyPart: 'chest', target: 'pectorals', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-018', name: 'Lat Pulldown (Gym Machine)', sets: 3, reps: '8–12', rest: '90s', formCue: 'Pull bar to upper chest without swinging torso', bodyPart: 'back', target: 'lats', gifUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-007', name: 'Forearm Plank', sets: 3, reps: '30 sec hold', rest: '60s', formCue: 'Brace core and glutes; straight line from ears to heels', bodyPart: 'core', target: 'rectus abdominis', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' }
-      ]
+        { id: 'wx-002', exerciseId: 'wx-002', name: 'Goblet Squat', sets: 3, reps: '8-12', rest: '90s', formCue: 'Keep the weight close and let knees track naturally.', bodyPart: 'legs', target: 'quadriceps', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-017', exerciseId: 'wx-017', name: 'Dumbbell Bench Press', sets: 3, reps: '8-12', rest: '90s', formCue: 'Lower under control and keep feet planted.', bodyPart: 'chest', target: 'pectorals', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-018', exerciseId: 'wx-018', name: 'Lat Pulldown (Gym Machine)', sets: 3, reps: '8-12', rest: '90s', formCue: 'Drive elbows down without leaning back hard.', bodyPart: 'back', target: 'lats', equipment: 'gym', gifUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-020', exerciseId: 'wx-020', name: 'Dead Bug (Core Stability)', sets: 2, reps: '8 / side', rest: '45s', formCue: 'Keep lower back pinned to the floor.', bodyPart: 'core', target: 'rectus abdominis', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' },
+      ],
     },
     beginner_home_full_body: {
       id: 'beginner_home_full_body',
-      title: 'Beginner Home Full Body',
+      title: 'Home Full-Body Basics',
+      durationMinutes: 30,
+      type: 'strength',
+      trainingMethod: 'Dumbbell basics',
+      detail: '2–3 rounds. Keep setup minimal and stop while form is still clean.',
+      exercises: [
+        { id: 'wx-001', exerciseId: 'wx-001', name: 'Bodyweight Squat', sets: 3, reps: '10-15', rest: '60s', formCue: 'Sit down and stand up with your whole foot planted.', bodyPart: 'legs', target: 'quadriceps', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-004', exerciseId: 'wx-004', name: 'Incline Push-up', sets: 3, reps: '8-12', rest: '60s', formCue: 'Keep ribcage tucked and body in one line.', bodyPart: 'chest', target: 'pectorals', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-006', exerciseId: 'wx-006', name: 'Glute Bridge', sets: 3, reps: '12-15', rest: '60s', formCue: 'Squeeze glutes at the top, don’t arch your back.', bodyPart: 'glutes', target: 'gluteus maximus', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-007', exerciseId: 'wx-007', name: 'Forearm Plank', sets: 2, reps: '20-30 sec', rest: '45s', formCue: 'Brace abs and keep hips level.', bodyPart: 'core', target: 'rectus abdominis', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' },
+      ],
+    },
+    dumbbell_strength: {
+      id: 'dumbbell_strength',
+      title: 'Dumbbell Strength Basics',
       durationMinutes: 35,
       type: 'strength',
-      action: 'Do a 35-minute full-body session at home',
-      detail: '3 rounds: bodyweight squats (10–15), push-ups (5–12, incline if needed), glute bridges (12–15), plank (20–30s). Rest 90s between rounds.',
-      why: 'Simple bodyweight movements stimulate all major muscle groups safely at home.',
+      trainingMethod: 'Dumbbell basics',
+      detail: 'Simple dumbbell work. Full-body stimulus, minimal exercise variety.',
       exercises: [
-        { id: 'wx-001', name: 'Bodyweight Squat', sets: 3, reps: '10–15', rest: '60s', formCue: 'Chest up, drive through heels', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-003', name: 'Standard Push-up', sets: 3, reps: '5–12', rest: '60s', formCue: 'Core braced, elbows at 45 degree angle', bodyPart: 'chest', target: 'pectorals', gifUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-006', name: 'Glute Bridge', sets: 3, reps: '12–15', rest: '60s', formCue: 'Squeeze glutes at top, do not over-arch lower back', bodyPart: 'glutes', target: 'gluteus maximus', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-007', name: 'Forearm Plank', sets: 3, reps: '30 sec hold', rest: '60s', formCue: 'Tuck tailbone slightly to engage lower abs', bodyPart: 'core', target: 'rectus abdominis', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' }
-      ]
-    },
-    soccer_performance: {
-      id: 'soccer_performance',
-      title: 'Soccer Performance & Agility',
-      durationMinutes: 40,
-      type: 'soccer',
-      action: 'Do a 40-minute soccer performance & agility session',
-      detail: '3 rounds: Pogo Jumps (30s), Lateral Skater Bounds (10/side), Spanish Squat (45s hold), Nordic Hamstring Curl (6-8 reps).',
-      why: 'Builds soccer-specific ankle stiffness, lateral agility, patellar tendon health, and eccentric hamstring strength to prevent match injuries.',
-      exercises: [
-        { id: 'wx-011', name: 'Pogo Jumps (Ankle Stiffness)', sets: 3, reps: '30 sec', rest: '45s', formCue: 'Rapid ankle bounces off balls of feet, minimal knee bend', bodyPart: 'calves', target: 'gastrocnemius', gifUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-012', name: 'Lateral Skater Bounds', sets: 3, reps: '10 / side', rest: '60s', formCue: 'Stick each single-leg landing softly for balance', bodyPart: 'legs', target: 'abductors', gifUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-013', name: 'Spanish Squat (Tendon Isometric)', sets: 3, reps: '45 sec hold', rest: '60s', formCue: 'Shins vertical against band tension; great for knee tendon health', bodyPart: 'legs', target: 'patellar tendon', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-014', name: 'Nordic Hamstring Curl', sets: 3, reps: '6–8 reps', rest: '90s', formCue: 'Resist forward fall slowly with hamstrings for 3-4 seconds', bodyPart: 'legs', target: 'hamstrings', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' }
-      ]
+        { id: 'wx-002', exerciseId: 'wx-002', name: 'Goblet Squat', sets: 3, reps: '8-12', rest: '90s', formCue: 'Stay tall and let elbows travel inside knees.', bodyPart: 'legs', target: 'quadriceps', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-005', exerciseId: 'wx-005', name: 'Dumbbell One-Arm Row', sets: 3, reps: '8-12 / side', rest: '75s', formCue: 'Pull toward your hip, not your shoulder.', bodyPart: 'back', target: 'lats', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-009', exerciseId: 'wx-009', name: 'Dumbbell Overhead Press', sets: 2, reps: '8-10', rest: '75s', formCue: 'Brace hard and avoid leaning back.', bodyPart: 'shoulders', target: 'anterior deltoid', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-016', exerciseId: 'wx-016', name: 'Dumbbell Romanian Deadlift (RDL)', sets: 3, reps: '8-12', rest: '90s', formCue: 'Push hips back and keep dumbbells close.', bodyPart: 'legs', target: 'hamstrings', equipment: 'dumbbell', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
+      ],
     },
     low_time_fallback: {
       id: 'low_time_fallback',
-      title: '10-Minute Habit Protector',
+      title: '10-Minute Minimum Dose',
       durationMinutes: 10,
       type: 'strength',
-      action: 'Do a 10-minute minimum: 3 rounds of squats + push-ups + plank',
-      detail: '3 rounds: 10 squats, 5–10 push-ups (incline if needed), 20-second plank. No warm-up needed at this intensity. Done in ~10 minutes.',
-      why: 'On a busy day, preserving the habit is more important than workout volume.',
+      trainingMethod: 'Short circuits',
+      detail: 'This is not a heroic workout. It is the minimum useful session so the habit doesn’t disappear.',
       exercises: [
-        { id: 'wx-001', name: 'Bodyweight Squat', sets: 3, reps: '10 reps', rest: '30s', formCue: 'Controlled tempo, full depth', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-004', name: 'Incline Push-up', sets: 3, reps: '8–10 reps', rest: '30s', formCue: 'Hands on bench/counter, core braced', bodyPart: 'chest', target: 'pectorals', gifUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-007', name: 'Forearm Plank', sets: 3, reps: '20 sec hold', rest: '30s', formCue: 'Breathe steadily, hips level', bodyPart: 'core', target: 'rectus abdominis', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' }
-      ]
+        { id: 'wx-001', exerciseId: 'wx-001', name: 'Bodyweight Squat', sets: 2, reps: '10', rest: '30s', formCue: 'Smooth reps. No rush.', bodyPart: 'legs', target: 'quadriceps', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-004', exerciseId: 'wx-004', name: 'Incline Push-up', sets: 2, reps: '6-10', rest: '30s', formCue: 'Pick a height where reps stay clean.', bodyPart: 'chest', target: 'pectorals', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-020', exerciseId: 'wx-020', name: 'Dead Bug (Core Stability)', sets: 2, reps: '6 / side', rest: '30s', formCue: 'Exhale as the leg extends.', bodyPart: 'core', target: 'rectus abdominis', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' },
+      ],
     },
     recovery_day: {
       id: 'recovery_day',
-      title: 'Active Recovery Walk & Mobility',
+      title: 'Sleep-First Recovery Day',
       durationMinutes: 20,
       type: 'recovery',
-      action: 'Take a recovery day: 15–20 minute easy walk + bedtime mobility',
-      detail: 'Keep it genuinely easy — you should be able to breathe comfortably and hold a conversation the whole time. No lifting today.',
-      why: 'Training hard when under-recovered slows down progress. Gentle movement promotes blood flow and recovery.',
+      trainingMethod: 'Walking',
+      detail: 'Keep today easy on purpose. Walking and gentle mobility are enough when sleep or recovery is poor.',
       exercises: [
-        { id: 'wx-010', name: 'Brisk Outdoor Walk', sets: 1, reps: '15–20 min', rest: '0s', formCue: 'Conversational pace, upright posture', bodyPart: 'cardio', target: 'cardiovascular system', gifUrl: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-022', name: 'Gentle Mobility & Wind-down Stretch', sets: 1, reps: '5–10 min', rest: '0s', formCue: 'Slow nasal exhalations to activate recovery before bed', bodyPart: 'full body', target: 'mobility', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' }
-      ]
-    },
-    upper_body_basics: {
-      id: 'upper_body_basics',
-      title: 'Upper Body Basics',
-      durationMinutes: 30,
-      type: 'strength',
-      action: 'Do a 30-minute upper body basics session',
-      detail: '3 sets each: dumbbell or incline push-ups (8–12), dumbbell one-arm rows (8–12/side), overhead reach or shoulder press (8–10). Rest 90s between sets.',
-      why: 'Focuses on posture and upper body strength while allowing lower body joints to recover.',
-      exercises: [
-        { id: 'wx-017', name: 'Dumbbell Bench Press', sets: 3, reps: '8–12', rest: '90s', formCue: 'Press steadily over chest, control the descent', bodyPart: 'chest', target: 'pectorals', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-005', name: 'Dumbbell One-Arm Row', sets: 3, reps: '8–12 / side', rest: '90s', formCue: 'Neutral spine, pull dumbbell toward hip', bodyPart: 'back', target: 'lats', gifUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-009', name: 'Dumbbell Overhead Press', sets: 3, reps: '8–10', rest: '90s', formCue: 'Brace core, do not over-arch lower back', bodyPart: 'shoulders', target: 'anterior deltoid', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' }
-      ]
-    },
-    lower_body_basics: {
-      id: 'lower_body_basics',
-      title: 'Lower Body Basics',
-      durationMinutes: 35,
-      type: 'strength',
-      action: 'Do a 35-minute lower body basics session',
-      detail: '3 sets each: goblet squats (8–12), glute bridges (12–15), reverse lunges (8/side). Keep reps slow and controlled.',
-      why: 'Builds leg strength and stability with beginner-friendly joint angles.',
-      exercises: [
-        { id: 'wx-002', name: 'Goblet Squat', sets: 3, reps: '8–12', rest: '90s', formCue: 'Keep dumbbell close to chest', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-016', name: 'Dumbbell Romanian Deadlift', sets: 3, reps: '8–12', rest: '90s', formCue: 'Hinge hips backward, keep dumbbells tight to shins', bodyPart: 'legs', target: 'hamstrings', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-        { id: 'wx-008', name: 'Reverse Lunge', sets: 3, reps: '8 / side', rest: '90s', formCue: 'Step backward softly, torso upright', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' }
-      ]
+        { id: 'wx-010', exerciseId: 'wx-010', name: 'Brisk Outdoor Walk', sets: 1, reps: '15-20 min', rest: '0s', formCue: 'Keep the pace conversational.', bodyPart: 'cardio', target: 'cardiovascular system', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-022', exerciseId: 'wx-022', name: 'Gentle Mobility & Wind-down Stretch', sets: 1, reps: '5-8 min', rest: '0s', formCue: 'Long exhale, zero strain.', bodyPart: 'full body', target: 'mobility', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' },
+      ],
     },
     light_cardio_walk: {
       id: 'light_cardio_walk',
-      title: 'Light Cardio / Walk Day',
+      title: 'Walk + Reset',
       durationMinutes: 25,
       type: 'cardio',
-      action: 'Do 25 minutes of light cardio or brisk walking',
-      detail: 'Walk fast enough that talking takes slight effort, or cycle at an easy pace. If you have stairs, add 3 calm ascents at the end.',
-      why: 'Improves daily energy and aerobic base without muscle soreness.',
+      trainingMethod: 'Walking',
+      detail: 'Useful when energy is okay but recovery is not great. Move, don’t grind.',
       exercises: [
-        { id: 'wx-010', name: 'Brisk Outdoor Walk', sets: 1, reps: '25 min', rest: '0s', formCue: 'Deep rhythmic breathing, tall posture', bodyPart: 'cardio', target: 'cardiovascular system', gifUrl: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80' }
-      ]
+        { id: 'wx-010', exerciseId: 'wx-010', name: 'Brisk Outdoor Walk', sets: 1, reps: '25 min', rest: '0s', formCue: 'Nasal breathing if comfortable.', bodyPart: 'cardio', target: 'cardiovascular system', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80' },
+      ],
+    },
+    soccer_performance: {
+      id: 'soccer_performance',
+      title: 'Soccer Agility + Strength',
+      durationMinutes: 35,
+      type: 'soccer',
+      trainingMethod: 'Soccer footwork',
+      detail: 'Plyometric quality matters more than volume. Stop when contacts get sloppy.',
+      exercises: [
+        { id: 'wx-011', exerciseId: 'wx-011', name: 'Pogo Jumps (Ankle Stiffness & Agility)', sets: 3, reps: '20 sec', rest: '45s', formCue: 'Quick off the floor. Minimal knee bend.', bodyPart: 'calves', target: 'gastrocnemius', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-012', exerciseId: 'wx-012', name: 'Lateral Skater Bounds (Soccer Agility)', sets: 3, reps: '8 / side', rest: '60s', formCue: 'Stick the landing before the next rep.', bodyPart: 'legs', target: 'abductors', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-013', exerciseId: 'wx-013', name: 'Spanish Squat (Tendon Isometric)', sets: 3, reps: '30-45 sec', rest: '60s', formCue: 'Keep shins vertical and tension steady.', bodyPart: 'legs', target: 'patellar tendon', equipment: 'bands', gifUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80' },
+        { id: 'wx-014', exerciseId: 'wx-014', name: 'Nordic Hamstring Curl (Eccentric Soccer Strength)', sets: 2, reps: '4-6', rest: '90s', formCue: 'Control the lowering phase as long as possible.', bodyPart: 'legs', target: 'hamstrings', equipment: 'body weight', gifUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80' },
+      ],
     },
   };
 
-  // ---------- Signal extraction ----------
+  const EXERCISE_POOL = Object.values(EXERCISE_TEMPLATES)
+    .flatMap((template) => template.exercises)
+    .reduce((acc, exercise) => {
+      if (!acc.some((item) => item.id === exercise.id)) acc.push(exercise);
+      return acc;
+    }, []);
 
-  function readSignals(profile, checkin) {
-    const sleepMap = { '<5': 4, '5-6': 5.5, '6-7': 6.5, '7-8': 7.5, '8+': 8.5 };
-    const timeMap = { '0-15': 12, '15-30': 25, '30-45': 40, '45-60': 55, '60+': 70 };
-    return {
-      sleepHrs: sleepMap[checkin.sleep] ?? 7,
-      energy: Number(checkin.energy) || 3,       // 1–5
-      soreness: Number(checkin.soreness) || 1,   // 1–5
-      mood: Number(checkin.mood) || 3,           // 1–5
-      minutes: timeMap[checkin.timeAvailable] ?? 40,
-      dedicatedTime: checkin.dedicatedWorkoutTime || profile.dedicatedWorkoutTime || '5-6 PM',
-      constraint: checkin.specialConstraint || 'none',
-      hasInjuryFlag:
-        checkin.specialConstraint === 'injury' ||
-        /injur|pain|hurt/i.test(checkin.extraNote || ''),
-      hasProfileInjury: !!(profile.injuryNotes || '').trim(),
-      goal: profile.goal || 'general',
-      experience: profile.experienceLevel || 'new',
-      equipment: profile.equipment || [],
-      wakeTimeTarget: profile.wakeTimeTarget || '7:00 AM',
-      sleepSchedule: profile.sleepSchedule || '22-23',
-      extraNote: checkin.extraNote || '',
-      preferredExercises: profile.preferences?.preferredExercises || [],
-      dislikedSuggestions: profile.preferences?.dislikedSuggestions || [],
-    };
-  }
+  const SLEEP_MAP = { '<5': 4, '5-6': 5.5, '6-7': 6.5, '7-8': 7.5, '8+': 8.5 };
+  const TIME_MAP = { '0-15': 12, '15-30': 25, '30-45': 40, '45-60': 55, '60+': 70 };
+  const BEDTIME_PENALTY = { on_target: 0, '30_late': 0.25, '60_late': 0.6, '90_late': 1.0, irregular: 1.2 };
 
-  function readiness(s) {
-    let score = 5;
-    score += (s.sleepHrs - 7) * 1.2;
-    score += (s.energy - 3) * 1.0;
-    score -= (s.soreness - 1) * 1.1;
-    score += (s.mood - 3) * 0.5;
-    return Math.max(0, Math.min(10, Math.round(score * 10) / 10));
+  function labelList(items = []) {
+    return items
+      .map((item) => typeof item === 'string' ? item : item?.name)
+      .filter(Boolean);
   }
 
   function goalLabel(goal) {
     return {
       strength: 'building strength',
       muscle: 'building muscle',
-      fat_loss: 'losing fat',
+      fat_loss: 'fat loss',
       fitness: 'general fitness',
-      energy: 'more daily energy',
-      soccer: 'soccer performance & athletic agility',
+      energy: 'daily energy',
+      soccer: 'soccer performance',
     }[goal] || 'general fitness';
   }
 
-  // ---------- Schedule Generator (Sleep-First Core Loop) ----------
+  function parseClock(label) {
+    const match = String(label || '').trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match) return null;
+    let hours = Number(match[1]) % 12;
+    const minutes = Number(match[2]);
+    const meridian = match[3].toUpperCase();
+    if (meridian === 'PM') hours += 12;
+    return hours * 60 + minutes;
+  }
 
-  function generateTimeBlocks(s, workoutBlock, isRestDay, profile = {}) {
-    const timeVal = s.dedicatedTime || '5-6 PM';
-    let workoutStart = '5:00 PM';
-    let workoutEnd = '6:00 PM';
+  function formatClock(totalMinutes) {
+    let mins = Number(totalMinutes);
+    while (mins < 0) mins += 1440;
+    mins %= 1440;
+    const hours24 = Math.floor(mins / 60);
+    const minutes = mins % 60;
+    const meridian = hours24 >= 12 ? 'PM' : 'AM';
+    const hours12 = ((hours24 + 11) % 12) + 1;
+    return `${hours12}:${String(minutes).padStart(2, '0')} ${meridian}`;
+  }
 
-    if (timeVal.includes('7-8 AM')) {
-      workoutStart = '7:00 AM';
-      workoutEnd = '8:00 AM';
-    } else if (timeVal.includes('12-1 PM')) {
-      workoutStart = '12:15 PM';
-      workoutEnd = '1:00 PM';
-    } else if (timeVal.includes('30-after-school') || timeVal.includes('30 min after')) {
-      workoutStart = '3:45 PM';
-      workoutEnd = '4:30 PM';
-    } else if (timeVal.includes('6-7 PM')) {
-      workoutStart = '6:00 PM';
-      workoutEnd = '7:00 PM';
-    } else if (timeVal.includes('5-6 PM')) {
-      workoutStart = '5:00 PM';
-      workoutEnd = '6:00 PM';
-    } else {
-      workoutStart = '5:30 PM';
-      workoutEnd = '6:15 PM';
+  function shiftClock(label, deltaMinutes) {
+    const parsed = parseClock(label);
+    if (parsed == null) return label;
+    return formatClock(parsed + deltaMinutes);
+  }
+
+  function bedtimeTarget(signals) {
+    if (signals.sleepSchedule === 'before-22') return '9:45 PM';
+    if (signals.sleepSchedule === '22-23') return '10:30 PM';
+    if (signals.sleepSchedule === '23-24') return '11:15 PM';
+    if (signals.sleepSchedule === 'after-24') return '12:15 AM';
+    if (signals.wakeTimeTarget === '6:00 AM') return '10:00 PM';
+    if (signals.wakeTimeTarget === '8:00 AM') return '11:00 PM';
+    return '10:45 PM';
+  }
+
+  function dedicatedWindow(label) {
+    const value = String(label || '5-6 PM');
+    if (value.includes('7-8 AM')) return ['7:00 AM', '8:00 AM'];
+    if (value.includes('12-1 PM')) return ['12:15 PM', '1:00 PM'];
+    if (value.includes('30-after-school') || /after school|after work/i.test(value)) return ['3:45 PM', '4:30 PM'];
+    if (value.includes('6-7 PM')) return ['6:00 PM', '7:00 PM'];
+    if (value.includes('5-6 PM')) return ['5:00 PM', '6:00 PM'];
+
+    const times = value.match(/\d{1,2}:\d{2}\s*(?:AM|PM)/gi);
+    if (times?.length >= 2) return [times[0].toUpperCase(), times[1].toUpperCase()];
+    if (times?.length === 1) return [times[0].toUpperCase(), shiftClock(times[0].toUpperCase(), 45)];
+    return ['5:30 PM', '6:15 PM'];
+  }
+
+  function normalizeExercise(exercise = {}) {
+    return {
+      exerciseId: String(exercise.exerciseId || exercise.id || ''),
+      id: String(exercise.id || exercise.exerciseId || ''),
+      name: String(exercise.name || 'Exercise'),
+      sets: exercise.sets ?? 3,
+      reps: exercise.reps ?? '8-12',
+      rest: String(exercise.rest || '60s'),
+      formCue: String(exercise.formCue || 'Controlled form.'),
+      bodyPart: String(exercise.bodyPart || 'general'),
+      target: String(exercise.target || 'general'),
+      equipment: String(exercise.equipment || 'body weight'),
+      gifUrl: String(exercise.gifUrl || 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80'),
+    };
+  }
+
+  function readSignals(profile = {}, checkin = {}) {
+    const preferredExercises = Array.isArray(profile.preferences?.preferredExercises)
+      ? profile.preferences.preferredExercises
+      : [];
+    const avoidedExercises = Array.isArray(profile.preferences?.avoidedExercises)
+      ? profile.preferences.avoidedExercises
+      : [];
+    const dislikedSuggestions = Array.isArray(profile.preferences?.dislikedSuggestions)
+      ? profile.preferences.dislikedSuggestions
+      : [];
+    const trainingMethods = Array.isArray(profile.preferences?.trainingMethods)
+      ? profile.preferences.trainingMethods
+      : [];
+
+    return {
+      sleepHrs: SLEEP_MAP[checkin.sleep] ?? 7,
+      sleepQuality: Number(checkin.sleepQuality) || 3,
+      bedtimeConsistency: checkin.bedtimeConsistency || 'on_target',
+      screenCutoff: checkin.screenCutoff || 'some',
+      energy: Number(checkin.energy) || 3,
+      soreness: Number(checkin.soreness) || 2,
+      mood: Number(checkin.mood) || 3,
+      minutes: TIME_MAP[checkin.timeAvailable] ?? 40,
+      dedicatedTime: checkin.dedicatedWorkoutTime || profile.dedicatedWorkoutTime || '5-6 PM',
+      constraint: checkin.specialConstraint || 'none',
+      hasInjuryFlag:
+        checkin.specialConstraint === 'injury' ||
+        /injur|pain|hurt|sharp|swollen/i.test(checkin.extraNote || ''),
+      hasProfileInjury: !!String(profile.injuryNotes || '').trim(),
+      goal: profile.goal || 'fitness',
+      experience: profile.experienceLevel || 'new',
+      equipment: Array.isArray(profile.equipment) ? profile.equipment : [],
+      wakeTimeTarget: profile.wakeTimeTarget || '7:00 AM',
+      sleepSchedule: profile.sleepSchedule || '22-23',
+      deviceCutoffMinutes: Number(profile.deviceCutoffMinutes || profile.preferences?.deviceCutoffMinutes || 30) || 30,
+      extraNote: checkin.extraNote || '',
+      preferredExercises,
+      avoidedExercises,
+      dislikedSuggestions,
+      trainingMethods,
+      scheduleNotes: String(profile.preferences?.scheduleNotes || '').trim(),
+      coachingConstraints: String(profile.preferences?.coachingConstraints || '').trim(),
+    };
+  }
+
+  function readiness(signals) {
+    let score = 5.2;
+    score += (signals.sleepHrs - 7) * 0.95;
+    score += (signals.sleepQuality - 3) * 0.65;
+    score += (signals.energy - 3) * 0.9;
+    score -= (signals.soreness - 2) * 0.75;
+    score += (signals.mood - 3) * 0.35;
+    score -= BEDTIME_PENALTY[signals.bedtimeConsistency] || 0;
+    if (signals.screenCutoff === 'no') score -= 0.45;
+    else if (signals.screenCutoff === 'some') score -= 0.15;
+    return Math.max(0, Math.min(10, Math.round(score * 10) / 10));
+  }
+
+  function isPoorSleep(signals) {
+    return (
+      signals.sleepHrs < 6.5 ||
+      signals.sleepQuality <= 2 ||
+      signals.bedtimeConsistency === '90_late' ||
+      signals.bedtimeConsistency === 'irregular'
+    );
+  }
+
+  function recentFrictionFeedback(signals) {
+    return (signals.dislikedSuggestions || []).find((item) =>
+      /annoy|unrealistic|too demanding|not realistic|too much|too long/i.test(String(item.reason || item.note || ''))
+    ) || null;
+  }
+
+  function usesMethod(signals, keyword) {
+    return labelList(signals.trainingMethods).some((name) => name.toLowerCase().includes(keyword));
+  }
+
+  function cloneTemplate(template) {
+    return template
+      ? {
+          ...template,
+          exercises: (template.exercises || []).map((exercise) => ({ ...exercise })),
+        }
+      : null;
+  }
+
+  function pickTemplate(signals, score, prevCompletion, weeklyReview) {
+    const hasGym = signals.equipment.includes('gym');
+    const hasDumbbells = signals.equipment.includes('dumbbells');
+    const poorSleep = isPoorSleep(signals);
+    const friction = recentFrictionFeedback(signals);
+
+    if (signals.goal === 'soccer' && !poorSleep && signals.minutes >= 30) {
+      return cloneTemplate(EXERCISE_TEMPLATES.soccer_performance);
     }
 
-    const wakeTime = s.wakeTimeTarget || '7:00 AM';
-    const bedtimeStr = profile.sleepSchedule === 'before-22' ? '9:30 PM' :
-                       profile.sleepSchedule === '22-23' ? '10:00 PM' :
-                       profile.sleepSchedule === '23-24' ? '11:00 PM' : '10:30 PM';
-    const windDownStr = profile.sleepSchedule === 'before-22' ? '9:00 PM' :
-                        profile.sleepSchedule === '22-23' ? '9:30 PM' : '10:15 PM';
+    if (signals.minutes <= 15 || signals.constraint === 'busy' || signals.constraint === 'exam') {
+      return cloneTemplate(EXERCISE_TEMPLATES.low_time_fallback);
+    }
 
-    const blocks = [];
-    blocks.push({
-      time: wakeTime,
-      title: 'Wake-Up Target & Morning Hydration',
-      detail: `Rise at your ${wakeTime} target. Drink a glass of water immediately to start circadian alertness.`,
-      type: 'habit',
+    if (poorSleep || (signals.energy <= 2 && signals.soreness >= 3)) {
+      return cloneTemplate(EXERCISE_TEMPLATES.recovery_day);
+    }
+
+    if (signals.soreness >= 4) {
+      return cloneTemplate(EXERCISE_TEMPLATES.light_cardio_walk);
+    }
+
+    if (usesMethod(signals, 'walking') && score < 6.6) {
+      return cloneTemplate(EXERCISE_TEMPLATES.light_cardio_walk);
+    }
+
+    if (hasGym && (usesMethod(signals, 'machine') || !hasDumbbells)) {
+      return cloneTemplate(EXERCISE_TEMPLATES.beginner_gym_full_body);
+    }
+
+    if (hasDumbbells) {
+      return cloneTemplate(EXERCISE_TEMPLATES.dumbbell_strength);
+    }
+
+    let template = cloneTemplate(EXERCISE_TEMPLATES.beginner_home_full_body);
+
+    if ((weeklyReview?.skipped || 0) >= 2 || friction) {
+      template = cloneTemplate(EXERCISE_TEMPLATES.low_time_fallback);
+    }
+
+    if (prevCompletion?.status === 'skipped' && signals.minutes < 35) {
+      template = cloneTemplate(EXERCISE_TEMPLATES.low_time_fallback);
+    }
+
+    return template;
+  }
+
+  function findReplacementExercise(exercise, avoidedIds, usedIds, allowCardio = true) {
+    return EXERCISE_POOL
+      .map(normalizeExercise)
+      .find((candidate) => {
+        if (!candidate.id || avoidedIds.has(candidate.id) || usedIds.has(candidate.id)) return false;
+        if (!allowCardio && candidate.bodyPart === 'cardio') return false;
+        if (exercise.bodyPart && candidate.bodyPart === exercise.bodyPart) return true;
+        if (exercise.target && candidate.target === exercise.target) return true;
+        return false;
+      }) || null;
+  }
+
+  function trimForReality(template, signals) {
+    if (!template) return null;
+    const friction = recentFrictionFeedback(signals);
+    const scheduleNotes = String(signals.scheduleNotes || '').toLowerCase();
+    const needsTrim = friction || /too long|too much setup|complicated|annoy/i.test(scheduleNotes);
+    if (!needsTrim) return template;
+
+    const trimmedExercises = (template.exercises || []).slice(0, Math.min(3, template.exercises.length));
+    return {
+      ...template,
+      title: template.type === 'recovery' ? template.title : `${template.title} — trimmed`,
+      durationMinutes: Math.max(10, Math.min(template.durationMinutes, signals.minutes, template.durationMinutes - 10)),
+      detail: `This is a shorter version because you previously said longer or more annoying plans were unrealistic. ${template.detail}`,
+      exercises: trimmedExercises,
+    };
+  }
+
+  function applyMemoryToWorkout(template, signals) {
+    if (!template) return null;
+
+    const avoidedIds = new Set((signals.avoidedExercises || []).map((item) => String(item.id || '')));
+    const preferred = (signals.preferredExercises || []).map(normalizeExercise).filter((item) => item.id || item.name);
+    let exercises = (template.exercises || []).map(normalizeExercise);
+
+    // Remove avoided exercises and swap if possible.
+    const usedIds = new Set();
+    exercises = exercises.reduce((list, exercise) => {
+      if (exercise.id && avoidedIds.has(exercise.id)) {
+        const replacement = findReplacementExercise(exercise, avoidedIds, usedIds, template.type !== 'strength');
+        if (replacement) {
+          usedIds.add(replacement.id);
+          list.push(replacement);
+        }
+        return list;
+      }
+      usedIds.add(exercise.id);
+      list.push(exercise);
+      return list;
+    }, []);
+
+    // Weave in 1–2 preferred exercises if they aren't avoided.
+    preferred.slice(0, 2).forEach((exercise) => {
+      if (!exercise.id || avoidedIds.has(exercise.id)) return;
+      if (exercises.some((item) => item.id === exercise.id || item.name.toLowerCase() === exercise.name.toLowerCase())) return;
+      exercises.unshift({
+        ...exercise,
+        exerciseId: exercise.id,
+        sets: 2,
+        reps: exercise.bodyPart === 'cardio' ? '10-15 min' : '8-12',
+        rest: exercise.bodyPart === 'cardio' ? '0s' : '60-90s',
+        formCue: exercise.formCue || 'Use the version you already know you can do cleanly.',
+      });
     });
 
-    blocks.push({
-      time: '7:45 AM',
-      title: 'Morning Fuel',
-      detail: 'Eat a balanced breakfast with 20–30g of protein.',
-      type: 'meal',
-    });
+    if (signals.minutes <= 20 && exercises.length > 3) {
+      exercises = exercises.slice(0, 3);
+    }
 
-    if (s.constraint === 'exam' || s.constraint === 'busy') {
+    return {
+      ...template,
+      durationMinutes: Math.min(template.durationMinutes, signals.minutes > 0 ? Math.max(signals.minutes, template.durationMinutes) : template.durationMinutes),
+      exercises,
+    };
+  }
+
+  function whyChanged(signals, prevEntry, prevCompletion) {
+    if (!prevEntry) return null;
+
+    const notes = [];
+    const prevCheckin = prevEntry.checkin || {};
+    const prevSleep = SLEEP_MAP[prevCheckin.sleep] ?? 7;
+    const prevQuality = Number(prevCheckin.sleepQuality) || 3;
+
+    if (prevCompletion?.status === 'completed') notes.push('you completed yesterday\'s workout');
+    if (prevCompletion?.status === 'partial') notes.push('you only got a partial session done yesterday');
+    if (prevCompletion?.status === 'skipped') notes.push(`yesterday\'s workout was skipped${prevCompletion.reason ? ` (${prevCompletion.reason})` : ''}`);
+
+    if (signals.sleepHrs < prevSleep - 0.75) notes.push('sleep dropped versus your last check-in');
+    else if (signals.sleepHrs > prevSleep + 0.75) notes.push('sleep improved versus your last check-in');
+
+    if (signals.sleepQuality < prevQuality) notes.push('sleep quality was worse');
+    else if (signals.sleepQuality > prevQuality) notes.push('sleep quality was better');
+
+    if (signals.energy < (Number(prevCheckin.energy) || 3)) notes.push('energy is lower');
+    if (signals.soreness > (Number(prevCheckin.soreness) || 2)) notes.push('soreness is higher');
+    if (signals.constraint !== 'none' && signals.constraint !== (prevCheckin.specialConstraint || 'none')) notes.push(`today includes a ${signals.constraint} constraint`);
+    if ((signals.avoidedExercises || []).length) notes.push('exercises you asked to avoid were filtered out');
+    if ((signals.trainingMethods || []).length) notes.push('saved training method preferences were used');
+    if (recentFrictionFeedback(signals)) notes.push('the plan was trimmed because you said longer or more annoying plans were unrealistic');
+
+    if (!notes.length) {
+      return 'Nothing major changed from your last check-in, so the plan stayed on the same progression path.';
+    }
+
+    return `Recommendations changed because ${notes.join(', ')}.`;
+  }
+
+  function buildSleepObject(signals, poorSleep) {
+    const targetBedtime = bedtimeTarget(signals);
+    const targetWakeTime = signals.wakeTimeTarget || '7:00 AM';
+    const cutoff = shiftClock(targetBedtime, -signals.deviceCutoffMinutes);
+    return {
+      title: poorSleep ? 'Sleep recovery is the main priority tonight' : 'Protect tonight\'s sleep window',
+      detail: poorSleep
+        ? 'Your sleep inputs were not good enough to justify a hard session. The next win is a consistent bedtime, device cutoff, and easier evening pace.'
+        : 'A stable bedtime is part of the training plan, not a bonus habit. Treat it like a scheduled block.',
+      targetBedtime,
+      targetWakeTime,
+      windDownAction: `Screens off by ${cutoff}. Use that window for low-light, easy movement, or reading instead of stimulation.`,
+      deviceCutoffTime: cutoff,
+    };
+  }
+
+  function generateTimeBlocks(signals, workout, options = {}) {
+    const poorSleep = !!options.poorSleep;
+    const isRestDay = !!options.isRestDay;
+    const targetBedtime = bedtimeTarget(signals);
+    const screenCutoffTime = shiftClock(targetBedtime, -signals.deviceCutoffMinutes);
+    const windDownTime = shiftClock(targetBedtime, -Math.max(15, signals.deviceCutoffMinutes - 10));
+    const wakeTime = signals.wakeTimeTarget || '7:00 AM';
+    const [workoutStart, workoutEnd] = dedicatedWindow(signals.dedicatedTime);
+
+    const blocks = [
+      {
+        time: wakeTime,
+        title: 'Wake target + bright light',
+        detail: 'Get up close to the same time and get 5–10 minutes of daylight or bright light early. That is part of fixing sleep inconsistency.',
+        type: 'habit',
+      },
+      {
+        time: shiftClock(wakeTime, 45),
+        title: 'Breakfast or first protein hit',
+        detail: 'Keep the first meal simple. Protein early helps make the day less chaotic later.',
+        type: 'meal',
+      },
+    ];
+
+    if (poorSleep) {
       blocks.push({
-        time: '9:00 AM — 12:00 PM',
-        title: 'Deep Focus Block',
-        detail: `Prioritize your ${s.constraint === 'exam' ? 'exam prep and studies' : 'highest priority task'}. Keep water close by.`,
-        type: 'study',
+        time: '1:30 PM',
+        title: 'Caffeine cutoff check',
+        detail: 'Avoid using a late caffeine rescue if you want tonight to improve. It solves this hour and damages the next day.',
+        type: 'habit',
+      });
+    } else if (signals.constraint === 'exam' || signals.constraint === 'busy') {
+      blocks.push({
+        time: '12:30 PM',
+        title: 'Protect the minimum viable day',
+        detail: 'Keep food and water simple. The goal is to arrive at your training block without decision fatigue.',
+        type: 'habit',
       });
     } else {
       blocks.push({
         time: '12:30 PM',
-        title: 'Midday Meal & Check-in',
-        detail: 'Have a nourishing lunch and take a 5-minute walk to clear your head.',
+        title: 'Midday reset',
+        detail: 'Stand up, walk briefly, and eat something that doesn’t leave you half-asleep later.',
         type: 'meal',
       });
     }
 
-    if (isRestDay || !workoutBlock) {
+    if (isRestDay || !workout) {
       blocks.push({
         time: `${workoutStart} — ${workoutEnd}`,
-        title: 'Active Recovery Walk',
-        detail: '15–20 minutes of light outdoor walking or gentle stretching. Protect your recovery.',
+        title: 'Recovery block',
+        detail: poorSleep
+          ? 'Keep it to an easy walk or gentle mobility. Recovery quality matters more than forcing output today.'
+          : 'Keep the body moving lightly and stop before it feels like training.',
         type: 'rest',
       });
     } else {
       blocks.push({
         time: `${workoutStart} — ${workoutEnd}`,
-        title: workoutBlock.title || 'Today\'s Workout',
-        detail: workoutBlock.detail || 'Follow today\'s curated beginner session.',
+        title: workout.title,
+        detail: workout.detail,
         type: 'workout',
       });
     }
 
     blocks.push({
       time: '7:00 PM',
-      title: 'Post-Session Meal',
-      detail: `Eat a protein-rich meal to support ${goalLabel(s.goal)} and muscular repair.`,
+      title: 'Dinner and downshift',
+      detail: poorSleep
+        ? 'Eat enough, avoid a second stimulant push, and start lowering the day\'s pace.'
+        : 'Eat a normal protein-rich meal and avoid turning the evening into a second workday.',
       type: 'meal',
     });
 
     blocks.push({
-      time: windDownStr,
-      title: 'Screens Off & Bedtime Wind-Down',
-      detail: 'Disconnect from phones and bright devices 30–45 minutes before bed. Perform gentle breathing or mobility.',
+      time: screenCutoffTime,
+      title: 'Screen / device cutoff',
+      detail: `Phones off or parked by ${screenCutoffTime}. If that feels annoying, that probably means it matters.`,
       type: 'sleep',
     });
 
     blocks.push({
-      time: bedtimeStr,
-      title: 'Target Bedtime Sleep Block',
-      detail: `In bed by ${bedtimeStr} for 7–8 hours of consistent sleep to optimize tomorrow's readiness.`,
+      time: windDownTime,
+      title: 'Wind-down routine',
+      detail: poorSleep
+        ? 'Low light, easy stretching, reading, or breathing. The point is to remove stimulation, not do more productivity.'
+        : 'Keep the last stretch of the day boring on purpose so sleep is easier to start.',
+      type: 'sleep',
+    });
+
+    blocks.push({
+      time: targetBedtime,
+      title: 'Target bedtime',
+      detail: `Aim to be in bed by ${targetBedtime} and keep wake time near ${wakeTime} tomorrow.`,
       type: 'sleep',
     });
 
     return blocks;
   }
 
-  // ---------- 7-Day Plan Generator ----------
+  function generateSevenDayPlan(profile = {}, weeklyReview = null) {
+    const goal = profile.goal || 'fitness';
+    const isSoccer = goal === 'soccer';
+    const note = weeklyReview?.topBlocker
+      ? `Main friction lately: ${weeklyReview.topBlocker}. Keep next week simpler than your ideal version.`
+      : 'Keep the schedule simple enough that you can actually repeat it.';
 
-  function generateSevenDayPlan(profile) {
-    const g = profile?.goal || 'general';
-    const isSoccer = g === 'soccer';
     return [
-      {
-        day: 'Day 1 (Today)',
-        focus: isSoccer ? 'Soccer Agility & Strength' : 'Primary Training',
-        mainAction: isSoccer ? '40-min soccer performance & plyometric basics' : 'Curated beginner session based on today\'s check-in',
-        note: 'Adapted to your sleep, energy, and dedicated time window.',
-      },
-      {
-        day: 'Day 2',
-        focus: 'Active Recovery & Sleep',
-        mainAction: '20-minute conversational walk + bedtime wind-down focus',
-        note: 'Allows muscle protein synthesis without adding fatigue.',
-      },
-      {
-        day: 'Day 3',
-        focus: isSoccer ? 'Tendon Isometric & Strength' : 'Strength Basics',
-        mainAction: isSoccer ? 'Spanish squats, Nordic hamstring curls, leg strength' : 'Full-body or upper-body beginner session',
-        note: 'Build on consistent movement patterns with moderate reps.',
-      },
-      {
-        day: 'Day 4',
-        focus: 'Habit & Mobility',
-        mainAction: '15-minute mobility work or light outdoor walk',
-        note: 'Mid-week check on sleep consistency and soreness.',
-      },
-      {
-        day: 'Day 5',
-        focus: isSoccer ? 'Speed & Agility' : 'Strength Basics',
-        mainAction: isSoccer ? 'Pogo jumps, lateral bounds, core stability' : 'Full-body or lower-body beginner session',
-        note: 'Maintain form quality even as fatigue accumulates.',
-      },
-      {
-        day: 'Day 6',
-        focus: isSoccer ? 'Match Conditioning' : 'Cardio Base',
-        mainAction: isSoccer ? 'Technical intervals & outdoor runs' : '25-minute brisk walk or easy cycling',
-        note: 'Low-impact cardiovascular conditioning.',
-      },
-      {
-        day: 'Day 7',
-        focus: 'Review & Rest',
-        mainAction: 'Complete rest or optional gentle stretching',
-        note: 'Review weekly consistency and plan next week\'s bedtime routine.',
-      },
+      { day: 'Day 1 (Today)', focus: 'Sleep-first schedule', mainAction: 'Do today\'s plan and protect the bedtime block.', note: 'The daily schedule is the anchor, not just the workout.' },
+      { day: 'Day 2', focus: isSoccer ? 'Recovery + touches' : 'Recovery + walk', mainAction: isSoccer ? 'Easy touches, mobility, and sleep consistency' : 'Easy walk or mobility and consistent wake time', note },
+      { day: 'Day 3', focus: isSoccer ? 'Agility or lower-body quality' : 'Main training day', mainAction: isSoccer ? 'Short quality soccer session' : 'Return to your main lift pattern or full-body basics', note: 'Add quality, not random variety.' },
+      { day: 'Day 4', focus: 'Sleep cleanup', mainAction: 'Hit the same wake time and repeat screen cutoff', note: 'Sleep inconsistency compounds fast.' },
+      { day: 'Day 5', focus: isSoccer ? 'Strength support' : 'Second useful workout', mainAction: isSoccer ? 'Strength + tendon support' : 'Short repeat of basics with clean form', note: 'Keep at least 1–2 reps in reserve.' },
+      { day: 'Day 6', focus: 'Low-friction movement', mainAction: 'Walk, mobility, or a short minimum dose session', note: 'This day exists to protect consistency when life gets messy.' },
+      { day: 'Day 7', focus: 'Weekly review', mainAction: 'Review what was realistic, what got skipped, and what sleep did to training quality', note: 'Adjust the plan to real life before the next week starts.' },
     ];
   }
 
-  // ---------- "Why this changed" vs previous day ----------
-
-  function explainChange(s, prevEntry, prevCompletion) {
-    if (!prevEntry) return null;
-    const p = prevEntry.checkin;
-    const diffs = [];
-    const pe = Number(p.energy), ps = Number(p.soreness);
-
-    if (prevCompletion) {
-      if (prevCompletion.status === 'completed') {
-        diffs.push('you completed yesterday\'s workout');
-      } else if (prevCompletion.status === 'skipped') {
-        diffs.push(`yesterday's workout was skipped${prevCompletion.reason ? ` (${prevCompletion.reason})` : ''}`);
-      } else if (prevCompletion.status === 'partial') {
-        diffs.push('you did a partial session yesterday');
-      }
-    }
-
-    if (p.sleep) {
-      const sleepMap = { '<5': 4, '5-6': 5.5, '6-7': 6.5, '7-8': 7.5, '8+': 8.5 };
-      const prevH = sleepMap[p.sleep] ?? 7;
-      if (s.sleepHrs - prevH >= 1) diffs.push('you slept more than yesterday');
-      else if (prevH - s.sleepHrs >= 1) diffs.push('you slept less than yesterday');
-    }
-    if (!Number.isNaN(pe)) {
-      if (s.energy - pe >= 1) diffs.push('your energy is up');
-      else if (pe - s.energy >= 1) diffs.push('your energy is down');
-    }
-    if (!Number.isNaN(ps)) {
-      if (s.soreness - ps >= 1) diffs.push('you\'re more sore');
-      else if (ps - s.soreness >= 1) diffs.push('you\'re less sore');
-    }
-    if (s.constraint !== 'none' && s.constraint !== (p.specialConstraint || 'none')) {
-      diffs.push(`today has a "${s.constraint}" constraint`);
-    }
-    if (s.preferredExercises && s.preferredExercises.length > 0) {
-      diffs.push('incorporating your saved preferred exercises');
-    }
-    if (s.dislikedSuggestions && s.dislikedSuggestions.length > 0) {
-      diffs.push('adapted based on your previous plan feedback');
-    }
-
-    if (diffs.length === 0) {
-      return 'Your check-in looks similar to last time, so today follows the same training progression.';
-    }
-    return `Compared to your last check-in, ${diffs.join(', ')} — so today's schedule and intensity were adjusted accordingly.`;
-  }
-
-  // ---------- Local Rule Engine (v0.3) ----------
-
   function localEngine(profile, checkin, prevEntry, entryCount, context = {}) {
-    const s = readSignals(profile, checkin);
-    const r = readiness(s);
+    const signals = readSignals(profile, checkin);
+    const score = readiness(signals);
+    const poorSleep = isPoorSleep(signals);
     const prevCompletion = context.prevCompletion || null;
+    const weeklyReview = context.weeklyReview || null;
+    const friction = recentFrictionFeedback(signals);
 
-    let template = EXERCISE_TEMPLATES.beginner_gym_full_body;
+    let template = null;
     let summary = '';
-    let confidence = 'high';
-    let confidenceNote = '';
     let explanation = '';
+    let confidence = 'medium';
+    let confidenceNote = '';
     let thingsToAvoid = [];
+    let followUpQuestion = null;
     let caution = null;
     let isRestDay = false;
-    let followUpQuestion = null;
 
-    // 1) Injury signals override everything.
-    if (s.hasInjuryFlag) {
+    if (signals.hasInjuryFlag) {
       isRestDay = true;
       template = null;
-      summary = `You flagged pain or an injury. Readiness doesn't matter today — safety does.`;
-      explanation = 'Training through sharp or joint pain is how beginners turn a minor strain into a chronic injury. Skipping one session costs you almost nothing; training through pain can cost months.';
+      summary = 'Pain or injury was flagged. Today is not a training-quality problem; it is a safety problem.';
+      explanation = 'Do not turn a maybe-minor pain issue into a longer problem by testing it under load. Skip the workout and reduce variables.';
       confidence = 'low';
-      confidenceNote = 'Low confidence — I cannot assess an injury from a check-in. Treat this as a default-to-safe suggestion, not medical advice.';
-      caution = 'Sharp, persistent, or worsening pain means see a doctor or physio. This is not medical advice.';
+      confidenceNote = 'Low confidence — a check-in cannot assess an injury. This is a safe default, not medical advice.';
       thingsToAvoid = [
-        'Do not train the affected area or test if it still hurts under load.',
-        'Avoid high-intensity intervals or sudden jumping movements.',
-        'Do not ignore sharp or joint pain.'
+        'Do not load the painful area to see if it improves mid-session.',
+        'Avoid impact, max effort, or compensating around pain.',
+        'If pain is sharp, worsening, or joint-specific, get actual medical guidance.',
       ];
-    }
-    // 2) Very poor recovery: short sleep AND low energy -> Sleep-First Core Loop.
-    else if (s.sleepHrs < 6 && s.energy <= 2) {
+      caution = 'This is not medical advice.';
+    } else if (poorSleep && signals.energy <= 3) {
       isRestDay = true;
-      template = EXERCISE_TEMPLATES.recovery_day;
-      summary = `Short sleep (${checkin.sleep}h) and low energy (${s.energy}/5). Sleep consistency is your primary focus today.`;
-      explanation = 'Training hard on under 6 hours of sleep with low energy produces a low-quality workout and digs a recovery hole. An active recovery walk and bedtime wind-down routine keep your momentum while restoring your circadian rhythm.';
+      template = cloneTemplate(EXERCISE_TEMPLATES.recovery_day);
+      summary = `Sleep was not good enough for a normal session (${checkin.sleep} hours, quality ${signals.sleepQuality}/5). Recovery gets priority.`;
+      explanation = 'When sleep is poor, forcing intensity usually gives you a mediocre workout and a worse next day. An easier schedule is not quitting; it is the correct adaptation.';
       confidence = 'high';
-      confidenceNote = 'High confidence — the evidence on short sleep and injury risk is consistent, and your inputs point toward recovery first.';
+      confidenceNote = 'High confidence — short or low-quality sleep is one of the cleanest reasons to reduce intensity.';
       thingsToAvoid = [
-        'Avoid heavy lifting or pushing near failure today.',
-        'Avoid caffeine within 8 hours of your target bedtime.',
-        'Do not use phones or screens 30–45 minutes before bed tonight.'
+        'Do not try to “make up” bad sleep with a hard workout.',
+        'Avoid caffeine late enough to interfere with tonight\'s bedtime block.',
+        'Avoid keeping screens in hand once the cutoff starts.',
       ];
-    }
-    // 3) High soreness.
-    else if (s.soreness >= 4) {
-      const canTrain = s.energy >= 3;
-      if (canTrain) {
-        template = EXERCISE_TEMPLATES.light_cardio_walk;
-        summary = `You're quite sore (${s.soreness}/5) but energy is okay. This is normal as your muscles adapt.`;
-        explanation = 'High soreness indicates a strong stimulus from your last session. Light movement speeds recovery by promoting blood flow without adding new muscular fatigue.';
-        confidence = 'medium';
-        confidenceNote = 'Medium confidence — soreness is an approximate signal. If the pain is sharp or one-sided in a joint, treat it as an injury flag.';
-        thingsToAvoid = ['Avoid heavy eccentric lifting on sore muscle groups.', 'Do not skip meals — protein is essential for repair.'];
-      } else {
-        isRestDay = true;
-        template = EXERCISE_TEMPLATES.recovery_day;
-        summary = `High soreness (${s.soreness}/5) and low energy (${s.energy}/5). Your body is asking for a day off.`;
-        explanation = 'Both recovery indicators are down. Rest is not falling behind — it is when the muscle adaptation from your previous sessions actually takes place.';
+    } else if (signals.soreness >= 4 && signals.energy <= 3) {
+      isRestDay = true;
+      template = cloneTemplate(EXERCISE_TEMPLATES.light_cardio_walk);
+      summary = `Recovery is lagging: soreness is ${signals.soreness}/5 and energy is ${signals.energy}/5.`;
+      explanation = 'High soreness plus mediocre energy is a bad trade for a real training session. Move enough to recover, not enough to dig deeper.';
+      confidence = 'high';
+      confidenceNote = 'High confidence — recovery signals are pointing in the same direction.';
+      thingsToAvoid = [
+        'Avoid heavy eccentric work for the sore area.',
+        'Do not chase sweat just to feel productive.',
+      ];
+    } else {
+      template = pickTemplate(signals, score, prevCompletion, weeklyReview);
+      template = trimForReality(template, signals);
+      template = applyMemoryToWorkout(template, signals);
+
+      if (template?.type === 'recovery' || template?.type === 'cardio') {
+        isRestDay = template.type === 'recovery';
+      }
+
+      if (template?.id === 'low_time_fallback') {
+        summary = `Life looks crowded today, so the plan is intentionally small.`;
+        explanation = 'A short session you actually do is better than a bigger plan you skip. This is workload control, not a motivational slogan.';
         confidence = 'high';
-        confidenceNote = 'High confidence — when soreness is high and energy is low, rest reliably outperforms training for beginners.';
-        thingsToAvoid = ['Do not force a gym session today.', 'Avoid dehydrating beverages.'];
+        confidenceNote = 'High confidence — minimum useful work is the right move when time or mental bandwidth is tight.';
+        thingsToAvoid = [
+          'Do not wait for a perfect hour to appear.',
+          'Avoid adding extra exercises just because the session feels “too easy.”',
+        ];
+      } else if (template?.type === 'soccer') {
+        summary = `Recovery is good enough for real soccer quality work today.`;
+        explanation = 'The session emphasizes agility, tendon resilience, and hamstring protection instead of random conditioning. That is the useful work for soccer, not generic exhaustion.';
+        confidence = score >= 7 ? 'high' : 'medium';
+        confidenceNote = 'Confidence is solid, but plyometric quality matters more than volume. Stop when contacts get sloppy.';
+        thingsToAvoid = [
+          'Avoid turning agility work into a fatigue contest.',
+          'Do not add random extra sprints if landing quality drops.',
+        ];
+      } else if (template?.type === 'cardio' || template?.type === 'recovery') {
+        summary = 'Today is more about restoring rhythm than forcing output.';
+        explanation = 'Walking or mobility keeps the day useful while lowering recovery cost. That makes more sense than pretending every day should be a push day.';
+        confidence = 'medium';
+        confidenceNote = 'Medium confidence — low-intensity work is broadly safe, but your exact recovery need is still estimated from check-in data.';
+        thingsToAvoid = [
+          'Avoid secretly converting the recovery work into training intensity.',
+          'Do not use the easier plan as permission to stay up later tonight.',
+        ];
+      } else {
+        summary = score >= 7
+          ? `Readiness is decent (${score}/10). You do not need a hype speech — just a clean session.`
+          : `Readiness is workable (${score}/10). Good enough for useful training, not a max-effort day.`;
+        explanation = `Today\'s plan matches your goal of ${goalLabel(signals.goal)}, your available setup, and the preferences you\'ve already saved. Simple basics remain the fastest path forward.`;
+        confidence = (score >= 7 || prevCompletion?.status === 'completed') ? 'high' : 'medium';
+        confidenceNote = confidence === 'high'
+          ? 'High confidence — the combination of usable recovery and basic exercises is usually the right call here.'
+          : 'Medium confidence — recovery is okay but not perfect, so the plan stays moderate.';
+        thingsToAvoid = [
+          'Avoid adding random extras because the session feels too basic.',
+          'Do not take early sets to failure and ruin the rest of the workout.',
+        ];
       }
     }
-    // 4) Almost no time today or busy constraint.
-    else if (s.minutes <= 15 || s.constraint === 'exam' || s.constraint === 'busy') {
-      template = EXERCISE_TEMPLATES.low_time_fallback;
-      summary = `Tight day (~${s.minutes} min available)${s.constraint !== 'none' ? ` with a "${s.constraint}" constraint` : ''}. Preserve the habit without zeroing out.`;
-      explanation = 'On a busy or deadline-heavy day, the objective is habit preservation, not peak performance. A 10-minute session keeps your momentum intact without adding stress.';
-      confidence = 'high';
-      confidenceNote = 'High confidence in the habit-preservation approach. The exact exercises matter less than showing up for 10 minutes.';
-      thingsToAvoid = [
-        'Do not adopt an "all or nothing" mindset.',
-        'Avoid scrolling social media during your scheduled workout block.'
-      ];
+
+    if (friction && template && template.type !== 'recovery') {
+      explanation += ` I also trimmed it because you previously said: “${friction.reason}.”`;
     }
-    // 5) Normal day -> Goal / Sport-Specific (Soccer) & Preference-aware template selection
-    else {
-      const hasGym = s.equipment.includes('gym');
-      const hasDumbbells = s.equipment.includes('dumbbells');
-      const strongDay = r >= 6.0;
 
-      if (s.goal === 'soccer') {
-        template = EXERCISE_TEMPLATES.soccer_performance;
-      } else if (hasGym) {
-        template = EXERCISE_TEMPLATES.beginner_gym_full_body;
-      } else if (hasDumbbells) {
-        template = EXERCISE_TEMPLATES.upper_body_basics;
-      } else {
-        template = EXERCISE_TEMPLATES.beginner_home_full_body;
-      }
+    if (signals.hasProfileInjury && !signals.hasInjuryFlag) {
+      const note = `Profile limitation noted: ${String(profile.injuryNotes || '').trim()}. Avoid pain-provocation in that area.`;
+      thingsToAvoid.push(note);
+      caution = caution ? `${caution} ${note}` : note;
+    }
 
-      if (prevCompletion && prevCompletion.status === 'completed') {
-        summary = `Strong momentum: yesterday's workout completed and readiness is ${r}/10 today.`;
-        explanation = `You completed your last session, and today's check-in shows solid readiness (${r}/10). ${template.title} remains the most reliable path toward ${goalLabel(s.goal)}.`;
-      } else if (prevCompletion && prevCompletion.status === 'skipped') {
-        summary = `Fresh start after yesterday's skipped session. Readiness is ${r}/10 today.`;
-        explanation = `Missing one session is normal; what matters is resuming the habit today. We scheduled this session at ${s.dedicatedTime} to make starting low-friction.`;
-        followUpQuestion = prevCompletion.reason ? null : 'What was the main reason yesterday\'s workout slipped?';
-      } else {
-        summary = strongDay
-          ? `Solid readiness today (${r}/10): sleep and energy are in your favor.`
-          : `Middling readiness (${r}/10). Good enough for consistent work, not a day to push limits.`;
-        explanation = strongDay
-          ? `Your inputs show good recovery, making today ideal for quality work toward ${goalLabel(s.goal)}.`
-          : `Your signals are moderate, so follow today's template at 80% effort. Consistency beats occasional heroics.`;
-      }
+    if ((signals.avoidedExercises || []).length) {
+      const avoidedNames = labelList(signals.avoidedExercises).slice(0, 3).join(', ');
+      explanation += ` Avoided exercises were filtered out (${avoidedNames}).`;
+    }
 
-      confidence = strongDay ? 'high' : 'medium';
-      confidenceNote = strongDay
-        ? 'High confidence — for beginners and returning athletes, consistent basics is the most evidence-backed strategy.'
-        : 'Medium confidence — your signals are mixed, so this represents a steady middle path.';
-      thingsToAvoid = [
-        'Avoid changing exercises set-to-set; stick to the basics.',
-        'Do not skip warm-up sets if lifting weights.'
-      ];
+    if ((signals.trainingMethods || []).length) {
+      const methods = labelList(signals.trainingMethods).slice(0, 3).join(', ');
+      explanation += ` Saved method preferences in play: ${methods}.`;
     }
 
     if (entryCount <= 1) {
-      confidenceNote += ' Note: As one of your first check-ins, recommendations will become more personalized as your completion logs build.';
-      if (confidence === 'high') confidence = 'medium';
+      confidence = confidence === 'high' ? 'medium' : confidence;
+      confidenceNote += ' This is still one of your first check-ins, so personalization is limited until more sleep and completion data exists.';
     }
 
-    if (s.hasProfileInjury && !s.hasInjuryFlag) {
-      const note = `You noted in your profile: "${profile.injuryNotes.trim()}". Do not load this area with any pain.`;
-      caution = caution ? caution + ' ' + note : note;
-      if (!thingsToAvoid.includes(note)) thingsToAvoid.push(note);
+    if (prevCompletion?.status === 'skipped' && !prevCompletion.reason) {
+      followUpQuestion = 'What was the main reason the last session got skipped?';
     }
 
-    // Weave preferred exercises into the workout routine if user saved any
-    let finalExercises = template ? [...(template.exercises || [])] : [];
-    if (s.preferredExercises && s.preferredExercises.length > 0 && finalExercises.length > 0) {
-      // Add up to 2 preferred exercises to the routine if not already present
-      s.preferredExercises.slice(0, 2).forEach((pref) => {
-        if (!finalExercises.some((ex) => ex.id === pref.id || ex.name.toLowerCase() === pref.name.toLowerCase())) {
-          finalExercises.unshift({
-            id: pref.id || 'wx-custom',
-            name: pref.name,
-            sets: 3,
-            reps: '10–12 reps',
-            rest: '60–90s',
-            formCue: 'Perform with smooth, controlled form',
-            bodyPart: pref.bodyPart || 'full body',
-            target: pref.target || 'general',
-            gifUrl: pref.gifUrl || 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=400&q=80',
-          });
+    const workout = template
+      ? {
+          title: template.title,
+          detail: template.detail,
+          durationMinutes: Math.min(template.durationMinutes, Math.max(10, signals.minutes || template.durationMinutes)),
+          type: template.type,
+          exercises: (template.exercises || []).map(normalizeExercise),
         }
+      : null;
+
+    const todaySchedule = generateTimeBlocks(signals, workout, { poorSleep, isRestDay });
+    const sleep = buildSleepObject(signals, poorSleep);
+    const habits = [
+      {
+        title: 'Sleep cutoff',
+        detail: `Start device cutoff by ${sleep.deviceCutoffTime || shiftClock(sleep.targetBedtime, -signals.deviceCutoffMinutes)} and keep the last part of the night boring.`,
+      },
+      {
+        title: 'Dedicated training block',
+        detail: `Protect ${signals.dedicatedTime} as the time you either train or do the minimum useful recovery block.`,
+      },
+    ];
+
+    if (poorSleep) {
+      habits.unshift({
+        title: 'Morning light and consistent wake time',
+        detail: `Wake near ${signals.wakeTimeTarget} and get light exposure early. That matters more than squeezing more effort out of today.`,
       });
     }
 
-    const whyChanged = explainChange(s, prevEntry, prevCompletion);
-
-    const workoutObj = template ? {
-      title: template.title,
-      detail: template.detail,
-      durationMinutes: template.durationMinutes,
-      type: template.type || 'strength',
-      exercises: finalExercises,
-    } : null;
-
-    const todaySchedule = generateTimeBlocks(s, workoutObj, isRestDay, profile);
-    const sevenDayPlan = generateSevenDayPlan(profile);
-
     return {
       summary,
-      readinessScore: r,
+      readinessScore: score,
       todaySchedule,
-      workout: workoutObj,
+      workout,
       nutrition: {
-        title: 'Protein & Hydration Focus',
-        detail: `Aim for 20–30g of protein at your next meal to support ${goalLabel(s.goal)}. Drink water with every meal.`,
+        title: poorSleep ? 'Keep food simple' : 'Protein + hydration baseline',
+        detail: poorSleep
+          ? 'Do not make the day harder by under-eating and then raiding snacks late. Eat normally and get protein in early.'
+          : `Get protein with your next meal and enough total food to support ${goalLabel(signals.goal)}.`,
       },
-      sleep: {
-        title: `Sleep Target (${profile?.sleepSchedule || '22:00'} Bedtime)`,
-        detail: 'Aim for 7–8 hours of quality sleep tonight to maximize muscular and mental recovery.',
-        targetBedtime: profile?.sleepSchedule === 'before-22' ? '21:30' : '22:30',
-        targetWakeTime: profile?.wakeTimeTarget || '07:00 AM',
-        windDownAction: 'Disconnect from phones 30-45 minutes before bed; perform gentle mobility or breathing.',
-      },
-      habits: [
-        {
-          title: 'Bedtime Consistency & Wind-Down',
-          detail: 'Set an alarm for your 30-minute phone cutoff before bed tonight.',
-        },
-        {
-          title: 'Dedicated Workout Window',
-          detail: `Protect your ${s.dedicatedTime} slot from scheduling conflicts today.`,
-        }
-      ],
+      sleep,
+      habits,
       explanation,
-      thingsToAvoid,
-      whyChanged,
+      thingsToAvoid: [...new Set(thingsToAvoid)],
+      whyChanged: whyChanged(signals, prevEntry, prevCompletion),
       followUpQuestion,
       confidence,
       confidenceNote,
-      sevenDayPlan,
+      sevenDayPlan: generateSevenDayPlan(profile, weeklyReview),
       structuredData: {
-        signals: s,
-        readiness: r,
-        engine: 'local-rules-v0.3',
-        templateId: template ? template.id : 'none',
+        signals,
+        readiness: score,
+        engine: 'local-rules-v2',
+        poorSleepMode: poorSleep,
+        templateId: template?.id || 'none',
+        memoryApplied: {
+          preferredExercises: labelList(signals.preferredExercises),
+          avoidedExercises: labelList(signals.avoidedExercises),
+          trainingMethods: labelList(signals.trainingMethods),
+        },
       },
-      // Backward-compat v0.1 fields:
-      mainAction: workoutObj ? workoutObj.title : 'Take a recovery day: easy walk only',
-      detail: workoutObj ? workoutObj.detail : '15–20 minutes of light outdoor walking.',
-      supportAction: `Protect your ${s.dedicatedTime} time slot and get protein at dinner.`,
+      mainAction: workout ? workout.title : 'Recovery only',
+      detail: workout ? workout.detail : 'Reduce load and protect sleep.',
+      supportAction: habits[0]?.detail || '',
       reason: explanation,
       caution,
     };
   }
-
-  // ---------- Normalization & Backward Compatibility ----------
 
   function normalizeRecommendation(rec, profile, checkin, prevEntry, context = {}) {
     if (!rec || typeof rec !== 'object') {
       return localEngine(profile, checkin, prevEntry, context.entryCount || 1, context);
     }
 
-    const s = readSignals(profile || {}, checkin || {});
-    const r = typeof rec.readinessScore === 'number' ? rec.readinessScore : readiness(s);
+    const signals = readSignals(profile || {}, checkin || {});
+    const score = typeof rec.readinessScore === 'number' ? rec.readinessScore : readiness(signals);
+    const poorSleep = isPoorSleep(signals);
 
-    let workoutObj = rec.workout;
-    if (!workoutObj && rec.mainAction && !/rest|recovery/i.test(rec.mainAction)) {
-      workoutObj = {
-        title: rec.mainAction,
-        detail: rec.detail || '',
+    const normalizeExercises = (list) => Array.isArray(list)
+      ? list.map(normalizeExercise).filter((item) => item.id || item.name)
+      : [];
+
+    let workout = rec.workout && typeof rec.workout === 'object'
+      ? {
+          title: String(rec.workout.title || rec.mainAction || 'Workout'),
+          detail: String(rec.workout.detail || rec.detail || ''),
+          durationMinutes: Number(rec.workout.durationMinutes || 30),
+          type: String(rec.workout.type || 'strength'),
+          exercises: normalizeExercises(rec.workout.exercises),
+        }
+      : null;
+
+    if (!workout && rec.mainAction && !/rest|recovery|injury/i.test(String(rec.mainAction))) {
+      workout = {
+        title: String(rec.mainAction),
+        detail: String(rec.detail || ''),
         durationMinutes: 30,
         type: 'strength',
         exercises: [],
       };
     }
 
-    // Ensure exercises array exists and has well-formed items
-    if (workoutObj) {
-      if (!Array.isArray(workoutObj.exercises) || workoutObj.exercises.length === 0) {
-        // Build default exercises list from known template or general basics
-        const tMatch = Object.values(EXERCISE_TEMPLATES).find((t) => t.title === workoutObj.title);
-        workoutObj.exercises = tMatch ? [...tMatch.exercises] : [
-          { id: 'wx-002', name: 'Goblet Squat', sets: 3, reps: '10–12', rest: '90s', formCue: 'Keep weight close to chest', bodyPart: 'legs', target: 'quadriceps', gifUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80' },
-          { id: 'wx-003', name: 'Standard Push-up', sets: 3, reps: '8–12', rest: '60s', formCue: 'Brace core and glutes', bodyPart: 'chest', target: 'pectorals', gifUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=400&q=80' },
-          { id: 'wx-007', name: 'Forearm Plank', sets: 3, reps: '30 sec hold', rest: '60s', formCue: 'Breathe steadily, hips level', bodyPart: 'core', target: 'rectus abdominis', gifUrl: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=400&q=80' }
-        ];
-      }
+    if (workout && workout.exercises.length === 0) {
+      const localFallback = localEngine(profile, checkin, prevEntry, context.entryCount || 1, context).workout;
+      workout.exercises = localFallback?.exercises || [];
     }
 
-    const todaySchedule = Array.isArray(rec.todaySchedule) && rec.todaySchedule.length > 0
-      ? rec.todaySchedule
-      : generateTimeBlocks(s, workoutObj, !workoutObj, profile);
+    const sleep = rec.sleep && typeof rec.sleep === 'object'
+      ? {
+          title: String(rec.sleep.title || 'Protect sleep'),
+          detail: String(rec.sleep.detail || ''),
+          targetBedtime: String(rec.sleep.targetBedtime || bedtimeTarget(signals)),
+          targetWakeTime: String(rec.sleep.targetWakeTime || signals.wakeTimeTarget || '7:00 AM'),
+          windDownAction: String(rec.sleep.windDownAction || `Screens off ${signals.deviceCutoffMinutes} minutes before bed.`),
+          deviceCutoffTime: rec.sleep.deviceCutoffTime || shiftClock(String(rec.sleep.targetBedtime || bedtimeTarget(signals)), -signals.deviceCutoffMinutes),
+        }
+      : buildSleepObject(signals, poorSleep);
 
-    const sevenDayPlan = Array.isArray(rec.sevenDayPlan) && rec.sevenDayPlan.length > 0
-      ? rec.sevenDayPlan
-      : generateSevenDayPlan(profile);
+    const habits = Array.isArray(rec.habits) && rec.habits.length
+      ? rec.habits.map((item) => ({ title: String(item.title || 'Habit'), detail: String(item.detail || '') }))
+      : [
+          { title: 'Sleep cutoff', detail: `Start device cutoff ${signals.deviceCutoffMinutes} minutes before bed.` },
+          { title: 'Dedicated training block', detail: `Protect ${signals.dedicatedTime}.` },
+        ];
 
+    const explanation = String(rec.explanation || rec.reason || 'Curated recommendation based on your profile and check-in.');
     const thingsToAvoid = Array.isArray(rec.thingsToAvoid)
-      ? rec.thingsToAvoid
-      : (rec.caution ? [rec.caution] : []);
-
-    const habits = Array.isArray(rec.habits) && rec.habits.length > 0
-      ? rec.habits
-      : (rec.supportAction ? [{ title: 'Daily Habit', detail: rec.supportAction }] : [{ title: 'Bedtime Consistency', detail: 'Disconnect from screens 30 minutes before bed.' }]);
-
-    const explanation = rec.explanation || rec.reason || 'Curated recommendation based on your profile and check-in signals.';
+      ? rec.thingsToAvoid.map(String)
+      : rec.caution ? [String(rec.caution)] : [];
 
     return {
-      summary: rec.summary || 'Your state today',
-      readinessScore: r,
-      todaySchedule,
-      workout: workoutObj || null,
-      nutrition: rec.nutrition || {
-        title: 'Daily Nutrition',
-        detail: `Prioritize protein and whole foods to support ${goalLabel(s.goal)}.`,
-      },
-      sleep: rec.sleep || {
-        title: `Sleep Target (${profile?.sleepSchedule || '22:00'} Bedtime)`,
-        detail: 'Aim for 7–8 hours of consistent sleep tonight.',
-        targetBedtime: profile?.sleepSchedule === 'before-22' ? '21:30' : '22:30',
-        targetWakeTime: profile?.wakeTimeTarget || '07:00 AM',
-        windDownAction: 'Disconnect from phones 30-45 minutes before bed; perform gentle mobility.',
-      },
+      summary: String(rec.summary || 'Today\'s plan'),
+      readinessScore: score,
+      todaySchedule: Array.isArray(rec.todaySchedule) && rec.todaySchedule.length
+        ? rec.todaySchedule.map((item) => ({
+            time: String(item.time || ''),
+            title: String(item.title || ''),
+            detail: String(item.detail || ''),
+            type: String(item.type || 'other'),
+          }))
+        : generateTimeBlocks(signals, workout, { poorSleep, isRestDay: !workout || /recovery/i.test(workout.type) }),
+      workout,
+      nutrition: rec.nutrition && typeof rec.nutrition === 'object'
+        ? { title: String(rec.nutrition.title || 'Nutrition'), detail: String(rec.nutrition.detail || '') }
+        : { title: 'Protein + hydration baseline', detail: `Eat enough to support ${goalLabel(signals.goal)}.` },
+      sleep,
       habits,
       explanation,
       thingsToAvoid,
-      whyChanged: rec.whyChanged !== undefined ? rec.whyChanged : explainChange(s, prevEntry, context.prevCompletion),
+      whyChanged: rec.whyChanged !== undefined ? rec.whyChanged : whyChanged(signals, prevEntry, context.prevCompletion),
       followUpQuestion: rec.followUpQuestion || null,
       confidence: ['high', 'medium', 'low'].includes(rec.confidence) ? rec.confidence : 'medium',
-      confidenceNote: rec.confidenceNote || 'Medium confidence — recommendation based on your check-in.',
-      sevenDayPlan,
-      structuredData: rec.structuredData || { signals: s, readiness: r, engine: 'normalized' },
-      // Backward-compat v0.1 fields:
-      mainAction: workoutObj ? workoutObj.title : (rec.mainAction || 'Active Recovery Walk'),
-      detail: workoutObj ? workoutObj.detail : (rec.detail || 'Light easy walk.'),
-      supportAction: habits[0] ? habits[0].detail : (rec.supportAction || ''),
+      confidenceNote: String(rec.confidenceNote || 'Recommendation based on a limited set of self-reported inputs.'),
+      sevenDayPlan: Array.isArray(rec.sevenDayPlan) && rec.sevenDayPlan.length
+        ? rec.sevenDayPlan.map((day) => ({
+            day: String(day.day || ''),
+            focus: String(day.focus || ''),
+            mainAction: String(day.mainAction || ''),
+            note: String(day.note || ''),
+          }))
+        : generateSevenDayPlan(profile, context.weeklyReview),
+      structuredData: rec.structuredData && typeof rec.structuredData === 'object'
+        ? rec.structuredData
+        : { signals, readiness: score, engine: 'normalized' },
+      mainAction: workout ? workout.title : String(rec.mainAction || 'Recovery only'),
+      detail: workout ? workout.detail : String(rec.detail || 'Protect recovery.'),
+      supportAction: habits[0]?.detail || String(rec.supportAction || ''),
       reason: explanation,
-      caution: rec.caution || (thingsToAvoid.length > 0 ? thingsToAvoid.join(' ') : null),
+      caution: rec.caution || (thingsToAvoid.length ? thingsToAvoid.join(' ') : null),
     };
   }
-
-  // ---------- LLM API Caller ----------
 
   async function callLLM(profile, checkin, prevEntry, entryCount, context = {}) {
     try {
       if (typeof Store !== 'undefined' && Store.logDebug) {
         Store.logDebug('AI-Request', 'Requesting recommendation from /api/coach', { profile, checkin, entryCount });
       }
+
       const response = await fetch('/api/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -698,29 +901,28 @@ const Coach = (() => {
       }
 
       const data = await response.json();
-      if (data && data.ok && data.recommendation) {
+      if (data?.ok && data.recommendation) {
         if (typeof Store !== 'undefined' && Store.logDebug) {
           Store.logDebug('AI-Response', 'Successful Gemini API response', data.recommendation);
         }
         return normalizeRecommendation(data.recommendation, profile, checkin, prevEntry, { ...context, entryCount });
-      } else {
-        throw new Error(data?.error || 'AI response indicated fallback or missing data');
       }
-    } catch (err) {
+
+      throw new Error(data?.error || 'AI response missing recommendation');
+    } catch (error) {
       if (typeof Store !== 'undefined' && Store.logDebug) {
-        Store.logDebug('AI-Fallback', `AI unavailable or validation failed (${err.message}). Activating local fallback rules engine.`);
+        Store.logDebug('AI-Fallback', `AI unavailable (${error.message}). Using local rules.`);
       }
       return localEngine(profile, checkin, prevEntry, entryCount, context);
     }
   }
 
-  // ---------- Public Generate API ----------
-
   async function generate(profile, checkin, prevEntry, entryCount, context = {}) {
     if (provider === 'llm' || provider === 'auto') {
       return callLLM(profile, checkin, prevEntry, entryCount, context);
     }
-    await new Promise((r) => setTimeout(r, 600));
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
     const raw = localEngine(profile, checkin, prevEntry, entryCount, context);
     return normalizeRecommendation(raw, profile, checkin, prevEntry, { ...context, entryCount });
   }
@@ -731,7 +933,7 @@ const Coach = (() => {
     localEngine,
     getTemplates: () => EXERCISE_TEMPLATES,
     get provider() { return provider; },
-    set provider(v) { provider = v; },
+    set provider(value) { provider = value; },
   };
 })();
 

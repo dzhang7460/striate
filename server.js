@@ -83,7 +83,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // GIFs
+  // Exercise media proxy
   if (pathname === '/api/exercises/media' && req.method === 'GET') {
     try {
       const targetUrl = urlObj.searchParams.get('url');
@@ -93,20 +93,18 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
+      const parsedTarget = new URL(targetUrl);
       const apiKey = process.env.WORKOUTX_API_KEY || process.env.WORKOUT_X_KEY;
-      if (!apiKey) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ ok: false, error: 'WORKOUTX_API_KEY not configured' }));
-        return;
+      const isWorkoutXAsset = /workoutxapp\.com$/i.test(parsedTarget.hostname) || /workoutx/i.test(parsedTarget.hostname);
+      const headers = {
+        'Accept': 'image/gif,image/*;q=0.9,*/*;q=0.8',
+      };
+
+      if (isWorkoutXAsset && apiKey) {
+        headers['X-WorkoutX-Key'] = apiKey;
       }
 
-      const upstream = await fetch(targetUrl, {
-        headers: {
-          'X-WorkoutX-Key': apiKey,
-          'Accept': 'image/gif,image/*;q=0.9,*/*;q=0.8',
-        },
-      });
-
+      const upstream = await fetch(targetUrl, { headers });
       if (!upstream.ok) {
         const text = await upstream.text().catch(() => '');
         res.writeHead(upstream.status, { 'Content-Type': 'application/json' });
@@ -116,7 +114,6 @@ const server = http.createServer(async (req, res) => {
 
       const contentType = upstream.headers.get('content-type') || 'image/gif';
       const buffer = Buffer.from(await upstream.arrayBuffer());
-
       res.writeHead(200, {
         'Content-Type': contentType,
         'Cache-Control': 'public, max-age=86400',
@@ -203,10 +200,10 @@ const server = http.createServer(async (req, res) => {
       console.log(' - Checkin Sleep:', checkin?.sleep);
       console.log(' - Dedicated Workout Time:', checkin?.dedicatedWorkoutTime || profile?.dedicatedWorkoutTime);
 
-      // Shortlist exercises from WorkoutX for AI
-      const shortlist = await workoutx.shortlistExercises(profile, checkin);
+      // Shortlist exercises from WorkoutX for AI (Gemini only sees the shortlist, never WorkoutX directly)
+      const shortlist = await workoutx.shortlistExercises(profile, checkin, context);
       context.candidateExercises = shortlist;
-      console.log(`[Striate Server Debug] Shortlist passed to AI (${shortlist.length} items):`, shortlist.map((e) => e.name));
+      console.log(`[Striate Server Debug] Shortlist passed to AI (${shortlist.length} items):`, shortlist.map((e) => `${e.name} [${e.id}]`));
 
       if (!getApiKey()) {
         console.warn('[Striate Server Debug] GEMINI_API_KEY not set. Returning fallback signal to client.');
