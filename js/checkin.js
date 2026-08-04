@@ -7,6 +7,7 @@
   if (!UI.requireProfile()) return;
 
   UI.initChipGroups();
+  UI.initMultiChipGroups();
   UI.initScaleGroups();
   UI.renderTabbar('checkin');
 
